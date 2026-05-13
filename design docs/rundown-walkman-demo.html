@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUNDOWN · Walkman Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lcd-bg: #0a1520; --lcd-text: #78c8e8; --lcd-dim: #2c6478;
+    --td: #1a1a1a; --tm: #555; --tl: #909090; --blue: #0057D9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #111;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    padding: 24px;
+  }
+
+  .shell {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ═══ WALKMAN DEVICE ═══ */
+  .device {
+    width: 260px;
+    flex-shrink: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(255,255,255,.024) 4px, rgba(255,255,255,.024) 5px),
+      linear-gradient(162deg, #f8f8f8 0%, #ebebeb 10%, #d8d8d8 24%, #c8c8c8 38%, #d4d4d4 52%, #bcbcbc 66%, #cacaca 80%, #e0e0e0 100%);
+    border-radius: 12px;
+    border: 1px solid #a8a8a8;
+    position: relative; overflow: hidden;
+    box-shadow: 8px 8px 24px rgba(0,0,0,.6), -2px -2px 8px rgba(255,255,255,.1);
+  }
+  .device::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 44%;
+    background: linear-gradient(180deg, rgba(255,255,255,.38) 0%, transparent 100%);
+    pointer-events: none; z-index: 1;
+  }
+  .device::after {
+    content: ''; position: absolute; inset: 0;
+    border-left: 3px solid rgba(255,255,255,.55);
+    border-top: 2px solid rgba(255,255,255,.4);
+    border-radius: 12px;
+    pointer-events: none; z-index: 2;
+  }
+
+  .d-head {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    display: flex; align-items: baseline; justify-content: space-between;
+    position: relative; z-index: 3;
+  }
+  .d-sony { font-size: 32px; font-weight: 900; color: var(--td); letter-spacing: -.01em; line-height: 1; }
+  .d-model { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 500; color: var(--tl); letter-spacing: .16em; text-transform: uppercase; }
+
+  /* LCD */
+  .d-bezel {
+    margin: 10px 14px 8px;
+    background: #1e1e1e; border-radius: 4px; padding: 3px;
+    box-shadow: inset 3px 3px 7px rgba(0,0,0,.75), inset -1px -1px 2px rgba(255,255,255,.07), 0 2px 0 rgba(255,255,255,.28);
+    position: relative; z-index: 3;
+  }
+  .d-lcd {
+    background: var(--lcd-bg); border-radius: 2px; padding: 10px 12px 9px;
+    position: relative; overflow: hidden; min-height: 90px;
+  }
+  .d-lcd::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.12) 2px, rgba(0,0,0,.12) 3px);
+    pointer-events: none; z-index: 1;
+  }
+  .d-lcd::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(120,200,232,.15) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  .lcd-np {
+    font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 500;
+    color: var(--lcd-dim); letter-spacing: .2em; text-transform: uppercase;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+    position: relative; z-index: 2;
+  }
+  .lcd-dot {
+    width: 6px; height: 6px; background: var(--lcd-text); border-radius: 50%;
+    box-shadow: 0 0 5px var(--lcd-text); animation: npb 1s step-end infinite;
+  }
+  @keyframes npb { 0%,100%{opacity:1} 50%{opacity:.08} }
+  .lcd-topic-wrap {
+    position: relative; z-index: 2;
+    overflow: hidden; width: 100%; height: 24px;
+    -webkit-mask-image: linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+    mask-image: linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+  }
+  .lcd-topic-name {
+    font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 500;
+    color: var(--lcd-text); text-transform: uppercase; letter-spacing: .03em; line-height: 1.5;
+    text-shadow: 0 0 8px var(--lcd-text); white-space: nowrap;
+    display: inline-block;
+  }
+  .lcd-topic-name.scrolling { animation: ticker linear infinite; }
+  @keyframes ticker { 0%{transform:translateX(100%)} 100%{transform:translateX(-100%)} }
+  .lcd-topic-name.flip { animation: flip .26s ease; }
+  @keyframes flip {
+    0%{opacity:1;transform:translateX(0)} 38%{opacity:0;transform:translateX(-10px)}
+    62%{opacity:0;transform:translateX(8px)} 100%{opacity:1;transform:translateX(0)}
+  }
+  .lcd-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 6px; position: relative; z-index: 2;
+  }
+  .lcd-trk { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--lcd-dim); letter-spacing: .1em; }
+  .lcd-time-disp {
+    font-family: 'IBM Plex Mono', monospace; font-size: 24px; font-weight: 300;
+    color: var(--lcd-text); text-shadow: 0 0 8px var(--lcd-text);
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .lcd-time-disp.urg { color: #e090a8; text-shadow: 0 0 7px #e090a8; animation: lb .4s step-end infinite; }
+  @keyframes lb { 0%,100%{opacity:1} 50%{opacity:.1} }
+  .lcd-seek { height: 3px; background: rgba(120,200,232,.1); border-radius: 1px; margin-top: 8px; position: relative; z-index: 2; overflow: hidden; }
+  .lcd-seekfill { height: 3px; background: var(--lcd-text); box-shadow: 0 0 5px var(--lcd-text); border-radius: 1px; transition: width 1s linear; }
+  .lcd-seekfill.urg { background: #e090a8; box-shadow: 0 0 5px #e090a8; }
+
+  /* track list */
+  .d-tracks { display: flex; flex-direction: column; position: relative; z-index: 3; border-top: 1px solid rgba(0,0,0,.1); }
+  .d-tracks::before { content: ''; position: absolute; inset: 0; box-shadow: inset 0 4px 8px rgba(0,0,0,.1); pointer-events: none; z-index: 1; }
+  .trow {
+    display: flex; align-items: center; padding: 7px 14px;
+    border-bottom: 1px solid rgba(0,0,0,.06); cursor: pointer;
+    position: relative; gap: 8px; transition: background .15s;
+  }
+  .trow.done { background: rgba(0,0,0,.03); opacity: .35; }
+  .trow.active { background: linear-gradient(90deg, rgba(0,87,217,.1) 0%, rgba(0,87,217,.03) 100%); }
+  .trow.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--blue); }
+  .trow.done::after { content: '✓'; position: absolute; right: 12px; font-size: 9px; color: #bbb; }
+  .trow.active::after { content: '▶'; position: absolute; right: 12px; font-size: 8px; color: var(--blue); }
+  .t-num { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--tl); width: 16px; text-align: right; flex-shrink: 0; }
+  .trow.active .t-num { color: var(--blue); } .trow.done .t-num { color: #ccc; }
+  .t-txt { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .trow.active .t-txt { color: var(--td); font-size: 14px; }
+  .trow.done .t-txt { color: #bbb; text-decoration: line-through; text-decoration-color: #ccc; }
+  .trow.upcoming .t-txt { color: var(--tm); }
+
+  /* transport */
+  .d-transport {
+    padding: 12px 14px 14px;
+    position: relative; z-index: 3;
+    background: linear-gradient(180deg, rgba(255,255,255,.1) 0%, rgba(0,0,0,.04) 100%);
+    border-top: 1px solid rgba(255,255,255,.45);
+  }
+  .t-rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(0,0,0,.14) 25%, rgba(0,0,0,.14) 75%, transparent); margin-bottom: 12px; }
+  .t-row1 { display: flex; align-items: flex-end; justify-content: center; gap: 12px; margin-bottom: 10px; }
+  .t-row2 { display: flex; justify-content: center; }
+  .bcol { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .blbl { font-family: 'IBM Plex Mono', monospace; font-size: 7px; font-weight: 500; color: var(--tl); letter-spacing: .12em; text-transform: uppercase; }
+
+  .btn {
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; cursor: pointer; user-select: none; border: none; outline: none;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--td);
+    transition: transform .08s, box-shadow .08s, background .08s;
+    background: radial-gradient(circle at 36% 34%, #fafafa, #d8d8d8 52%, #bebebe);
+    box-shadow: 3px 3px 7px rgba(0,0,0,.32), -1.5px -1.5px 4px rgba(255,255,255,.88), inset 0 1.5px 0 rgba(255,255,255,.75), inset 0 -1px 0 rgba(0,0,0,.1);
+  }
+  .btn:active {
+    transform: translateY(2px) scale(.95);
+    background: radial-gradient(circle at 36% 34%, #d0d0d0, #c0c0c0 52%, #d0d0d0);
+    box-shadow: 1px 1px 3px rgba(0,0,0,.28), -.5px -.5px 1.5px rgba(255,255,255,.6), inset 2.5px 2.5px 5px rgba(0,0,0,.22), inset -1px -1px 3px rgba(255,255,255,.4);
+  }
+  .btn-play { width: 48px; height: 48px; font-size: 16px; background: radial-gradient(circle at 38% 36%, #fefefe, #d4d4d4 50%, #bcbcbc); box-shadow: 5px 5px 10px rgba(0,0,0,.36), -2.5px -2.5px 6px rgba(255,255,255,.9), inset 0 2px 0 rgba(255,255,255,.8), inset 0 -1.5px 0 rgba(0,0,0,.12); }
+  .btn-sm { width: 34px; height: 34px; font-size: 12px; }
+  .btn-stop { width: 26px; height: 26px; font-size: 11px; border-radius: 4px; }
+
+  .d-foot {
+    padding: 6px 16px 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 3; border-top: 1px solid rgba(0,0,0,.07);
+  }
+  .d-foot span { font-family: 'IBM Plex Mono', monospace; font-size: 7px; color: var(--tl); letter-spacing: .14em; text-transform: uppercase; }
+
+  /* flash */
+  .flasher { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 99; border-radius: 12px; transition: opacity .04s; }
+  .flasher.on { opacity: .07; }
+
+  /* ═══ RIGHT PANEL ═══ */
+  .ctrl-panel {
+    width: 280px; display: flex; flex-direction: column; gap: 14px;
+  }
+
+  .status-bar {
+    background: rgba(0,0,0,.5); border: 1px solid #333; border-radius: 6px;
+    padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .sb-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: #666; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
+  .sb-topic { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #ccc; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+  .sb-time { font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #eee; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+
+  .chips-section-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: #444; letter-spacing: .18em; text-transform: uppercase; }
+  .chips-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip {
+    background: linear-gradient(145deg, #e8e8e8, #cacaca); color: var(--tm);
+    font-family: 'IBM Plex Mono', monospace; font-size: 8px;
+    padding: 4px 10px; border-radius: 20px; border: 1px solid #b8b8b8;
+    cursor: pointer; transition: all .1s; user-select: none; letter-spacing: .03em; text-transform: uppercase;
+    box-shadow: 1.5px 1.5px 3px rgba(0,0,0,.14), -.5px -.5px 1.5px rgba(255,255,255,.7);
+  }
+  .chip:hover { border-color: #999; color: var(--td); }
+  .chip.cur { background: linear-gradient(145deg, #d4e4f8, #aecef4); border-color: #6ea8e0; color: #1a3a6a; }
+  .chip.done { opacity: .28; text-decoration: line-through; }
+
+  /* Big embossed control buttons */
+  .big-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .big-btn {
+    background: linear-gradient(145deg, #f4f4f4, #d2d2d2);
+    border: 1px solid #bbb; border-radius: 8px; color: var(--td);
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 14px 10px;
+    cursor: pointer; text-align: center;
+    box-shadow: 3px 3px 6px rgba(0,0,0,.2), -1.5px -1.5px 4px rgba(255,255,255,.75);
+    transition: all .08s; user-select: none;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .big-btn:active {
+    transform: translateY(2px);
+    box-shadow: 1px 1px 3px rgba(0,0,0,.2), inset 2px 2px 5px rgba(0,0,0,.14);
+  }
+  .big-btn .ico { font-size: 22px; line-height: 1; }
+  .big-btn .lbl { font-size: 8px; font-weight: 500; color: var(--tl); letter-spacing: .14em; text-transform: uppercase; }
+
+  .big-btn.pause-btn { grid-column: span 2; }
+  .big-btn.pause-btn.active {
+    background: linear-gradient(145deg, #d0daf0, #b4c6ec);
+    border-color: #7a9ad8; color: #1a2a5a;
+  }
+  .big-btn.reset-btn { grid-column: span 2; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: #444;
+    letter-spacing: .18em; text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- WALKMAN DEVICE -->
+  <div class="device" style="position:relative">
+    <div class="d-head">
+      <div class="d-sony">BEEZY</div>
+      <div class="d-model">RUNDOWN</div>
+    </div>
+
+    <div class="d-bezel">
+      <div class="d-lcd">
+        <div class="lcd-np"><div class="lcd-dot"></div>NOW PLAYING</div>
+        <div class="lcd-topic-wrap" id="lcdTopicWrap"><div class="lcd-topic-name" id="lcdTopic">NBA PLAYOFFS</div></div>
+        <div class="lcd-meta">
+          <div class="lcd-trk" id="lcdTrk">TRK 01/08</div>
+          <div class="lcd-time-disp" id="lcdTime">0:30</div>
+        </div>
+        <div class="lcd-seek"><div class="lcd-seekfill" id="lcdSf" style="width:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="d-tracks" id="dTracks"></div>
+
+    <div class="d-transport">
+      <div class="t-rule"></div>
+      <div class="t-row1">
+        <div class="bcol">
+          <button class="btn btn-sm" onclick="prevTopic()">⏮</button>
+          <div class="blbl">PREV</div>
+        </div>
+        <div class="bcol">
+          <button class="btn btn-play" id="hwPlay" onclick="togglePause()">▶</button>
+          <div class="blbl" id="hwPlayLbl">PLAY</div>
+        </div>
+        <div class="bcol">
+          <button class="btn btn-sm" onclick="nextTopic()">⏭</button>
+          <div class="blbl">NEXT</div>
+        </div>
+      </div>
+      <div class="t-row2">
+        <div class="bcol">
+          <button class="btn btn-stop" onclick="resetAll()">■</button>
+          <div class="blbl">RESET</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-foot">
+      <span>RD-001</span>
+      <span id="dFootR">01 / 08</span>
+    </div>
+
+    <div class="flasher" id="flasher"></div>
+  </div>
+
+  <!-- CONTROL PANEL -->
+  <div class="ctrl-panel">
+
+    <div class="status-bar">
+      <div>
+        <div class="sb-label">Now On</div>
+        <div class="sb-topic" id="sbTopic">NBA PLAYOFFS</div>
+      </div>
+      <div class="sb-time" id="sbTime">0:30</div>
+    </div>
+
+    <div>
+      <div class="section-label" style="margin-bottom:8px">Jump to Topic</div>
+      <div class="chips-wrap" id="chipsWrap"></div>
+    </div>
+
+    <div>
+      <div class="section-label" style="margin-bottom:10px">Controls</div>
+      <div class="big-btns">
+        <button class="big-btn" onclick="prevTopic()">
+          <div class="ico">⏮</div><div class="lbl">Prev Topic</div>
+        </button>
+        <button class="big-btn" onclick="nextTopic()">
+          <div class="ico">⏭</div><div class="lbl">Next Topic</div>
+        </button>
+        <button class="big-btn pause-btn" id="extPause" onclick="togglePause()">
+          <div class="ico" id="extPauseIco">⏸</div>
+          <div class="lbl" id="extPauseLbl">Pause Timer</div>
+        </button>
+        <button class="big-btn reset-btn" onclick="resetAll()">
+          <div class="ico">■</div><div class="lbl">Reset All</div>
+        </button>
+      </div>
+    </div>
+
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3a3a3a;line-height:1.8;letter-spacing:.08em">
+      KEYBOARD: → NEXT · ← PREV · SPACE PAUSE<br>
+      1–8 JUMP TO TRACK
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const TOPICS=[
+  {text:"NBA Playoffs",dur:30},{text:"Drake vs Kendrick",dur:25},
+  {text:"Tesla Self-Drive",dur:30},{text:"AI Takes Your Job",dur:35},
+  {text:"Celtics Repeat",dur:25},{text:"Summer Movies",dur:30},
+  {text:"Social Media",dur:30},{text:"Hot Take",dur:20}
+];
+let cur=0,tl=TOPICS[0].dur,tot=TOPICS[0].dur,paused=false;
+
+const els={
+  lcdTopic:document.getElementById('lcdTopic'),
+  lcdTrk:document.getElementById('lcdTrk'),
+  lcdTime:document.getElementById('lcdTime'),
+  lcdSf:document.getElementById('lcdSf'),
+  dTracks:document.getElementById('dTracks'),
+  dFootR:document.getElementById('dFootR'),
+  hwPlay:document.getElementById('hwPlay'),
+  hwPlayLbl:document.getElementById('hwPlayLbl'),
+  extPause:document.getElementById('extPause'),
+  extPauseIco:document.getElementById('extPauseIco'),
+  extPauseLbl:document.getElementById('extPauseLbl'),
+  chipsWrap:document.getElementById('chipsWrap'),
+  sbTopic:document.getElementById('sbTopic'),
+  sbTime:document.getElementById('sbTime'),
+  flasher:document.getElementById('flasher')
+};
+
+function pad(n){return String(n).padStart(2,'0')}
+function fmt(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`}
+
+function buildTracks(){
+  els.dTracks.innerHTML='';
+  TOPICS.forEach((t,i)=>{
+    const el=document.createElement('div');
+    let c='trow ';if(i<cur)c+='done';else if(i===cur)c+='active';else c+='upcoming';
+    el.className=c;
+    el.innerHTML=`<span class="t-num">${pad(i+1)}</span><span class="t-txt">${t.text}</span>`;
+    el.addEventListener('click',()=>goTo(i));
+    els.dTracks.appendChild(el);
+  });
+  els.lcdTrk.textContent=`TRK ${pad(cur+1)}/08`;
+  els.dFootR.textContent=`${pad(cur+1)} / 08`;
+}
+
+function buildChips(){
+  els.chipsWrap.innerHTML='';
+  TOPICS.forEach((t,i)=>{
+    const c=document.createElement('span');
+    let cls='chip';if(i===cur)cls+=' cur';else if(i<cur)cls+=' done';
+    c.className=cls;c.textContent=`${pad(i+1)}. ${t.text}`;
+    c.addEventListener('click',()=>goTo(i));
+    els.chipsWrap.appendChild(c);
+  });
+}
+
+function updateTimer(){
+  const f=fmt(tl);
+  els.lcdTime.textContent=f;els.sbTime.textContent=f;
+  const urg=tl<=8;
+  els.lcdTime.classList.toggle('urg',urg);els.lcdSf.classList.toggle('urg',urg);
+  els.lcdSf.style.width=(tot>0?(tl/tot)*100:0)+'%';
+}
+
+function doFlash(){els.flasher.classList.add('on');setTimeout(()=>els.flasher.classList.remove('on'),90)}
+
+function applyTicker(text){
+  const el=els.lcdTopic,wrap=document.getElementById('lcdTopicWrap');
+  el.textContent=text.toUpperCase();
+  el.classList.remove('scrolling');
+  void el.offsetWidth;
+  if(el.scrollWidth>wrap.clientWidth){
+    const dur=(el.scrollWidth+wrap.clientWidth)/60;
+    el.style.animationDuration=dur+'s';
+    el.classList.add('scrolling');
+  }
+}
+
+function lcdFlip(text){
+  els.lcdTopic.classList.remove('scrolling');
+  els.lcdTopic.classList.add('flip');
+  setTimeout(()=>{ els.lcdTopic.classList.remove('flip'); applyTicker(text); },130);
+  els.sbTopic.textContent=text.toUpperCase();
+}
+
+function goTo(i){
+  if(i<0||i>=TOPICS.length)return;
+  cur=i;tl=TOPICS[i].dur;tot=TOPICS[i].dur;
+  doFlash();lcdFlip(TOPICS[i].text);buildTracks();buildChips();updateTimer();
+}
+
+function nextTopic(){goTo(cur+1)}
+function prevTopic(){goTo(cur-1)}
+
+function togglePause(){
+  paused=!paused;
+  els.hwPlay.textContent=paused?'▶':'⏸';
+  els.hwPlayLbl.textContent=paused?'PLAY':'PAUSE';
+  els.extPauseIco.textContent=paused?'▶':'⏸';
+  els.extPauseLbl.textContent=paused?'Resume Timer':'Pause Timer';
+  els.extPause.classList.toggle('active',paused);
+}
+
+function resetAll(){
+  paused=false;
+  els.hwPlay.textContent='▶';els.hwPlayLbl.textContent='PLAY';
+  els.extPauseIco.textContent='⏸';els.extPauseLbl.textContent='Pause Timer';
+  els.extPause.classList.remove('active');
+  goTo(0);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight')nextTopic();
+  if(e.key==='ArrowLeft')prevTopic();
+  if(e.key===' '){e.preventDefault();togglePause();}
+  const n=parseInt(e.key);if(n>=1&&n<=8)goTo(n-1);
+});
+
+buildTracks();buildChips();updateTimer();
+applyTicker(TOPICS[0].text);
+setInterval(()=>{
+  if(paused)return;
+  if(tl>0){tl--;updateTimer();}
+  else if(cur<TOPICS.length-1)goTo(cur+1);
+},1000);
+</script>
+</body>
+</html>

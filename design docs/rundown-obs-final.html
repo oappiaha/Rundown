@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RUNDOWN · OBS Overlay</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lcd-bg:#0a1520; --lcd-text:#78c8e8; --lcd-dim:#2c6478;
+    --td:#1a1a1a; --tm:#555; --tl:#909090; --blue:#0057D9;
+    --silver-shine: linear-gradient(162deg,#f8f8f8 0%,#ebebeb 10%,#d8d8d8 24%,#c8c8c8 38%,#d4d4d4 52%,#bcbcbc 66%,#cacaca 80%,#e0e0e0 100%);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    width:1920px; height:1080px;
+    background:transparent;
+    font-family:'Barlow Condensed',sans-serif;
+    overflow:hidden; position:relative;
+  }
+
+  /* ═══════════════════════════════
+     RIGHT PANEL — timer + tracklist
+  ═══════════════════════════════ */
+  #right-panel {
+    position:absolute;
+    top:0; right:0;
+    width:300px;
+    /* stops above the bottom bar */
+    height:calc(1080px - 110px);
+    display:flex; flex-direction:column;
+
+    background:
+      repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(255,255,255,.024) 4px,rgba(255,255,255,.024) 5px),
+      var(--silver-shine);
+
+    border-left:1px solid #a8a8a8;
+    overflow:hidden;
+  }
+
+  /* top shine */
+  #right-panel::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:42%;
+    background:linear-gradient(180deg,rgba(255,255,255,.38) 0%,transparent 100%);
+    pointer-events:none; z-index:1;
+  }
+  /* left bevel */
+  #right-panel::after {
+    content:''; position:absolute; inset:0;
+    border-left:3px solid rgba(255,255,255,.55);
+    pointer-events:none; z-index:2;
+  }
+
+  /* header */
+  #rp-header {
+    padding:18px 20px 14px;
+    border-bottom:1px solid rgba(0,0,0,.12);
+    display:flex; align-items:baseline; justify-content:space-between;
+    position:relative; z-index:3;
+  }
+  #rp-sony { font-size:30px; font-weight:900; color:var(--td); letter-spacing:-.01em; line-height:1; }
+  #rp-label { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:500; color:var(--tl); letter-spacing:.16em; text-transform:uppercase; }
+
+  /* LCD */
+  #rp-bezel {
+    margin:10px 14px 8px;
+    background:#1e1e1e; border-radius:4px; padding:3px;
+    box-shadow:inset 3px 3px 7px rgba(0,0,0,.75),inset -1px -1px 2px rgba(255,255,255,.07),0 2px 0 rgba(255,255,255,.28);
+    position:relative; z-index:3;
+  }
+  #rp-lcd {
+    background:var(--lcd-bg); border-radius:2px; padding:10px 12px 9px;
+    position:relative; overflow:hidden; min-height:90px;
+  }
+  #rp-lcd::after {
+    content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 3px);
+    pointer-events:none; z-index:1;
+  }
+  #rp-lcd::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(120,200,232,.15) 0%,transparent 60%);
+    pointer-events:none; z-index:0;
+  }
+  .lcd-np {
+    font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:500;
+    color:var(--lcd-dim); letter-spacing:.2em; text-transform:uppercase;
+    margin-bottom:5px; display:flex; align-items:center; gap:5px;
+    position:relative; z-index:2;
+  }
+  .lcd-dot {
+    width:6px; height:6px; background:var(--lcd-text); border-radius:50%;
+    box-shadow:0 0 5px var(--lcd-text); animation:npb 1s step-end infinite;
+  }
+  @keyframes npb { 0%,100%{opacity:1} 50%{opacity:.08} }
+  /* ticker wrapper — clips the scrolling text */
+  #lcd-topic-wrap {
+    position:relative; z-index:2;
+    overflow:hidden;
+    width:100%;
+    height:26px;
+    /* fade edges so scroll feels like a real LED board */
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+  }
+  #lcd-topic {
+    font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:500;
+    color:var(--lcd-text); text-transform:uppercase; letter-spacing:.03em; line-height:1.45;
+    text-shadow:0 0 8px var(--lcd-text); white-space:nowrap;
+    display:inline-block;
+    /* scroll only kicks in when text overflows — set by JS */
+  }
+  #lcd-topic.scrolling {
+    animation:ticker linear infinite;
+  }
+  @keyframes ticker {
+    0%   { transform:translateX(100%); }
+    100% { transform:translateX(-100%); }
+  }
+  #lcd-topic.flip { animation:flip .26s ease; }
+  @keyframes flip {
+    0%{opacity:1;transform:translateX(0)} 38%{opacity:0;transform:translateX(-10px)}
+    62%{opacity:0;transform:translateX(8px)} 100%{opacity:1;transform:translateX(0)}
+  }
+  .lcd-meta {
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-top:6px; position:relative; z-index:2;
+  }
+  #lcd-trk { font-family:'IBM Plex Mono',monospace; font-size:8px; color:var(--lcd-dim); letter-spacing:.1em; }
+  #lcd-time {
+    font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:300;
+    color:var(--lcd-text); text-shadow:0 0 8px var(--lcd-text);
+    font-variant-numeric:tabular-nums; line-height:1;
+  }
+  #lcd-time.urg { color:#e090a8; text-shadow:0 0 7px #e090a8; animation:lb .4s step-end infinite; }
+  @keyframes lb { 0%,100%{opacity:1} 50%{opacity:.1} }
+  #lcd-seek { height:3px; background:rgba(120,200,232,.1); border-radius:1px; margin-top:8px; position:relative; z-index:2; overflow:hidden; }
+  #lcd-seekfill { height:3px; background:var(--lcd-text); box-shadow:0 0 5px var(--lcd-text); border-radius:1px; transition:width 1s linear; }
+  #lcd-seekfill.urg { background:#e090a8; box-shadow:0 0 5px #e090a8; }
+
+  /* track list */
+  #track-list {
+    flex:1; display:flex; flex-direction:column;
+    overflow:hidden; position:relative; z-index:3;
+    border-top:1px solid rgba(0,0,0,.1);
+  }
+  #track-list::before {
+    content:''; position:absolute; inset:0;
+    box-shadow:inset 0 4px 8px rgba(0,0,0,.1);
+    pointer-events:none; z-index:1;
+  }
+  .trow {
+    display:flex; align-items:center;
+    padding:0 18px; border-bottom:1px solid rgba(0,0,0,.06);
+    cursor:default; position:relative;
+    flex:1; min-height:0; gap:10px;
+    transition:background .15s;
+  }
+  .trow.done { background:rgba(0,0,0,.03); opacity:.35; }
+  .trow.active { background:linear-gradient(90deg,rgba(0,87,217,.1) 0%,rgba(0,87,217,.03) 100%); }
+  .trow.active::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--blue); }
+  .trow.done::after { content:'✓'; position:absolute; right:14px; font-size:10px; color:#bbb; }
+  .trow.active::after { content:'▶'; position:absolute; right:14px; font-size:9px; color:var(--blue); }
+  .t-num { font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--tl); width:18px; text-align:right; flex-shrink:0; }
+  .trow.active .t-num { color:var(--blue); } .trow.done .t-num { color:#ccc; }
+  .t-txt { font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
+  .trow.active .t-txt { color:var(--td); font-size:17px; }
+  .trow.done .t-txt { color:#bbb; text-decoration:line-through; text-decoration-color:#ccc; }
+  .trow.upcoming .t-txt { color:var(--tm); }
+
+  /* rp footer */
+  #rp-footer {
+    padding:7px 18px 9px;
+    display:flex; align-items:center; justify-content:space-between;
+    position:relative; z-index:3;
+    border-top:1px solid rgba(0,0,0,.07);
+  }
+  #rp-footer span { font-family:'IBM Plex Mono',monospace; font-size:7px; color:var(--tl); letter-spacing:.14em; text-transform:uppercase; }
+
+
+  /* ═══════════════════════════════
+     BOTTOM BAR — transport controls
+  ═══════════════════════════════ */
+  #bottom-bar {
+    position:absolute;
+    bottom:0; left:0;
+    width:1920px; height:110px;
+    display:flex; align-items:center; justify-content:center;
+    gap:0;
+
+    background:
+      repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(255,255,255,.018) 4px,rgba(255,255,255,.018) 5px),
+      linear-gradient(180deg,#f0f0f0 0%,#e0e0e0 30%,#d0d0d0 55%,#c8c8c8 70%,#d4d4d4 100%);
+
+    border-top:1px solid #a0a0a0;
+    box-shadow:0 -3px 0 rgba(255,255,255,.45);
+    overflow:hidden;
+  }
+
+  /* top shine on bottom bar */
+  #bottom-bar::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,.32) 0%,transparent 100%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* Now-on label left side */
+  #bb-now {
+    position:absolute; left:40px;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  #bb-now-label {
+    font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:500;
+    color:var(--tl); letter-spacing:.2em; text-transform:uppercase;
+  }
+  #bb-now-topic {
+    font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900;
+    color:var(--td); text-transform:uppercase; letter-spacing:.04em; line-height:1;
+  }
+  #bb-now-sub {
+    font-family:'IBM Plex Mono',monospace; font-size:8px;
+    color:var(--tl); letter-spacing:.12em; text-transform:uppercase;
+  }
+
+  /* center buttons */
+  #bb-btns {
+    display:flex; align-items:center; gap:20px;
+    position:relative; z-index:1;
+  }
+
+  .bb-btn-wrap { display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .bb-btn-lbl {
+    font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:500;
+    color:var(--tl); letter-spacing:.14em; text-transform:uppercase;
+  }
+
+  /* embossed circular buttons */
+  .hw-btn {
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%; cursor:default; border:none; outline:none;
+    font-family:'Barlow Condensed',sans-serif; font-weight:700;
+    color:var(--td);
+    transition:transform .08s, box-shadow .08s, background .08s;
+    background:radial-gradient(circle at 36% 34%,#fafafa,#d8d8d8 52%,#bebebe);
+    box-shadow:
+      4px 4px 8px rgba(0,0,0,.32),
+      -2px -2px 5px rgba(255,255,255,.88),
+      inset 0 2px 0 rgba(255,255,255,.75),
+      inset 0 -1px 0 rgba(0,0,0,.1);
+  }
+  .hw-btn:active {
+    transform:translateY(2px) scale(.95);
+    background:radial-gradient(circle at 36% 34%,#d0d0d0,#c0c0c0 52%,#d0d0d0);
+    box-shadow:
+      1px 1px 3px rgba(0,0,0,.28),
+      -.5px -.5px 1.5px rgba(255,255,255,.6),
+      inset 3px 3px 6px rgba(0,0,0,.22),
+      inset -1px -1px 3px rgba(255,255,255,.4);
+  }
+
+  .btn-main { width:60px; height:60px; font-size:20px; }
+  .btn-side { width:46px; height:46px; font-size:15px; }
+  .btn-stop { width:38px; height:38px; font-size:14px; border-radius:5px; }
+
+  /* divider between button groups */
+  .bb-divider {
+    width:1px; height:50px;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.15) 30%,rgba(0,0,0,.15) 70%,transparent);
+    margin:0 10px;
+  }
+
+  /* track counter right side */
+  #bb-counter {
+    position:absolute; right:40px;
+    display:flex; flex-direction:column; align-items:flex-end; gap:2px;
+  }
+  #bb-counter-label {
+    font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:500;
+    color:var(--tl); letter-spacing:.2em; text-transform:uppercase;
+  }
+  #bb-counter-num {
+    font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:300;
+    color:var(--td); letter-spacing:.04em; font-variant-numeric:tabular-nums; line-height:1;
+  }
+  #bb-counter-of {
+    font-family:'IBM Plex Mono',monospace; font-size:8px;
+    color:var(--tl); letter-spacing:.12em;
+  }
+
+  /* flash */
+  #flash {
+    position:absolute; inset:0; background:#fff;
+    opacity:0; pointer-events:none; z-index:200;
+    transition:opacity .04s;
+  }
+  #flash.on { opacity:.06; }
+</style>
+</head>
+<body>
+
+<!-- ═══ RIGHT PANEL ═══ -->
+<div id="right-panel">
+  <div id="rp-header">
+    <div id="rp-sony">BEEZY</div>
+    <div id="rp-label">RUNDOWN</div>
+  </div>
+
+  <div id="rp-bezel">
+    <div id="rp-lcd">
+      <div class="lcd-np"><div class="lcd-dot"></div>NOW PLAYING</div>
+      <div id="lcd-topic-wrap"><div id="lcd-topic">NBA PLAYOFFS</div></div>
+      <div class="lcd-meta">
+        <div id="lcd-trk">TRK 01/08</div>
+        <div id="lcd-time">2:00</div>
+      </div>
+      <div id="lcd-seek"><div id="lcd-seekfill" style="width:100%"></div></div>
+    </div>
+  </div>
+
+  <div id="track-list"></div>
+
+  <div id="rp-footer">
+    <span>RD-001</span>
+    <span id="rp-ctr">01 / 08</span>
+  </div>
+</div>
+
+
+<!-- ═══ BOTTOM BAR ═══ -->
+<div id="bottom-bar">
+
+  <div id="bb-now">
+    <div id="bb-now-label">Now On</div>
+    <div id="bb-now-topic">NBA PLAYOFFS</div>
+    <div id="bb-now-sub">Topic 01 of 08</div>
+  </div>
+
+  <div id="bb-btns">
+    <div class="bb-btn-wrap">
+      <button class="hw-btn btn-side" onclick="prevTopic()">⏮</button>
+      <div class="bb-btn-lbl">PREV</div>
+    </div>
+
+    <div class="bb-btn-wrap">
+      <button class="hw-btn btn-main" id="playBtn" onclick="togglePause()">⏸</button>
+      <div class="bb-btn-lbl" id="playLbl">PAUSE</div>
+    </div>
+
+    <div class="bb-btn-wrap">
+      <button class="hw-btn btn-side" onclick="nextTopic()">⏭</button>
+      <div class="bb-btn-lbl">NEXT</div>
+    </div>
+
+    <div class="bb-divider"></div>
+
+    <div class="bb-btn-wrap">
+      <button class="hw-btn btn-stop" onclick="resetAll()">■</button>
+      <div class="bb-btn-lbl">RESET</div>
+    </div>
+  </div>
+
+  <div id="bb-counter">
+    <div id="bb-counter-label">Track</div>
+    <div id="bb-counter-num">01</div>
+    <div id="bb-counter-of">of 08</div>
+  </div>
+
+</div>
+
+<div id="flash"></div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────────────────────
+  // When RUNDOWN is running, overlay polls this for live topics.
+  // Set to null to use FALLBACK_TOPICS below (manual mode).
+  const RUNDOWN_API = "http://localhost:8000/rundown/topics";
+  const POLL_INTERVAL_MS = 5000; // check for new topics every 5 seconds
+
+  // ─── FALLBACK TOPICS (used when RUNDOWN server is offline) ────────────────
+  const FALLBACK_TOPICS = [
+    { text:"NBA Playoff Picture",    duration:120 },
+    { text:"Drake vs Kendrick",      duration:90  },
+    { text:"Tesla Self-Drive",       duration:120 },
+    { text:"AI Takes Your Job?",     duration:150 },
+    { text:"Celtics Repeat Run",     duration:90  },
+    { text:"Summer Movie Preview",   duration:120 },
+    { text:"Social Media Addiction", duration:120 },
+    { text:"Hot Take of the Week",   duration:60  },
+  ];
+  // ─────────────────────────────────────────────────────────────────────────
+
+  let TOPICS = [...FALLBACK_TOPICS];
+  let cur=0, tl=TOPICS[0].duration, tot=TOPICS[0].duration, paused=false;
+  let lastTopicsHash = null;
+
+  const els = {
+    lcdTopic:  document.getElementById('lcd-topic'),
+    lcdTrk:    document.getElementById('lcd-trk'),
+    lcdTime:   document.getElementById('lcd-time'),
+    lcdSf:     document.getElementById('lcd-seekfill'),
+    trackList: document.getElementById('track-list'),
+    rpCtr:     document.getElementById('rp-ctr'),
+    playBtn:   document.getElementById('playBtn'),
+    playLbl:   document.getElementById('playLbl'),
+    bbTopic:   document.getElementById('bb-now-topic'),
+    bbSub:     document.getElementById('bb-now-sub'),
+    bbCtrNum:  document.getElementById('bb-counter-num'),
+    flash:     document.getElementById('flash'),
+  };
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function fmt(s){ return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; }
+
+  // ─── LIVE TOPIC POLLING ──────────────────────────────────────────────────
+  // Polls RUNDOWN FastAPI every POLL_INTERVAL_MS.
+  // Only resets the rundown if topics actually changed (hash mismatch).
+  // If RUNDOWN is offline, silently stays on FALLBACK_TOPICS.
+  async function pollTopics() {
+    if(!RUNDOWN_API) return;
+    try {
+      const res  = await fetch(RUNDOWN_API, { cache: 'no-store' });
+      const data = await res.json();
+
+      if(data.hash && data.hash !== lastTopicsHash) {
+        lastTopicsHash = data.hash;
+        TOPICS = data.topics;
+        // Reset to topic 1 with new topics
+        cur = 0; tl = TOPICS[0].duration; tot = TOPICS[0].duration;
+        paused = false;
+        els.playBtn.textContent = '⏸';
+        els.playLbl.textContent = 'PAUSE';
+        doFlash();
+        lcdFlip(TOPICS[0].text);
+        buildList();
+        updateTimer();
+        console.log('[RUNDOWN] Topics updated:', TOPICS.length, 'topics loaded');
+      }
+    } catch(e) {
+      // RUNDOWN server offline — stay on current topics silently
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
+  function buildList() {
+    els.trackList.innerHTML = '';
+    TOPICS.forEach((t,i) => {
+      const el = document.createElement('div');
+      let c = 'trow ';
+      if(i < cur) c += 'done';
+      else if(i === cur) c += 'active';
+      else c += 'upcoming';
+      el.className = c;
+      el.innerHTML = `<span class="t-num">${pad(i+1)}</span><span class="t-txt">${t.text}</span>`;
+      el.addEventListener('click', () => goTo(i));
+      els.trackList.appendChild(el);
+    });
+    els.lcdTrk.textContent  = `TRK ${pad(cur+1)}/${pad(TOPICS.length)}`;
+    els.rpCtr.textContent   = `${pad(cur+1)} / ${pad(TOPICS.length)}`;
+    els.bbTopic.textContent = TOPICS[cur].text.toUpperCase();
+    els.bbSub.textContent   = `Topic ${pad(cur+1)} of ${pad(TOPICS.length)}`;
+    els.bbCtrNum.textContent = pad(cur+1);
+  }
+
+  function updateTimer() {
+    const f = fmt(tl);
+    els.lcdTime.textContent = f;
+    const urg = tl <= 15;
+    els.lcdTime.classList.toggle('urg', urg);
+    els.lcdSf.classList.toggle('urg', urg);
+    els.lcdSf.style.width = (tot > 0 ? (tl/tot)*100 : 0) + '%';
+  }
+
+  function doFlash() {
+    els.flash.classList.add('on');
+    setTimeout(() => els.flash.classList.remove('on'), 90);
+  }
+
+  function applyTicker(text) {
+    const el   = els.lcdTopic;
+    const wrap = document.getElementById('lcd-topic-wrap');
+    el.textContent = text.toUpperCase();
+    el.classList.remove('scrolling');
+    // force reflow so animation restarts cleanly
+    void el.offsetWidth;
+    // only scroll if text is wider than the container
+    if(el.scrollWidth > wrap.clientWidth) {
+      // speed: ~60px/s — longer text scrolls at same pace
+      const duration = (el.scrollWidth + wrap.clientWidth) / 60;
+      el.style.animationDuration = duration + 's';
+      el.classList.add('scrolling');
+    }
+  }
+
+  function lcdFlip(text) {
+    els.lcdTopic.classList.remove('scrolling');
+    els.lcdTopic.classList.add('flip');
+    setTimeout(() => {
+      els.lcdTopic.classList.remove('flip');
+      applyTicker(text);
+    }, 130);
+  }
+
+  function goTo(i) {
+    if(i < 0 || i >= TOPICS.length) return;
+    cur = i; tl = TOPICS[i].duration; tot = TOPICS[i].duration;
+    doFlash(); lcdFlip(TOPICS[i].text); buildList(); updateTimer();
+  }
+
+  function nextTopic()  { goTo(cur + 1); }
+  function prevTopic()  { goTo(cur - 1); }
+
+  function togglePause() {
+    paused = !paused;
+    els.playBtn.textContent = paused ? '▶' : '⏸';
+    els.playLbl.textContent = paused ? 'PLAY' : 'PAUSE';
+  }
+
+  function resetAll() {
+    paused = false;
+    els.playBtn.textContent = '⏸';
+    els.playLbl.textContent = 'PAUSE';
+    goTo(0);
+  }
+
+  // Debounce: ignore duplicate keydown events within 300ms
+  let lastKey = null, lastKeyTime = 0;
+  document.addEventListener('keydown', e => {
+    const now = Date.now();
+    if(e.key === lastKey && now - lastKeyTime < 300) return;
+    lastKey = e.key; lastKeyTime = now;
+
+    if(e.key === 'ArrowRight' || e.key === 'n') nextTopic();
+    if(e.key === 'ArrowLeft'  || e.key === 'p') prevTopic();
+    if(e.key === ' ') { e.preventDefault(); togglePause(); }
+    const n = parseInt(e.key);
+    if(n >= 1 && n <= TOPICS.length) goTo(n-1);
+  });
+
+  buildList(); updateTimer();
+  // Apply ticker on first load
+  applyTicker(TOPICS[0].text);
+  // Start polling RUNDOWN for live topics
+  pollTopics();
+  setInterval(pollTopics, POLL_INTERVAL_MS);
+  // Countdown tick
+  setInterval(() => {
+    if(paused) return;
+    if(tl > 0) { tl--; updateTimer(); }
+    else if(cur < TOPICS.length - 1) goTo(cur + 1);
+  }, 1000);
+</script>
+</body>
+</html>
