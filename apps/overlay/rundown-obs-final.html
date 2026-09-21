@@ -141,7 +141,7 @@
   /* track list */
   #track-list {
     flex:1; display:flex; flex-direction:column;
-    overflow:hidden; position:relative; z-index:3;
+    overflow-x:hidden; overflow-y:auto; position:relative; z-index:3;
     border-top:1px solid rgba(0,0,0,.1);
   }
   #track-list::before {
@@ -153,7 +153,7 @@
     display:flex; align-items:center;
     padding:0 18px; border-bottom:1px solid rgba(0,0,0,.06);
     cursor:default; position:relative;
-    flex:1; min-height:0; gap:10px;
+    flex:1 0 48px; min-height:48px; gap:10px;
     transition:background .15s;
   }
   .trow.done { background:rgba(0,0,0,.03); opacity:.35; }
@@ -337,24 +337,24 @@
 
   <div id="bb-btns">
     <div class="bb-btn-wrap">
-      <button class="hw-btn btn-side" onclick="prevTopic()">⏮</button>
+      <button class="hw-btn btn-side" aria-label="Previous topic" onclick="prevTopic()">⏮</button>
       <div class="bb-btn-lbl">PREV</div>
     </div>
 
     <div class="bb-btn-wrap">
-      <button class="hw-btn btn-main" id="playBtn" onclick="togglePause()">⏸</button>
+      <button class="hw-btn btn-main" id="playBtn" aria-label="Play or pause" onclick="togglePause()">⏸</button>
       <div class="bb-btn-lbl" id="playLbl">PAUSE</div>
     </div>
 
     <div class="bb-btn-wrap">
-      <button class="hw-btn btn-side" onclick="nextTopic()">⏭</button>
+      <button class="hw-btn btn-side" aria-label="Next topic" onclick="nextTopic()">⏭</button>
       <div class="bb-btn-lbl">NEXT</div>
     </div>
 
     <div class="bb-divider"></div>
 
     <div class="bb-btn-wrap">
-      <button class="hw-btn btn-stop" onclick="resetAll()">■</button>
+      <button class="hw-btn btn-stop" aria-label="Reset show" onclick="resetAll()">■</button>
       <div class="bb-btn-lbl">RESET</div>
     </div>
   </div>
@@ -370,184 +370,130 @@
 <div id="flash"></div>
 
 <script>
-  // ─── CONFIG ───────────────────────────────────────────────────────────────
-  // When RUNDOWN is running, overlay polls this for live topics.
-  // Set to null to use FALLBACK_TOPICS below (manual mode).
-  const RUNDOWN_API = "http://localhost:8000/rundown/topics";
-  const POLL_INTERVAL_MS = 5000; // check for new topics every 5 seconds
-
-  // ─── FALLBACK TOPICS (used when RUNDOWN server is offline) ────────────────
-  const FALLBACK_TOPICS = [
-    { text:"NBA Playoff Picture",    duration:120 },
-    { text:"Drake vs Kendrick",      duration:90  },
-    { text:"Tesla Self-Drive",       duration:120 },
-    { text:"AI Takes Your Job?",     duration:150 },
-    { text:"Celtics Repeat Run",     duration:90  },
-    { text:"Summer Movie Preview",   duration:120 },
-    { text:"Social Media Addiction", duration:120 },
-    { text:"Hot Take of the Week",   duration:60  },
-  ];
-  // ─────────────────────────────────────────────────────────────────────────
-
-  let TOPICS = [...FALLBACK_TOPICS];
-  let cur=0, tl=TOPICS[0].duration, tot=TOPICS[0].duration, paused=false;
-  let lastTopicsHash = null;
-
-  const els = {
-    lcdTopic:  document.getElementById('lcd-topic'),
-    lcdTrk:    document.getElementById('lcd-trk'),
-    lcdTime:   document.getElementById('lcd-time'),
-    lcdSf:     document.getElementById('lcd-seekfill'),
-    trackList: document.getElementById('track-list'),
-    rpCtr:     document.getElementById('rp-ctr'),
-    playBtn:   document.getElementById('playBtn'),
-    playLbl:   document.getElementById('playLbl'),
-    bbTopic:   document.getElementById('bb-now-topic'),
-    bbSub:     document.getElementById('bb-now-sub'),
-    bbCtrNum:  document.getElementById('bb-counter-num'),
-    flash:     document.getElementById('flash'),
-  };
-
-  function pad(n){ return String(n).padStart(2,'0'); }
-  function fmt(s){ return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; }
-
-  // ─── LIVE TOPIC POLLING ──────────────────────────────────────────────────
-  // Polls RUNDOWN FastAPI every POLL_INTERVAL_MS.
-  // Only resets the rundown if topics actually changed (hash mismatch).
-  // If RUNDOWN is offline, silently stays on FALLBACK_TOPICS.
-  async function pollTopics() {
-    if(!RUNDOWN_API) return;
-    try {
-      const res  = await fetch(RUNDOWN_API, { cache: 'no-store' });
-      const data = await res.json();
-
-      if(data.hash && data.hash !== lastTopicsHash) {
-        lastTopicsHash = data.hash;
-        TOPICS = data.topics;
-        // Reset to topic 1 with new topics
-        cur = 0; tl = TOPICS[0].duration; tot = TOPICS[0].duration;
-        paused = false;
-        els.playBtn.textContent = '⏸';
-        els.playLbl.textContent = 'PAUSE';
-        doFlash();
-        lcdFlip(TOPICS[0].text);
-        buildList();
-        updateTimer();
-        console.log('[RUNDOWN] Topics updated:', TOPICS.length, 'topics loaded');
-      }
-    } catch(e) {
-      // RUNDOWN server offline — stay on current topics silently
-    }
-  }
-  // ─────────────────────────────────────────────────────────────────────────
-
-  function buildList() {
-    els.trackList.innerHTML = '';
-    TOPICS.forEach((t,i) => {
-      const el = document.createElement('div');
-      let c = 'trow ';
-      if(i < cur) c += 'done';
-      else if(i === cur) c += 'active';
-      else c += 'upcoming';
-      el.className = c;
-      el.innerHTML = `<span class="t-num">${pad(i+1)}</span><span class="t-txt">${t.text}</span>`;
-      el.addEventListener('click', () => goTo(i));
-      els.trackList.appendChild(el);
-    });
-    els.lcdTrk.textContent  = `TRK ${pad(cur+1)}/${pad(TOPICS.length)}`;
-    els.rpCtr.textContent   = `${pad(cur+1)} / ${pad(TOPICS.length)}`;
-    els.bbTopic.textContent = TOPICS[cur].text.toUpperCase();
-    els.bbSub.textContent   = `Topic ${pad(cur+1)} of ${pad(TOPICS.length)}`;
-    els.bbCtrNum.textContent = pad(cur+1);
-  }
-
-  function updateTimer() {
-    const f = fmt(tl);
-    els.lcdTime.textContent = f;
-    const urg = tl <= 15;
-    els.lcdTime.classList.toggle('urg', urg);
-    els.lcdSf.classList.toggle('urg', urg);
-    els.lcdSf.style.width = (tot > 0 ? (tl/tot)*100 : 0) + '%';
-  }
-
-  function doFlash() {
-    els.flash.classList.add('on');
-    setTimeout(() => els.flash.classList.remove('on'), 90);
-  }
+  // The server owns the clock; multiple browser sources never advance it twice.
+  const RUNDOWN_API = "/rundown/state";
+  let state = null, online = false, busy = false, polling = false;
+  let renderedTopic = null;
+  const $ = id => document.getElementById(id);
+  const pad = n => String(n).padStart(2, '0');
+  const fmt = s => `${Math.floor(s / 60)}:${pad(s % 60)}`;
 
   function applyTicker(text) {
-    const el   = els.lcdTopic;
-    const wrap = document.getElementById('lcd-topic-wrap');
+    const el = $('lcd-topic');
     el.textContent = text.toUpperCase();
     el.classList.remove('scrolling');
-    // force reflow so animation restarts cleanly
-    void el.offsetWidth;
-    // only scroll if text is wider than the container
-    if(el.scrollWidth > wrap.clientWidth) {
-      // speed: ~60px/s — longer text scrolls at same pace
-      const duration = (el.scrollWidth + wrap.clientWidth) / 60;
-      el.style.animationDuration = duration + 's';
+    if (el.scrollWidth > $('lcd-topic-wrap').clientWidth) {
+      el.style.animationDuration = (el.scrollWidth + $('lcd-topic-wrap').clientWidth) / 60 + 's';
       el.classList.add('scrolling');
     }
   }
 
-  function lcdFlip(text) {
-    els.lcdTopic.classList.remove('scrolling');
-    els.lcdTopic.classList.add('flip');
-    setTimeout(() => {
-      els.lcdTopic.classList.remove('flip');
-      applyTicker(text);
-    }, 130);
+  function render() {
+    const topics = state?.topics || [];
+    const index = topics.findIndex(t => t.id === state?.current_topic_id);
+    const current = topics[index];
+    const remaining = state?.remaining_seconds || 0;
+    const name = current?.text || 'NO TOPICS YET';
+    const marker = current ? current.id + current.text : null;
+    if (marker !== renderedTopic) {
+      $('flash').classList.add('on');
+      setTimeout(() => $('flash').classList.remove('on'), 90);
+      applyTicker(name);
+      renderedTopic = marker;
+    } else if (!current) applyTicker(name);
+    $('lcd-trk').textContent = `TRK ${pad(index + 1)}/${pad(topics.length)}`;
+    $('rp-ctr').textContent = `${pad(index + 1)} / ${pad(topics.length)}`;
+    $('bb-now-topic').textContent = name.toUpperCase();
+    $('bb-now-sub').textContent = !online ? 'Reconnecting — last known state' :
+      current ? `Topic ${pad(index + 1)} of ${pad(topics.length)} · ${state.paused ? 'Paused' : 'Playing'}` : 'Add a topic in the control room';
+    $('bb-counter-num').textContent = pad(index + 1);
+    $('bb-counter-of').textContent = `of ${pad(topics.length)}`;
+    $('lcd-time').textContent = fmt(remaining);
+    $('lcd-time').classList.toggle('urg', !!current && remaining <= 15 && !state.paused);
+    $('lcd-seekfill').style.width = current ? `${remaining / current.duration * 100}%` : '0%';
+    $('playBtn').textContent = state?.paused !== false ? '▶' : '⏸';
+    $('playLbl').textContent = state?.paused !== false ? 'PLAY' : 'PAUSE';
+    document.querySelectorAll('.hw-btn').forEach(el => el.disabled = !online || !current || busy);
+    const list = $('track-list');
+    // Preserve existing DOM rows while only the clock changes.
+    const signature = JSON.stringify([topics, state?.current_topic_id]);
+    if (list.dataset.signature !== signature) {
+      list.dataset.signature = signature;
+      list.replaceChildren();
+      topics.forEach((topic, i) => {
+        const row = document.createElement('div');
+        row.className = 'trow ' + (i < index ? 'done' : i === index ? 'active' : 'upcoming');
+        row.setAttribute('role', 'button');
+        row.tabIndex = 0;
+        row.setAttribute('aria-label', `Play topic ${i + 1}: ${topic.text}`);
+        const number = document.createElement('span');
+        number.className = 't-num'; number.textContent = pad(i + 1);
+        const label = document.createElement('span');
+        label.className = 't-txt'; label.textContent = topic.text;
+        row.append(number, label);
+        const jump = () => sendControl('jump', topic.id);
+        row.addEventListener('click', jump);
+        row.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); jump(); }
+        });
+        list.appendChild(row);
+      });
+    }
   }
 
-  function goTo(i) {
-    if(i < 0 || i >= TOPICS.length) return;
-    cur = i; tl = TOPICS[i].duration; tot = TOPICS[i].duration;
-    doFlash(); lcdFlip(TOPICS[i].text); buildList(); updateTimer();
+  function accept(next) {
+    if (state && (next.revision < state.revision ||
+        (next.revision === state.revision && Date.parse(next.server_time) < Date.parse(state.server_time)))) return;
+    state = next; online = true; render();
   }
 
-  function nextTopic()  { goTo(cur + 1); }
-  function prevTopic()  { goTo(cur - 1); }
-
-  function togglePause() {
-    paused = !paused;
-    els.playBtn.textContent = paused ? '▶' : '⏸';
-    els.playLbl.textContent = paused ? 'PLAY' : 'PAUSE';
+  async function pollTopics() {
+    if (polling) return;
+    polling = true;
+    try {
+      const response = await fetch(RUNDOWN_API, {cache: 'no-store'});
+      if (!response.ok) throw new Error('State unavailable');
+      accept(await response.json());
+    } catch {
+      online = false; render();
+    } finally { polling = false; }
   }
 
-  function resetAll() {
-    paused = false;
-    els.playBtn.textContent = '⏸';
-    els.playLbl.textContent = 'PAUSE';
-    goTo(0);
+  async function sendControl(action, topic_id) {
+    if (!state || !online || busy) return;
+    busy = true; render();
+    try {
+      const response = await fetch('/rundown/control', {
+        method: 'POST', headers: {'content-type': 'application/json'},
+        body: JSON.stringify({revision: state.revision, action, topic_id})
+      });
+      if (response.status === 409) { await pollTopics(); return; }
+      if (!response.ok) throw new Error('Control failed');
+      accept(await response.json());
+    } catch { online = false; }
+    finally { busy = false; render(); }
   }
+  function nextTopic() { return sendControl('next'); }
+  function prevTopic() { return sendControl('previous'); }
+  function togglePause() { return sendControl(state?.paused ? 'play' : 'pause'); }
+  function resetAll() { return sendControl('reset'); }
 
-  // Debounce: ignore duplicate keydown events within 300ms
   let lastKey = null, lastKeyTime = 0;
   document.addEventListener('keydown', e => {
+    if (e.target instanceof HTMLElement && e.target.closest('button,input,textarea,[role=button]')) return;
     const now = Date.now();
-    if(e.key === lastKey && now - lastKeyTime < 300) return;
+    if (e.repeat || (e.key === lastKey && now - lastKeyTime < 300)) return;
     lastKey = e.key; lastKeyTime = now;
-
-    if(e.key === 'ArrowRight' || e.key === 'n') nextTopic();
-    if(e.key === 'ArrowLeft'  || e.key === 'p') prevTopic();
-    if(e.key === ' ') { e.preventDefault(); togglePause(); }
-    const n = parseInt(e.key);
-    if(n >= 1 && n <= TOPICS.length) goTo(n-1);
+    if (e.key === 'ArrowRight' || e.key === 'n') nextTopic();
+    if (e.key === 'ArrowLeft' || e.key === 'p') prevTopic();
+    if (e.key === ' ') { e.preventDefault(); togglePause(); }
+    const n = Number(e.key);
+    if (n >= 1 && n <= (state?.topics.length || 0)) sendControl('jump', state.topics[n - 1].id);
   });
-
-  buildList(); updateTimer();
-  // Apply ticker on first load
-  applyTicker(TOPICS[0].text);
-  // Start polling RUNDOWN for live topics
+  render();
   pollTopics();
-  setInterval(pollTopics, POLL_INTERVAL_MS);
-  // Countdown tick
-  setInterval(() => {
-    if(paused) return;
-    if(tl > 0) { tl--; updateTimer(); }
-    else if(cur < TOPICS.length - 1) goTo(cur + 1);
-  }, 1000);
+  setInterval(pollTopics, 1000);
 </script>
+
 </body>
 </html>

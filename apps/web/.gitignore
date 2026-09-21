@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 dist
+# Local tool caches (tsc buildinfo, Vite/Vitest dep cache)
+.cache
 dist-ssr
 *.local
 
