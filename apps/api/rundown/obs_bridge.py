@@ -1,11 +1,7 @@
-"""
-OBS bridge: serves the current rundown to the overlay and triggers OBS
-WebSocket v5 refresh when new topics are pushed.
+"""Compatibility endpoints for legacy topic clients and optional OBS refresh.
 
-The overlay polls GET /rundown/topics every 5 seconds; we return the latest
-Rundown's RundownItems plus an MD5 hash so the overlay only resets on change.
-POST /rundown/push-to-obs writes a new Rundown row, then (best-effort) tells
-OBS to refresh the browser source.
+The shared show clock is authoritative; legacy replacement publishes and its
+Rundown history snapshot commit in the same SQLite transaction.
 """
 
 import asyncio
@@ -17,24 +13,19 @@ from datetime import datetime
 
 import websockets
 from fastapi import APIRouter
-from pydantic import BaseModel
-from sqlmodel import col, select
+from pydantic import BaseModel, Field
 from websockets.typing import Subprotocol
 
 from rundown.config import settings
 from rundown.db import session
-from rundown.models import Rundown, RundownItem
+from rundown.models import Rundown
+from rundown.show import TopicIn, get_state, legacy_publish
 
 router = APIRouter(prefix="/rundown", tags=["rundown-obs"])
 
 
-class TopicIn(BaseModel):
-    text: str
-    duration: int
-
-
 class TopicsPayload(BaseModel):
-    topics: list[TopicIn]
+    topics: list[TopicIn] = Field(min_length=1, max_length=20)
     refresh_obs: bool = True
     notes: str | None = None
 
@@ -44,30 +35,9 @@ class TopicOut(BaseModel):
     duration: int
 
 
-_FALLBACK_TOPICS: list[dict] = [
-    {"text": "Topic 1", "duration": 120},
-    {"text": "Topic 2", "duration": 90},
-]
-
-
-def _load_current_topics() -> list[dict]:
-    with session() as db:
-        rundown = db.exec(
-            select(Rundown).order_by(col(Rundown.generated_at).desc()).limit(1)
-        ).first()
-        if rundown is None:
-            return _FALLBACK_TOPICS
-        items = db.exec(
-            select(RundownItem)
-            .where(RundownItem.rundown_id == rundown.id)
-            .order_by(col(RundownItem.position).asc())
-        ).all()
-        return [{"text": i.text, "duration": i.duration} for i in items] or _FALLBACK_TOPICS
-
-
 @router.get("/topics")
 async def get_topics() -> dict:
-    topics = _load_current_topics()
+    topics = [{"text": t["text"], "duration": t["duration"]} for t in get_state()["topics"]]
     topics_hash = hashlib.md5(
         json.dumps(topics, sort_keys=True).encode()
     ).hexdigest()[:8]
@@ -77,25 +47,7 @@ async def get_topics() -> dict:
 @router.post("/push-to-obs")
 async def push_to_obs(payload: TopicsPayload) -> dict:
     """Persist a new rundown + (best-effort) refresh the OBS browser source."""
-    with session() as db:
-        rundown = Rundown(notes=payload.notes)
-        db.add(rundown)
-        db.commit()
-        db.refresh(rundown)
-
-        rundown_id = rundown.id
-        assert rundown_id is not None  # set by refresh
-
-        for position, topic in enumerate(payload.topics):
-            db.add(
-                RundownItem(
-                    rundown_id=rundown_id,
-                    position=position,
-                    text=topic.text,
-                    duration=topic.duration,
-                )
-            )
-        db.commit()
+    rundown_id = legacy_publish(payload.topics, payload.notes)
 
     obs_refreshed = False
     if payload.refresh_obs:
