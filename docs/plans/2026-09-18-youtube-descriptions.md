@@ -1,0 +1,5 @@
+# Fuller YouTube descriptions
+Use one videos.list(part=snippet,id=...) request for up to 50 unique validated search IDs, using the existing key and bounded request helper. Associate returned metadata by ID, never position, and preserve search order. Skip missing/malformed videos without falling back to abbreviated search descriptions. Invalid metadata envelopes or duplicate requested IDs fail atomically with safe error text. No second call when no valid IDs. Existing freshness/text limits/provenance/dedup remain.
+No new UI fields, banners, panels or permanent instructions. Long source context stays in existing notes/source disclosure. Explicitly label missing description inside source text; no transcript claims. Existing imported/manual topics are never overwritten.
+Verify adapters and failure boundaries, real loopback HTTP fixture -> Inbox -> saved show, retry and playback preservation. No new key, paid service, migration or deployment.
+Reference: https://developers.google.com/youtube/v3/docs/videos/list

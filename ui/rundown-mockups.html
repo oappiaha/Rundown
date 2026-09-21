@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUNDOWN · Desktop + Mobile Mockups</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --mono: "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* Apple light system */
+  --bg:      #F5F5F7;
+  --card:    #FFFFFF;
+  --sep:     rgba(0,0,0,0.08);
+  --sep2:    rgba(0,0,0,0.05);
+  --label:   #1d1d1f;
+  --label2:  #6e6e73;
+  --label3:  #aeaeb2;
+  --label4:  #d2d2d7;
+  --blue:    #0071e3;
+  --blue-lt: #e8f0fe;
+  --green:   #1a7a3c;
+  --green-lt:#eaf6ef;
+  --orange:  #c45000;
+  --orange-lt:#fff0e6;
+  --red:     #ff3b30;
+
+  /* Sony Walkman accents */
+  --silver:  linear-gradient(162deg,#f8f8f8 0%,#ebebeb 12%,#dcdcdc 28%,#cfcfcf 42%,#d8d8d8 55%,#c4c4c4 70%,#d0d0d0 84%,#e2e2e2 100%);
+  --lcd-bg:  #0a1520;
+  --lcd-tx:  #78c8e8;
+  --lcd-dim: #2c6478;
+
+  --pill: 980px;
+  --shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-lg: 0 24px 80px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.1);
+}
+
+body {
+  background:#e9e9ee;
+  font-family:var(--font);
+  color:var(--label);
+  min-height:100vh;
+  padding:48px 32px 80px;
+}
+
+.page-hero { text-align:center; margin-bottom:48px; }
+.page-eyebrow {
+  font-size:12px; font-weight:600; color:var(--blue);
+  letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;
+}
+.page-title {
+  font-size:44px; font-weight:700; letter-spacing:-1.5px;
+  background:linear-gradient(140deg,#1d1d1f 30%,#6e6e73 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.page-sub { font-size:15px; color:var(--label2); margin-top:8px; }
+
+.mock-row {
+  display:flex; gap:48px; align-items:flex-start; justify-content:center;
+  flex-wrap:wrap; max-width:1400px; margin:0 auto;
+}
+
+.mock-label {
+  font-size:12px; font-weight:600; color:var(--label3);
+  letter-spacing:0.08em; text-transform:uppercase;
+  text-align:center; margin-bottom:16px;
+}
+
+/* ═════════════ DESKTOP FRAME ═════════════ */
+.desktop-wrap { flex-shrink:0; }
+
+.desktop {
+  width:820px;
+  background:var(--bg);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  border:1px solid rgba(0,0,0,0.1);
+}
+
+/* macOS title bar */
+.titlebar {
+  height:40px;
+  background:rgba(245,245,247,0.9);
+  border-bottom:1px solid var(--sep);
+  display:flex; align-items:center;
+  padding:0 16px;
+  gap:8px;
+}
+.tl-dot { width:12px; height:12px; border-radius:50%; }
+.tl-dot.r { background:#ff5f57; } .tl-dot.y { background:#febc2e; } .tl-dot.g { background:#28c840; }
+.tl-title {
+  flex:1; text-align:center;
+  font-size:13px; font-weight:600; color:var(--label2);
+  margin-right:52px;
+}
+
+.desktop-body { display:flex; height:520px; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width:200px; flex-shrink:0;
+  background:rgba(242,242,247,0.7);
+  border-right:1px solid var(--sep);
+  padding:16px 10px;
+  display:flex; flex-direction:column; gap:2px;
+}
+
+.side-brand {
+  display:flex; align-items:center; gap:8px;
+  padding:6px 10px 16px;
+}
+.side-logo {
+  width:26px; height:26px; border-radius:7px;
+  background:linear-gradient(135deg,#0071e3,#0055b3);
+  display:flex; align-items:center; justify-content:center;
+  color:white; font-size:12px; font-weight:800;
+  box-shadow:0 2px 6px rgba(0,113,227,0.3);
+}
+.side-brand-name { font-size:15px; font-weight:700; letter-spacing:-0.3px; }
+
+.side-item {
+  display:flex; align-items:center; gap:10px;
+  padding:7px 10px; border-radius:8px;
+  font-size:13px; font-weight:500; color:var(--label2);
+  cursor:default;
+}
+.side-item.on { background:rgba(0,113,227,0.1); color:var(--blue); font-weight:600; }
+.side-icon { width:16px; text-align:center; font-size:13px; }
+
+.side-section {
+  font-size:10px; font-weight:600; color:var(--label3);
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:16px 10px 6px;
+}
+
+.side-spacer { flex:1; }
+
+/* Walkman mini-deck in sidebar — Sony moment */
+.side-deck {
+  margin:0 4px;
+  background:var(--silver);
+  border-radius:12px;
+  border:1px solid #b8b8b8;
+  padding:10px;
+  position:relative; overflow:hidden;
+  box-shadow:2px 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+.side-deck::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:45%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.4),transparent);
+  pointer-events:none;
+}
+.deck-lcd {
+  background:var(--lcd-bg); border-radius:5px;
+  padding:7px 9px; margin-bottom:9px;
+  position:relative; overflow:hidden;
+  box-shadow:inset 2px 2px 5px rgba(0,0,0,0.6);
+}
+.deck-lcd::after {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.14) 2px,rgba(0,0,0,0.14) 3px);
+  pointer-events:none;
+}
+.deck-np {
+  font-family:var(--mono); font-size:6px; color:var(--lcd-dim);
+  letter-spacing:0.2em; text-transform:uppercase; margin-bottom:3px;
+  display:flex; align-items:center; gap:4px;
+}
+.deck-dot { width:4px; height:4px; border-radius:50%; background:var(--lcd-tx); box-shadow:0 0 4px var(--lcd-tx); animation:blink 1s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.1} }
+.deck-topic {
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  color:var(--lcd-tx); text-shadow:0 0 6px var(--lcd-tx);
+  text-transform:uppercase; white-space:nowrap; overflow:hidden;
+}
+.deck-time {
+  font-family:var(--mono); font-size:15px; font-weight:300;
+  color:var(--lcd-tx); text-shadow:0 0 6px var(--lcd-tx);
+  text-align:right; margin-top:2px;
+}
+.deck-btns { display:flex; justify-content:center; gap:8px; position:relative; }
+.deck-btn {
+  width:24px; height:24px; border-radius:50%;
+  background:radial-gradient(circle at 36% 34%,#fafafa,#d8d8d8 52%,#c0c0c0);
+  box-shadow:2px 2px 4px rgba(0,0,0,0.25), -1px -1px 2px rgba(255,255,255,0.85), inset 0 1px 0 rgba(255,255,255,0.7);
+  border:none; display:flex; align-items:center; justify-content:center;
+  font-size:8px; color:var(--label); cursor:pointer;
+}
+.deck-btn.big { width:30px; height:30px; font-size:10px; }
+.deck-btn:active { transform:translateY(1px); box-shadow:1px 1px 2px rgba(0,0,0,0.25), inset 2px 2px 4px rgba(0,0,0,0.2); }
+
+/* ── MAIN COLUMN ── */
+.main {
+  flex:1; display:flex; flex-direction:column;
+  overflow:hidden;
+}
+
+.main-head {
+  padding:20px 24px 0;
+}
+.main-eyebrow {
+  display:flex; align-items:center; gap:8px; margin-bottom:4px;
+}
+.live-pip {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(255,59,48,0.08); border:1px solid rgba(255,59,48,0.2);
+  border-radius:var(--pill); padding:2px 9px 2px 6px;
+  font-size:10px; font-weight:600; color:var(--red);
+}
+.live-dot { width:5px; height:5px; border-radius:50%; background:var(--red); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.head-lbl { font-size:11px; color:var(--label3); }
+.main-title {
+  font-size:26px; font-weight:700; letter-spacing:-0.7px;
+  background:linear-gradient(140deg,#1d1d1f 30%,#6e6e73 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+.main-toolbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 24px;
+}
+.seg { display:inline-flex; background:rgba(0,0,0,0.06); border-radius:9px; padding:2.5px; }
+.seg-btn {
+  font-size:12px; font-weight:500; color:var(--label2);
+  padding:4px 13px; border-radius:7px; border:none; background:transparent; cursor:pointer;
+}
+.seg-btn.on { background:#fff; color:var(--label); font-weight:600; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+.gen-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; font-weight:500; color:#fff;
+  background:var(--blue); border:none; border-radius:var(--pill);
+  padding:7px 16px; cursor:pointer;
+  box-shadow:0 1px 4px rgba(0,113,227,0.25);
+}
+
+.main-list {
+  flex:1; overflow-y:auto;
+  padding:4px 24px 24px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.main-list::-webkit-scrollbar { width:3px; }
+.main-list::-webkit-scrollbar-thumb { background:var(--label4); border-radius:3px; }
+
+.trow {
+  background:var(--card);
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  display:flex; align-items:center; gap:12px;
+  padding:12px 14px;
+  cursor:default;
+}
+.trow.selected { border-color:rgba(0,113,227,0.35); box-shadow:0 0 0 3px rgba(0,113,227,0.08), var(--shadow); }
+
+.tnum {
+  width:28px; height:28px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700;
+  background:rgba(0,0,0,0.05); color:var(--label3);
+}
+.tnum.on {
+  background:linear-gradient(135deg,#0071e3,#0055b3);
+  color:white; box-shadow:0 3px 8px rgba(0,113,227,0.3);
+}
+.tbody2 { flex:1; min-width:0; }
+.ttl { font-size:13px; font-weight:600; letter-spacing:-0.1px; }
+.ttl.on {
+  background:linear-gradient(90deg,#0071e3,#0055b3);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.tsub { font-size:11px; color:var(--label3); margin-top:1px; }
+.tright { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+.badge { font-size:10px; font-weight:600; padding:2px 8px; border-radius:var(--pill); }
+.badge.hi { background:var(--green-lt); color:var(--green); }
+.badge.md { background:var(--orange-lt); color:var(--orange); }
+.chv { color:var(--label4); font-size:15px; }
+
+/* ═════════════ MOBILE FRAME ═════════════ */
+.mobile-wrap { flex-shrink:0; }
+
+.phone {
+  width:300px;
+  background:#050505;
+  border-radius:48px;
+  padding:10px;
+  box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.phone-screen {
+  background:var(--bg);
+  border-radius:38px;
+  overflow:hidden;
+  height:620px;
+  display:flex; flex-direction:column;
+  position:relative;
+}
+
+/* dynamic island */
+.island {
+  position:absolute; top:10px; left:50%; transform:translateX(-50%);
+  width:96px; height:26px; border-radius:20px; background:#050505;
+  z-index:50;
+}
+
+/* status bar */
+.statusbar {
+  height:48px; flex-shrink:0;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:0 26px 4px;
+  font-size:13px; font-weight:600;
+}
+
+/* mobile nav */
+.m-nav { padding:8px 18px 0; flex-shrink:0; }
+.m-eyebrow { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
+.m-title {
+  font-size:26px; font-weight:700; letter-spacing:-0.8px;
+  background:linear-gradient(140deg,#1d1d1f 30%,#6e6e73 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+/* Walkman deck card — hero of mobile */
+.m-deck {
+  margin:12px 16px 10px;
+  background:var(--silver);
+  border-radius:18px;
+  border:1px solid #b4b4b4;
+  padding:14px;
+  position:relative; overflow:hidden;
+  box-shadow:3px 4px 14px rgba(0,0,0,0.16), inset 0 1.5px 0 rgba(255,255,255,0.75);
+  flex-shrink:0;
+}
+.m-deck::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:45%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.42),transparent);
+  pointer-events:none;
+}
+.m-deck-head {
+  display:flex; align-items:baseline; justify-content:space-between;
+  margin-bottom:9px; position:relative;
+}
+.m-deck-brand { font-size:15px; font-weight:800; letter-spacing:-0.2px; color:#1a1a1a; }
+.m-deck-model { font-family:var(--mono); font-size:7px; color:#8a8a8a; letter-spacing:0.16em; text-transform:uppercase; }
+
+.m-lcd {
+  background:var(--lcd-bg); border-radius:8px;
+  padding:11px 13px; margin-bottom:12px;
+  position:relative; overflow:hidden;
+  box-shadow:inset 3px 3px 7px rgba(0,0,0,0.65), inset -1px -1px 2px rgba(255,255,255,0.06);
+}
+.m-lcd::after {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.13) 2px,rgba(0,0,0,0.13) 3px);
+  pointer-events:none;
+}
+.m-np {
+  font-family:var(--mono); font-size:7px; color:var(--lcd-dim);
+  letter-spacing:0.2em; text-transform:uppercase; margin-bottom:4px;
+  display:flex; align-items:center; gap:4px; position:relative; z-index:1;
+}
+.m-topic {
+  font-family:var(--mono); font-size:14px; font-weight:500;
+  color:var(--lcd-tx); text-shadow:0 0 8px var(--lcd-tx);
+  text-transform:uppercase; white-space:nowrap; overflow:hidden;
+  position:relative; z-index:1;
+}
+.m-lcd-row {
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-top:5px; position:relative; z-index:1;
+}
+.m-trk { font-family:var(--mono); font-size:8px; color:var(--lcd-dim); letter-spacing:0.1em; }
+.m-time {
+  font-family:var(--mono); font-size:22px; font-weight:300;
+  color:var(--lcd-tx); text-shadow:0 0 8px var(--lcd-tx); line-height:1;
+}
+.m-seek { height:2px; background:rgba(120,200,232,0.12); border-radius:1px; margin-top:8px; position:relative; z-index:1; }
+.m-seek-fill { height:2px; width:62%; background:var(--lcd-tx); box-shadow:0 0 5px var(--lcd-tx); border-radius:1px; }
+
+.m-transport { display:flex; justify-content:center; align-items:center; gap:16px; position:relative; }
+.m-btn {
+  border-radius:50%; border:none; cursor:pointer;
+  background:radial-gradient(circle at 36% 34%,#fbfbfb,#d9d9d9 52%,#c2c2c2);
+  box-shadow:3px 3px 6px rgba(0,0,0,0.28), -1.5px -1.5px 4px rgba(255,255,255,0.9), inset 0 1.5px 0 rgba(255,255,255,0.75);
+  display:flex; align-items:center; justify-content:center;
+  color:#1a1a1a; font-size:11px;
+}
+.m-btn:active { transform:translateY(1.5px) scale(0.96); box-shadow:1px 1px 3px rgba(0,0,0,0.25), inset 2.5px 2.5px 5px rgba(0,0,0,0.2); }
+.m-btn.side { width:34px; height:34px; }
+.m-btn.main { width:46px; height:46px; font-size:15px; }
+
+/* mobile topic list */
+.m-list {
+  flex:1; overflow-y:auto;
+  padding:2px 16px 16px;
+  display:flex; flex-direction:column; gap:7px;
+}
+.m-list::-webkit-scrollbar { display:none; }
+
+.m-row {
+  background:var(--card);
+  border:1px solid rgba(0,0,0,0.05);
+  border-radius:13px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.05);
+  display:flex; align-items:center; gap:10px;
+  padding:11px 12px;
+}
+.m-row .tnum { width:26px; height:26px; font-size:11px; border-radius:8px; }
+.m-row .ttl { font-size:12.5px; }
+.m-row .tsub { font-size:10.5px; }
+.m-row .badge { font-size:9px; padding:2px 7px; }
+
+/* mobile tab bar */
+.tabbar {
+  flex-shrink:0;
+  background:rgba(245,245,247,0.88);
+  -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);
+  border-top:1px solid var(--sep);
+  display:flex; justify-content:space-around;
+  padding:10px 8px 22px;
+}
+.tab {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  font-size:9px; font-weight:500; color:var(--label3);
+  cursor:default; min-width:56px;
+}
+.tab.on { color:var(--blue); }
+.tab-icon { font-size:19px; line-height:1; }
+
+/* home indicator */
+.home-bar {
+  position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
+  width:110px; height:4px; border-radius:4px; background:#1d1d1f; opacity:0.9;
+  z-index:60;
+}
+
+/* footnotes */
+.notes {
+  max-width:900px; margin:56px auto 0;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px;
+}
+.note {
+  background:var(--card); border-radius:14px;
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:var(--shadow);
+  padding:16px 18px;
+}
+.note-t { font-size:13px; font-weight:600; margin-bottom:5px; }
+.note-d { font-size:12px; color:var(--label2); line-height:1.6; }
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <div class="page-eyebrow">Design Exploration · Apple × Sony</div>
+  <div class="page-title">Rundown.</div>
+  <div class="page-sub">Desktop and mobile — Apple structure, Walkman soul.</div>
+</div>
+
+<div class="mock-row">
+
+  <!-- ═══ DESKTOP ═══ -->
+  <div class="desktop-wrap">
+    <div class="mock-label">Desktop — macOS App</div>
+    <div class="desktop">
+      <div class="titlebar">
+        <div class="tl-dot r"></div><div class="tl-dot y"></div><div class="tl-dot g"></div>
+        <div class="tl-title">Rundown</div>
+      </div>
+      <div class="desktop-body">
+
+        <!-- sidebar -->
+        <div class="sidebar">
+          <div class="side-brand">
+            <div class="side-logo">R</div>
+            <div class="side-brand-name">Rundown</div>
+          </div>
+          <div class="side-item on"><span class="side-icon">≣</span> Tonight's Show</div>
+          <div class="side-item"><span class="side-icon">◷</span> History</div>
+          <div class="side-item"><span class="side-icon">✦</span> Sources</div>
+          <div class="side-item"><span class="side-icon">⚙</span> Settings</div>
+
+          <div class="side-section">Overlay</div>
+          <div class="side-item"><span class="side-icon">▣</span> OBS Connected</div>
+
+          <div class="side-spacer"></div>
+
+          <!-- Sony mini deck -->
+          <div class="side-deck">
+            <div class="deck-lcd">
+              <div class="deck-np"><div class="deck-dot"></div>NOW PLAYING</div>
+              <div class="deck-topic">NBA PLAYOFFS</div>
+              <div class="deck-time">1:42</div>
+            </div>
+            <div class="deck-btns">
+              <button class="deck-btn">⏮</button>
+              <button class="deck-btn big">⏸</button>
+              <button class="deck-btn">⏭</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+          <div class="main-head">
+            <div class="main-eyebrow">
+              <div class="live-pip"><div class="live-dot"></div>Live</div>
+              <span class="head-lbl">Tonight's Show · 8 topics · 15 min</span>
+            </div>
+            <div class="main-title">Tonight's Rundown</div>
+          </div>
+          <div class="main-toolbar">
+            <div class="seg">
+              <button class="seg-btn on">All</button>
+              <button class="seg-btn">Articles</button>
+              <button class="seg-btn">YouTube</button>
+              <button class="seg-btn">TikTok</button>
+            </div>
+            <button class="gen-btn">↻ Generate</button>
+          </div>
+          <div class="main-list">
+            <div class="trow selected">
+              <div class="tnum on">1</div>
+              <div class="tbody2">
+                <div class="ttl on">NBA Playoff Picture</div>
+                <div class="tsub">4 sources · 2:00 · playing now</div>
+              </div>
+              <div class="tright"><span class="badge hi">High</span><span class="chv">›</span></div>
+            </div>
+            <div class="trow">
+              <div class="tnum">2</div>
+              <div class="tbody2">
+                <div class="ttl">Drake vs Kendrick: One Year Later</div>
+                <div class="tsub">3 sources · 1:30</div>
+              </div>
+              <div class="tright"><span class="badge hi">High</span><span class="chv">›</span></div>
+            </div>
+            <div class="trow">
+              <div class="tnum">3</div>
+              <div class="tbody2">
+                <div class="ttl">AI Takes Your Job?</div>
+                <div class="tsub">4 sources · 2:30</div>
+              </div>
+              <div class="tright"><span class="badge hi">High</span><span class="chv">›</span></div>
+            </div>
+            <div class="trow">
+              <div class="tnum">4</div>
+              <div class="tbody2">
+                <div class="ttl">Tesla FSD Reality Check</div>
+                <div class="tsub">3 sources · 2:00</div>
+              </div>
+              <div class="tright"><span class="badge md">Medium</span><span class="chv">›</span></div>
+            </div>
+            <div class="trow">
+              <div class="tnum">5</div>
+              <div class="tbody2">
+                <div class="ttl">Fashion Week AI Trend Report</div>
+                <div class="tsub">3 sources · 1:30</div>
+              </div>
+              <div class="tright"><span class="badge md">Medium</span><span class="chv">›</span></div>
+            </div>
+            <div class="trow">
+              <div class="tnum">6</div>
+              <div class="tbody2">
+                <div class="ttl">Summer Movie Preview</div>
+                <div class="tsub">2 sources · 1:00</div>
+              </div>
+              <div class="tright"><span class="badge md">Medium</span><span class="chv">›</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MOBILE ═══ -->
+  <div class="mobile-wrap">
+    <div class="mock-label">Mobile — iOS Companion</div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="island"></div>
+        <div class="statusbar">
+          <span>9:41</span>
+          <span style="letter-spacing:2px">▮▮▮</span>
+        </div>
+
+        <div class="m-nav">
+          <div class="m-eyebrow">
+            <div class="live-pip"><div class="live-dot"></div>Live</div>
+          </div>
+          <div class="m-title">Rundown.</div>
+        </div>
+
+        <!-- Walkman hero deck -->
+        <div class="m-deck">
+          <div class="m-deck-head">
+            <div class="m-deck-brand">BEEZY</div>
+            <div class="m-deck-model">RD-001</div>
+          </div>
+          <div class="m-lcd">
+            <div class="m-np"><div class="deck-dot"></div>NOW PLAYING</div>
+            <div class="m-topic">NBA PLAYOFFS</div>
+            <div class="m-lcd-row">
+              <div class="m-trk">TRK 01/08</div>
+              <div class="m-time">1:42</div>
+            </div>
+            <div class="m-seek"><div class="m-seek-fill"></div></div>
+          </div>
+          <div class="m-transport">
+            <button class="m-btn side">⏮</button>
+            <button class="m-btn main">⏸</button>
+            <button class="m-btn side">⏭</button>
+          </div>
+        </div>
+
+        <!-- up next -->
+        <div class="m-list">
+          <div class="m-row">
+            <div class="tnum">2</div>
+            <div class="tbody2">
+              <div class="ttl">Drake vs Kendrick</div>
+              <div class="tsub">3 sources · 1:30</div>
+            </div>
+            <span class="badge hi">High</span>
+          </div>
+          <div class="m-row">
+            <div class="tnum">3</div>
+            <div class="tbody2">
+              <div class="ttl">AI Takes Your Job?</div>
+              <div class="tsub">4 sources · 2:30</div>
+            </div>
+            <span class="badge hi">High</span>
+          </div>
+          <div class="m-row">
+            <div class="tnum">4</div>
+            <div class="tbody2">
+              <div class="ttl">Tesla FSD Reality Check</div>
+              <div class="tsub">3 sources · 2:00</div>
+            </div>
+            <span class="badge md">Med</span>
+          </div>
+          <div class="m-row">
+            <div class="tnum">5</div>
+            <div class="tbody2">
+              <div class="ttl">Fashion Week AI Report</div>
+              <div class="tsub">3 sources · 1:30</div>
+            </div>
+            <span class="badge md">Med</span>
+          </div>
+        </div>
+
+        <!-- tab bar -->
+        <div class="tabbar">
+          <div class="tab on"><span class="tab-icon">▶</span>Show</div>
+          <div class="tab"><span class="tab-icon">≣</span>Topics</div>
+          <div class="tab"><span class="tab-icon">✦</span>Sources</div>
+          <div class="tab"><span class="tab-icon">⚙</span>Settings</div>
+        </div>
+
+        <div class="home-bar"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- design rationale -->
+<div class="notes">
+  <div class="note">
+    <div class="note-t">The fusion logic</div>
+    <div class="note-d">Apple owns the chrome — layout, typography, cards, pills, frosted glass. Sony owns the instrument — the LCD deck with its glow, scanlines, and embossed transport is the one skeuomorphic object in an otherwise flat system. One hero texture, everything else quiet.</div>
+  </div>
+  <div class="note">
+    <div class="note-t">Desktop = producer</div>
+    <div class="note-d">Sidebar navigation, full topic list, filters, generate. The Walkman deck lives docked in the sidebar corner — always visible, always in reach, like a hardware remote sitting on the desk.</div>
+  </div>
+  <div class="note">
+    <div class="note-t">Mobile = remote control</div>
+    <div class="note-d">The deck is the hero — first thing under the title, thumb-reachable transport buttons. Topic list below is "up next." This is the couch/phone view over Tailscale: check topics in the morning, drive the show from the deck at night.</div>
+  </div>
+</div>
+
+</body>
+</html>
