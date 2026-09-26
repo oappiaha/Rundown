@@ -80,3 +80,53 @@ def test_serves_overlay_with_same_origin_api():
         response = client.get("/static/overlay.html")
         assert response.status_code == 200
         assert 'const RUNDOWN_API = "/rundown/state"' in response.text
+
+
+async def test_obs_v5_authenticated_refresh(monkeypatch):
+    import base64
+    import hashlib
+    import json
+
+    import websockets
+
+    from rundown.config import settings
+    from rundown.obs_bridge import _obs_refresh_browser_source
+
+    seen = []
+    async def handler(ws):
+        await ws.send(json.dumps({'op': 0, 'd': {'authentication': {
+            'salt': 'fixture-salt', 'challenge': 'fixture-challenge'}}}))
+        identify = json.loads(await ws.recv())
+        # OBS v5 specification: two concatenations and plain SHA256, not HMAC.
+        secret = base64.b64encode(hashlib.sha256(b'fixture-passwordfixture-salt').digest()).decode()
+        expected = base64.b64encode(hashlib.sha256((secret + 'fixture-challenge').encode()).digest()).decode()
+        assert identify['d']['authentication'] == expected
+        await ws.send(json.dumps({'op': 2, 'd': {'negotiatedRpcVersion': 1}}))
+        request = json.loads(await ws.recv())
+        seen.append(request)
+        await ws.send(json.dumps({'op': 7, 'd': {'requestId': request['d']['requestId'],
+            'requestStatus': {'result': True, 'code': 100}}}))
+    async with websockets.serve(handler, '127.0.0.1', 0) as server:
+        monkeypatch.setattr(settings, 'obs_ws_host', '127.0.0.1')
+        monkeypatch.setattr(settings, 'obs_ws_port', server.sockets[0].getsockname()[1])
+        monkeypatch.setattr(settings, 'obs_ws_pass', 'fixture-password')
+        assert await _obs_refresh_browser_source()
+    assert seen[0]['d']['requestData']['propertyName'] == 'refreshnocache'
+
+
+async def test_obs_rejects_unidentified_connection(monkeypatch):
+    import json
+
+    import websockets
+
+    from rundown.config import settings
+    from rundown.obs_bridge import _obs_refresh_browser_source
+
+    async def handler(ws):
+        await ws.send(json.dumps({'op': 0, 'd': {}}))
+        await ws.recv()
+        await ws.send(json.dumps({'op': 5, 'd': {}}))
+    async with websockets.serve(handler, '127.0.0.1', 0) as server:
+        monkeypatch.setattr(settings, 'obs_ws_host', '127.0.0.1')
+        monkeypatch.setattr(settings, 'obs_ws_port', server.sockets[0].getsockname()[1])
+        assert not await _obs_refresh_browser_source()

@@ -7,7 +7,6 @@ Rundown history snapshot commit in the same SQLite transaction.
 import asyncio
 import base64
 import hashlib
-import hmac
 import json
 from datetime import datetime
 
@@ -86,14 +85,10 @@ async def _obs_refresh_browser_source() -> bool:
             challenge = auth_data["challenge"]
             salt = auth_data["salt"]
             secret = base64.b64encode(
-                hmac.new(
-                    settings.obs_ws_pass.encode(),
-                    (challenge + salt).encode(),
-                    hashlib.sha256,
-                ).digest()
+                hashlib.sha256((settings.obs_ws_pass + salt).encode()).digest()
             ).decode()
             auth_string = base64.b64encode(
-                hmac.new(secret.encode(), challenge.encode(), hashlib.sha256).digest()
+                hashlib.sha256((secret + challenge).encode()).digest()
             ).decode()
 
         identify: dict = {"op": 1, "d": {"rpcVersion": 1, "eventSubscriptions": 0}}
@@ -101,7 +96,9 @@ async def _obs_refresh_browser_source() -> bool:
             identify["d"]["authentication"] = auth_string
 
         await ws.send(json.dumps(identify))
-        await ws.recv()  # Identified
+        identified = json.loads(await ws.recv())
+        if identified.get("op") != 2:
+            return False
 
         request = {
             "op": 6,
@@ -117,4 +114,6 @@ async def _obs_refresh_browser_source() -> bool:
         await ws.send(json.dumps(request))
         response = json.loads(await ws.recv())
 
-    return response.get("d", {}).get("requestStatus", {}).get("result", False)
+    data = response.get("d", {})
+    return (response.get("op") == 7 and data.get("requestId") == "rundown-refresh"
+            and data.get("requestStatus", {}).get("result") is True)

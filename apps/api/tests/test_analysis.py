@@ -170,10 +170,13 @@ def test_provider_output_validation(client, monkeypatch, kind):
         def __init__(self, **kwargs):
             assert kwargs['max_retries'] == 0 and kwargs['api_key'] == 'local-fixture-only'
             self.messages = self
-        def __enter__(self): return self
-        def __exit__(self, *args): pass
-        def create(self, **kwargs): return response
-    monkeypatch.setattr(analysis.anthropic, 'Anthropic', Provider)
+        async def __aenter__(self): return self
+        async def __aexit__(self, *args): pass
+        def stream(self, **kwargs): return self
+        async def __aiter__(self):
+            yield SimpleNamespace(type='message_stop')
+        async def get_final_message(self): return response
+    monkeypatch.setattr(analysis.anthropic, 'AsyncAnthropic', Provider)
     with pytest.raises(ValueError):
         analysis.call_provider(json.dumps({'stories': [{'id': i} for i in ids]}), 'fixture-model')
 
@@ -204,3 +207,92 @@ def test_ai_relevance_precedes_category_variety(client, monkeypatch, scores, exp
              'preferences': {'pinned': False, 'priority': 0}}
             for n, score in enumerate(scores)]
     assert [r['id'] for r in research.select_rows(rows, 3)['items']] == ['0', '2', '3']
+
+
+@pytest.mark.parametrize('raw_transport', [False, True])
+@pytest.mark.parametrize('kind,phase,description', [
+    ('ConnectTimeout', 'connect', 'connecting'),
+    ('ReadTimeout', 'read', 'waiting for a response'),
+    ('WriteTimeout', 'write', 'sending the request'),
+    ('PoolTimeout', 'pool', 'waiting for a connection'),
+])
+def test_timeout_diagnostics_safe_and_idempotent(client, monkeypatch, caplog, kind, phase, description, raw_transport):
+    import anthropic
+    import httpx
+    p = payload(client, seed(client, 1))
+    calls = []
+    def failure(*args):
+        calls.append(1)
+        request = httpx.Request('POST', 'https://provider.invalid/?key=SECRET')
+        try:
+            raise getattr(httpx, kind)('SECRET provider detail', request=request)
+        except httpx.TimeoutException as cause:
+            if raw_transport:
+                raise
+            raise anthropic.APITimeoutError(request=request) from cause
+    monkeypatch.setattr(analysis, 'call_provider', failure)
+    result = client.post('/research/ai/generate', json=p).json()
+    assert result['status'] == 'failed'
+    assert description in result['error']
+    assert result['input_tokens'] is None and result['output_tokens'] is None
+    assert client.post('/research/ai/generate', json=p).json() == result
+    assert client.get('/research/ai/runs/' + p['request_id']).json() == result
+    assert calls == [1]
+    assert 'failure=timeout_' + phase in caplog.text
+    assert p['request_id'] in caplog.text and 'elapsed_seconds=' in caplog.text
+    assert 'SECRET' not in caplog.text + json.dumps(result)
+
+
+@pytest.mark.parametrize('mode', ['deadline', 'incomplete'])
+def test_stream_deadline_and_completion_gate(client, monkeypatch, mode):
+    import asyncio
+    from types import SimpleNamespace
+
+    exits = []
+    class Stream:
+        async def __aenter__(self): return self
+        async def __aexit__(self, *args): exits.append('stream')
+        async def __aiter__(self):
+            yield SimpleNamespace(type='message_start')
+            if mode == 'deadline':
+                await asyncio.sleep(1)
+        async def get_final_message(self):
+            raise AssertionError('Incomplete response must never be used')
+    class Provider:
+        def __init__(self, **kwargs):
+            assert kwargs['max_retries'] == 0
+            self.messages = self
+        async def __aenter__(self): return self
+        async def __aexit__(self, *args): exits.append('client')
+        def stream(self, **kwargs): return Stream()
+    monkeypatch.setattr(analysis.anthropic, 'AsyncAnthropic', Provider)
+    monkeypatch.setattr(analysis, 'PROVIDER_DEADLINE_SECONDS', .03)
+    p = payload(client, seed(client, 1))
+    result = client.post('/research/ai/generate', json=p).json()
+    assert result['status'] == 'failed' and result['items'] == []
+    assert ('time limit' if mode == 'deadline' else 'invalid or incomplete') in result['error']
+    assert exits == ['stream', 'client']
+    assert client.post('/research/ai/generate', json=p).json() == result
+    assert exits == ['stream', 'client']
+
+
+def test_provider_deadline_fits_lease():
+    assert analysis.PROVIDER_TIMEOUT_SECONDS < analysis.PROVIDER_DEADLINE_SECONDS < analysis.LEASE_SECONDS
+
+
+@pytest.mark.parametrize('truncated', [False, True])
+def test_only_exact_imported_notes_are_deduplicated(truncated):
+    from rundown.models import RetrievedItem
+    source = RetrievedItem(id='youtube:test', inbox_topic_id='topic', platform='youtube',
+        feed_id='feed', feed_name='Selected source', url='https://example.com/story',
+        original_title='Source title', body_text='Original description',
+        published_at='2026-09-24', imported_at=0, truncated=truncated)
+    generated = ('Youtube · Selected source\nOriginal title: Source title\n'
+                 'Published: 2026-09-24\n\nOriginal description')
+    if truncated:
+        generated += '\n[Source text shortened.]'
+    assert analysis.editorial_context(generated, source) == ''
+    for notes in [generated + '\nEditorial angle', 'My editorial angle', '',
+                  generated.replace('Original description', 'Corrected description')]:
+        assert analysis.editorial_context(notes, source) == notes
+    assert analysis.editorial_context(generated, None) == generated
