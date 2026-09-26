@@ -18,3 +18,7 @@ Deployed `43e20fd16ae23cfb540b5c86cedc4992d5c21385`: original cream/paper backgr
 Shipped `44dd08a`: explicit article/TikTok preview in Link capture, thumbnail/source preservation, personal-title/note protection and manual fallback. Warm palette and existing Discover/day workflow retained. Additive `topiclinksource` table only. Independent 299 API / 242 web tests, static/build checks, API and Chromium acceptance passed. Production smoke and backup comparison passed; no test topics persisted. See docs/evaluations/2026-09-26-link-previews/README.md for evidence and the rolled-back test-isolation incident/fix.
 
 Predeploy backup `predeploy-20260926-184249`; previous release `43e20fd` retained. Real source availability, MacBook/OBS rehearsal, Reddit approval and off-machine backups remain followups. No billed AI calls.
+
+## September 26 — real-source preview acceptance
+
+Three public sources passed actual preview, remote-thumbnail decode, save/readback/reload, mobile and personal-note preservation in a disposable stack: TypeSafe Jev, Blender4.5, official TikTok example. First uncached metadata calls 0.217/0.489/0.279 seconds. Private-target rejection/manual fallback and plans/live preservation passed. Evidence: docs/evaluations/2026-09-26-real-previews/README.md. No application changes or deployment needed. Signed TikTok cover longevity remains a followup; actual MacBook/OBS rehearsal is next.

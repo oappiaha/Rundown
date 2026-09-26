@@ -1,0 +1,71 @@
+[
+  {
+    "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+    "status": 200,
+    "seconds": 0.217,
+    "response": {
+      "kind": "article",
+      "source_url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+      "resolved_url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+      "title": "Introducing System One Models & Jev - TypeSafe AI Blog",
+      "description": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access.",
+      "site_name": "typesafe.ai",
+      "creator": "typesafe.ai",
+      "published_at": null,
+      "thumbnail": {
+        "url": "https://framerusercontent.com/images/RtIGTDwO43jR4ZDilesXiR5znc.jpg",
+        "width": null,
+        "height": null
+      },
+      "truncated": false,
+      "expires_at": "2026-09-26T23:18:59.823544+00:00",
+      "mode": "live"
+    }
+  },
+  {
+    "url": "https://www.blender.org/download/releases/4-5/",
+    "status": 200,
+    "seconds": 0.489,
+    "response": {
+      "kind": "article",
+      "source_url": "https://www.blender.org/download/releases/4-5/",
+      "resolved_url": "https://www.blender.org/download/releases/4-5/",
+      "title": "4.5 LTS \u2014 Blender",
+      "description": "With 2 years of updates, full Vulkan support, and quality-of-life improvements, Blender 4.5 LTS is every Blenderhead\u2019s best friend.",
+      "site_name": "Blender",
+      "creator": "Blender Foundation",
+      "published_at": null,
+      "thumbnail": {
+        "url": "https://www.blender.org/wp-content/uploads/2025/06/blender_splash_45.webp",
+        "width": null,
+        "height": null
+      },
+      "truncated": true,
+      "expires_at": "2026-09-26T23:19:02.421605+00:00",
+      "mode": "live"
+    }
+  },
+  {
+    "url": "https://www.tiktok.com/@scout2015/video/6718335390845095173",
+    "status": 200,
+    "seconds": 0.279,
+    "response": {
+      "kind": "tiktok",
+      "source_url": "https://www.tiktok.com/@scout2015/video/6718335390845095173",
+      "resolved_url": "https://www.tiktok.com/@scout2015/video/6718335390845095173",
+      "title": "Scramble up ur name & I\u2019ll try to guess it\ud83d\ude0d\u2764\ufe0f #foryoupage #petsoftiktok #aesthetic",
+      "description": "Scramble up ur name & I\u2019ll try to guess it\ud83d\ude0d\u2764\ufe0f #foryoupage #petsoftiktok #aesthetic",
+      "site_name": "TikTok",
+      "creator": "Scout, Suki & Stella",
+      "published_at": null,
+      "thumbnail": {
+        "url": "https://p19-common-sign.tiktokcdn-us.com/tos-maliva-p-0068/2367c7d45cf54a1397abd0e72bf22eac~tplv-tiktokx-origin.image?[signed query omitted]",
+        "width": 576,
+        "height": 1024
+      },
+      "truncated": false,
+      "expires_at": "2026-09-26T23:19:04.810327+00:00",
+      "mode": "live"
+    }
+  }
+]
