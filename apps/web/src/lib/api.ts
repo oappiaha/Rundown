@@ -232,8 +232,8 @@ export async function health(): Promise<{ status: string }> {
 
 export type InboxTopic = { text: string; duration: number; notes: string }
 
-/** Where an imported idea came from: an RSS feed, or a saved YouTube/Reddit discovery search. */
-export type InboxSourceKind = "rss" | "youtube" | "reddit"
+/** Where an imported idea came from: an RSS feed, a saved YouTube/Reddit discovery search, or a pasted link the user previewed (article page / TikTok permalink). */
+export type InboxSourceKind = "rss" | "youtube" | "reddit" | "article" | "tiktok"
 
 /**
  * Read-only provenance of an idea an importer created. `body_text` is the
@@ -252,6 +252,10 @@ export type InboxSource = {
   published_at: string | null
   imported_at: string
   truncated: boolean
+  /** Link previews only: the URL exactly as pasted and the page/permalink it resolved to. */
+  entered_url?: string
+  resolved_url?: string
+  creator?: string
 }
 
 /** Card metadata an importer retained (YouTube snippet, Media RSS); `null` for manual ideas and pre-slice imports. */
@@ -319,7 +323,7 @@ export type InboxCreate = { text: string; duration: number; notes?: string; sour
 /** Full edit: every field is sent; `revision` guards against stale writes (409). */
 export type InboxUpdate = { revision: number; text: string; duration: number; notes: string; source_url: string }
 
-const SOURCE_KINDS: readonly InboxSourceKind[] = ["rss", "youtube", "reddit"]
+const SOURCE_KINDS: readonly InboxSourceKind[] = ["rss", "youtube", "reddit", "article", "tiktok"]
 
 /** Only a well-formed provenance block of a known kind is kept; anything else (absent, null, an unknown kind) reads as a manual idea. */
 function normalizeSource(raw: unknown): InboxSource | null {
@@ -471,7 +475,8 @@ export async function setInboxArchived(id: string, revision: number, archived: b
 // the server) with the title/label in the query; its note is saved afterwards
 // through the editorial endpoint.
 
-export type CaptureInput = { kind: "write" | "link"; title: string; label?: string; note?: string; source_url?: string; duration?: number }
+/** `preview` is the token a link preview issued for exactly this `source_url`; the server refuses a stale, tampered or mismatched one with 409 and saves nothing. */
+export type CaptureInput = { kind: "write" | "link"; title: string; label?: string; note?: string; source_url?: string; duration?: number; preview?: string }
 
 export async function captureInboxTopic(input: CaptureInput): Promise<InboxItem> {
   const r = await fetch("/inbox/capture", jsonInit("POST", input))
@@ -1666,4 +1671,65 @@ function normalizeSocialLinkPreview(raw: unknown): SocialLinkPreview {
 export async function previewSocialLink(url: string, signal?: AbortSignal): Promise<SocialLinkPreview> {
   const r = await fetch("/social-links/preview", { ...jsonInit("POST", { url }), signal })
   return normalizeSocialLinkPreview(await expectJson<unknown>(r))
+}
+
+// ---- Link previews (articles and TikTok permalinks) --------------------------
+// An explicit, read-only fetch of one pasted link: article `<head>` metadata
+// through the bounded public transport, or the official TikTok oEmbed answer.
+// Nothing is stored; the accepted metadata comes back as a signed `token`
+// that `captureInboxTopic` sends with the same `source_url`.
+
+export type LinkPreviewKind = "article" | "tiktok"
+
+export type LinkPreview = {
+  kind: LinkPreviewKind
+  /** Exactly the pasted link (what the topic will store). */
+  source_url: string
+  /** The page after redirects, or the canonical TikTok permalink. */
+  resolved_url: string
+  /** Full fetched headline or caption, at most 1000 characters. */
+  title: string
+  description: string
+  site_name: string
+  creator: string
+  published_at: string | null
+  thumbnail: InboxThumbnail | null
+  truncated: boolean
+  token: string
+  expires_at: string
+  mode: "live" | "fixture"
+}
+
+function normalizeLinkPreview(raw: unknown): LinkPreview {
+  const body = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : null
+  const kind = body?.kind === "article" || body?.kind === "tiktok" ? body.kind : null
+  if (!body || kind === null || typeof body.source_url !== "string" || typeof body.title !== "string" || !body.title.trim() || typeof body.token !== "string" || !body.token) {
+    throw new ApiError(502, "The preview answer was incomplete. Save the link without it.")
+  }
+  return {
+    kind,
+    source_url: body.source_url,
+    resolved_url: typeof body.resolved_url === "string" ? body.resolved_url : body.source_url,
+    title: body.title,
+    description: typeof body.description === "string" ? body.description : "",
+    site_name: typeof body.site_name === "string" ? body.site_name : "",
+    creator: typeof body.creator === "string" ? body.creator : "",
+    published_at: typeof body.published_at === "string" ? body.published_at : null,
+    thumbnail: normalizeThumbnail(body.thumbnail),
+    truncated: body.truncated === true,
+    token: body.token,
+    expires_at: typeof body.expires_at === "string" ? body.expires_at : "",
+    mode: body.mode === "fixture" ? "fixture" : "live",
+  }
+}
+
+/**
+ * Preview one pasted link. Unsupported links (X posts, TikTok profiles,
+ * non-http) reject with 422, a page or provider that fails (403/429/404,
+ * private address, not HTML, no metadata) with 502, a second preview inside
+ * two seconds (or one already running) with 429. Nothing is written.
+ */
+export async function previewLink(url: string, signal?: AbortSignal): Promise<LinkPreview> {
+  const r = await fetch("/link-previews/preview", { ...jsonInit("POST", { url }), signal })
+  return normalizeLinkPreview(await expectJson<unknown>(r))
 }

@@ -1,7 +1,7 @@
 // Pure helpers for the Discover surface: what a card shows, how the list is
 // filtered, and deterministic artwork for topics without a usable image.
 // Nothing here fetches, and nothing here rewrites imported text.
-import { NO_EDITORIAL, type InboxAttachment, type InboxEditorial, type InboxItem, type InboxThumbnail } from "./api"
+import { NO_EDITORIAL, type InboxAttachment, type InboxEditorial, type InboxItem, type InboxSourceKind, type InboxThumbnail } from "./api"
 import { safeSourceHref } from "./inboxDraft"
 import { hostOf } from "./plans"
 
@@ -18,6 +18,8 @@ export const SOURCE_FILTERS: ReadonlyArray<{ id: SourceFilter; label: string }> 
 
 export const KIND_LABEL: Record<Kind, string> = { youtube: "YouTube", rss: "Article", reddit: "Reddit", manual: "Your idea" }
 const CAPTURE_LABEL = { write: "Your idea", link: "Your link", upload: "Your upload" } as const
+/** A pasted link the user previewed reads as what it resolved to, not as an imported feed. */
+const LINK_SOURCE_LABEL: Partial<Record<InboxSourceKind, string>> = { article: "Article link", tiktok: "TikTok link" }
 
 export const EXCERPT_CHARS = 240
 
@@ -41,6 +43,8 @@ export type Card = {
   href: string | null
   /** An uploaded PDF/TXT/MD kept as the original file, offered for download. */
   document: InboxAttachment | null
+  /** Provenance kind when an importer or a link preview kept one; null for plain ideas. */
+  sourceKind: InboxSourceKind | null
 }
 
 export function kindOf(item: InboxItem): Kind {
@@ -72,15 +76,18 @@ export function cardOf(item: InboxItem): Card {
   const cover = capture?.attachments.find((file) => file.role === "cover") ?? null
   const document = capture?.attachments.find((file) => file.role === "document") ?? null
   const fullText = source ? source.body_text : capture?.source_text || item.notes
-  const excerpt = card?.excerpt ? excerptFromText(card.excerpt) : excerptFromText(fullText)
+  const title = capture?.display_title || source?.original_title || item.text
+  const rawExcerpt = card?.excerpt ? excerptFromText(card.excerpt) : excerptFromText(fullText)
+  // One copy of the source text: a caption that is the headline (TikTok) is not repeated as the excerpt.
+  const excerpt = rawExcerpt.replace(/\s+/g, " ").trim() === title.replace(/\s+/g, " ").trim() ? "" : rawExcerpt
   const thumbnail = cover ? { url: cover.url, width: cover.width, height: cover.height } : (card?.thumbnail ?? null)
   const captureCreator = capture?.kind === "upload" ? (capture.attachments[0]?.filename ?? "") : capture?.kind === "link" ? hostOf(item.source_url) : ""
   return {
     id: item.id,
     kind,
-    title: capture?.display_title || source?.original_title || item.text,
+    title,
     liveLabel: item.text,
-    kindLabel: capture ? CAPTURE_LABEL[capture.kind] : KIND_LABEL[kind],
+    kindLabel: capture ? (capture.kind === "link" && source ? LINK_SOURCE_LABEL[source.kind] ?? CAPTURE_LABEL.link : CAPTURE_LABEL[capture.kind]) : KIND_LABEL[kind],
     creator: card?.creator || (kind === "rss" ? (source?.feed_name ?? "") : captureCreator),
     excerpt,
     fullText,
@@ -90,6 +97,7 @@ export function cardOf(item: InboxItem): Card {
     published: source?.published_at ?? null,
     mediaSeconds: card?.media_seconds ?? null,
     href: safeSourceHref(item.source_url),
+    sourceKind: source?.kind ?? null,
   }
 }
 

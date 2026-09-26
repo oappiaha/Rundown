@@ -22,6 +22,7 @@ from rundown.models import (
     ResearchPreference,
     RetrievedItem,
     SavedShow,
+    TopicLinkSource,
 )
 
 router = APIRouter(prefix="/research", tags=["research"])
@@ -93,7 +94,7 @@ def normalized_title(value: str) -> str:
     return " ".join(re.findall(r"\w+", unicodedata.normalize("NFKC", value).casefold()))
 
 
-def category_for(item: InboxTopic, source: InboxSource | RetrievedItem | None) -> str:
+def category_for(item: InboxTopic, source: InboxSource | RetrievedItem | TopicLinkSource | None) -> str:
     text = source.original_title if source else item.text
     tokens = set(normalized_title(text).split())
     scores = {category: len(tokens & words) for category, words in KEYWORDS.items()}
@@ -109,7 +110,7 @@ def preference(pref: ResearchPreference | None) -> dict:
             "excluded": pref.excluded if pref else False}
 
 
-def row(item: InboxTopic, source: InboxSource | RetrievedItem | None,
+def row(item: InboxTopic, source: InboxSource | RetrievedItem | TopicLinkSource | None,
         pref: ResearchPreference | None, now: float) -> dict:
     options = preference(pref)
     category = options["category"] or category_for(item, source)

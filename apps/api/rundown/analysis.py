@@ -19,7 +19,7 @@ from sqlmodel import Session, col, select
 from rundown import inbox, library, preparation, research
 from rundown.config import settings
 from rundown.db import session
-from rundown.models import InboxSource, ResearchAnalysis, RetrievedItem
+from rundown.models import InboxSource, ResearchAnalysis, RetrievedItem, TopicLinkSource
 
 router = APIRouter(prefix='/research/ai', tags=['research-ai'])
 MAX_OUTPUT = 5000
@@ -115,7 +115,7 @@ def config(db: Session) -> dict:
             'max_stories': 20, 'max_output_tokens': MAX_OUTPUT}
 
 
-def editorial_context(notes: str, source: InboxSource | RetrievedItem | None) -> str:
+def editorial_context(notes: str, source: InboxSource | RetrievedItem | TopicLinkSource | None) -> str:
     # Strip only an exact importer-generated copy. Edited/manual notes remain
     # authoritative context, even when they happen to repeat parts of the source.
     if isinstance(source, RetrievedItem):

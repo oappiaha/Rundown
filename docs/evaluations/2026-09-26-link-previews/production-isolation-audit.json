@@ -1,0 +1,7 @@
+{
+  "reference_backup": "/Users/rei/services/rundown/backups/daily-20260926-170313-322491/rundown.db",
+  "different_tables": [
+    "showclock"
+  ],
+  "new_preview_table_in_production": false
+}

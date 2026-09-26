@@ -27,6 +27,7 @@ export default defineConfig({
       '/research': { target: apiTarget, changeOrigin: true },
       '/retrieval': { target: apiTarget, changeOrigin: true },
       '/social-links': { target: apiTarget, changeOrigin: true },
+      '/link-previews': { target: apiTarget, changeOrigin: true },
     },
   },
   test: {

@@ -387,3 +387,24 @@ class Attachment(SQLModel, table=True):
     width: int | None = None
     height: int | None = None
     created_at: float
+
+
+class TopicLinkSource(SQLModel, table=True):
+    """Provenance of a link the user pasted and explicitly previewed: the
+    exact entered URL, the resolved page or permalink, the full fetched
+    headline (never cut to the 200-character title) and the description or
+    caption. It reads like feed/search provenance for review and preparation;
+    the card image lives in TopicPresentation."""
+
+    inbox_topic_id: str = Field(primary_key=True, foreign_key="inboxtopic.id")
+    kind: str  # article | tiktok
+    entered_url: str
+    resolved_url: str
+    feed_id: str = ""
+    feed_name: str = ""
+    original_title: str
+    body_text: str = ""
+    creator: str = ""
+    published_at: str = ""
+    imported_at: float
+    truncated: bool = False

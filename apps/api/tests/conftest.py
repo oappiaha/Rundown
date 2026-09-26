@@ -4,6 +4,12 @@ from sqlmodel import create_engine
 from rundown import db
 from rundown.config import settings
 
+# The module-level engine is built from settings.db_path at import time, i.e. the
+# real local database. Replace it before any test runs so that nothing that
+# restores "the original" (monkeypatch.undo(), a fixture teardown order bug) can
+# ever point a test at real data: the fallback is a throwaway in-memory engine.
+db._engine = create_engine('sqlite://', connect_args={'check_same_thread': False})
+
 
 @pytest.fixture(autouse=True)
 def isolated_database(tmp_path, monkeypatch):

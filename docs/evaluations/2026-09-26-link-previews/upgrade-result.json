@@ -1,0 +1,33 @@
+{
+ "tables_before": 31,
+ "tables_after": 33,
+ "added": [
+  "showclock",
+  "topiclinksource"
+ ],
+ "topiclinksource_columns": [
+  "inbox_topic_id",
+  "kind",
+  "entered_url",
+  "resolved_url",
+  "feed_id",
+  "feed_name",
+  "original_title",
+  "body_text",
+  "creator",
+  "published_at",
+  "imported_at",
+  "truncated"
+ ],
+ "old_rows_identical": true,
+ "old_item_readback": {
+  "text": "Old idea",
+  "display_title": "Old idea full title",
+  "note": "old personal note",
+  "source": null,
+  "presentation": null
+ },
+ "shows": [
+  "Old show"
+ ]
+}

@@ -34,11 +34,27 @@ def canonical_url(value: str) -> str:
     return normalized
 
 
-def checked_addresses(url: str) -> tuple[str, int, list[str]]:
+class StatusError(FeedError):
+    """A non-success HTTP status from the remote; the body is never kept."""
+
+    def __init__(self, message: str, status: int):
+        super().__init__(message)
+        self.status = status
+
+
+@dataclass
+class Fetched:
+    data: bytes
+    url: str  # final URL after checked redirects
+    content_type: str
+    truncated: bool
+
+
+def checked_addresses(url: str, label: str = 'feed', what: str = 'Feed imports') -> tuple[str, int, list[str]]:
     parsed = urlsplit(url)
     host = parsed.hostname
     if not host:
-        raise FeedError('Feed URL needs a hostname.')
+        raise FeedError(f'{label.capitalize()} URL needs a hostname.')
     port = parsed.port or (443 if parsed.scheme == 'https' else 80)
     origin = f'{parsed.scheme}://{parsed.netloc}'
     fixture = settings.rss_test_feed_origin
@@ -49,25 +65,37 @@ def checked_addresses(url: str) -> tuple[str, int, list[str]]:
         addresses = list(dict.fromkeys(str(info[4][0]) for info in socket.getaddrinfo(
             host, port, type=socket.SOCK_STREAM)))
     except OSError as exc:
-        raise FeedError('Could not resolve the feed hostname. Check the URL and try again.') from exc
+        raise FeedError(f'Could not resolve the {label} hostname. Check the URL and try again.') from exc
     if not addresses or (not allowed_fixture and any(
         not ipaddress.ip_address(addr).is_global or ipaddress.ip_address(addr).is_multicast
         for addr in addresses
     )):
-        raise FeedError('Feed imports require a public internet address; private and loopback targets are blocked.')
+        raise FeedError(f'{what} require a public internet address; private and loopback targets are blocked.')
     return host, port, addresses
 
 
-def fetch_feed(url: str) -> tuple[bytes, str]:
-    """Resolve/check each redirect and pin the connection to a checked address."""
-    deadline = time.monotonic() + FETCH_SECONDS
+def fetch_public(url: str, *, accept: str, max_bytes: int, seconds: float, label: str = 'feed',
+                 what: str = 'Feed imports', limit_text: str = '2 MB import', plain: str = 'plain XML',
+                 user_agent: str = 'Rundown-RSS/1.0', truncate: bool = False) -> Fetched:
+    """Bounded GET of one public document.
+
+    Every hop (including each redirect) is canonicalized, resolved and checked
+    against the public-address rule, and the socket is pinned to the checked
+    address so the HTTP library never resolves the host again. Compressed
+    bodies are refused. With `truncate=False` a body over `max_bytes` is an
+    error; with `truncate=True` the first `max_bytes` are returned and the
+    result is marked truncated (metadata that lives in a document head does
+    not need the rest). Remote error bodies are never returned.
+    """
+    deadline = time.monotonic() + seconds
+    cap = label.capitalize()
     for _ in range(4):
         try:
             url = canonical_url(url)
-            host, port, addresses = checked_addresses(url)
+            host, port, addresses = checked_addresses(url, label, what)
             remaining = deadline - time.monotonic()
             if remaining <= 0:
-                raise FeedError('Feed request timed out. Try again later.')
+                raise FeedError(f'{cap} request timed out. Try again later.')
             parsed = urlsplit(url)
             conn = http.client.HTTPConnection(host, port, timeout=min(remaining, 8))
             wire = None
@@ -78,46 +106,66 @@ def fetch_feed(url: str) -> tuple[bytes, str]:
                     wire = ssl.create_default_context().wrap_socket(wire, server_hostname=host)
                 conn.sock = wire
                 conn.request('GET', urlunsplit(('', '', parsed.path or '/', parsed.query, '')),
-                             headers={'User-Agent': 'Rundown-RSS/1.0', 'Accept': 'application/atom+xml, application/rss+xml, application/xml, text/xml',
+                             headers={'User-Agent': user_agent, 'Accept': accept,
                                       'Accept-Encoding': 'identity', 'Connection': 'close'})
                 response = conn.getresponse()
                 if response.status in {301, 302, 303, 307, 308}:
                     location = response.getheader('Location')
                     if not location:
-                        raise FeedError('The feed redirected without a destination.')
+                        raise FeedError(f'The {label} redirected without a destination.')
                     url = urljoin(url, location)
                     continue
                 if response.status != 200:
-                    raise FeedError(f'The feed returned HTTP {response.status}. Check the feed URL or try again later.')
+                    raise StatusError(f'The {label} returned HTTP {response.status}. Check the {label} URL or try again later.',
+                                      response.status)
                 if response.getheader('Content-Encoding', 'identity').lower() not in {'', 'identity'}:
-                    raise FeedError('The feed sent compressed content despite requesting plain XML.')
+                    raise FeedError(f'The {label} sent compressed content despite requesting {plain}.')
                 length = response.getheader('Content-Length')
-                if length and (not length.isdigit() or int(length) > MAX_BYTES):
-                    raise FeedError('The feed exceeds the 2 MB import limit.')
+                truncated = False
+                if length and not length.isdigit():
+                    raise FeedError(f'The {label} sent an invalid length header.' if truncate
+                                    else f'The {label} exceeds the {limit_text} limit.')
+                if length and int(length) > max_bytes:
+                    if not truncate:
+                        raise FeedError(f'The {label} exceeds the {limit_text} limit.')
+                    truncated = True
                 data = bytearray()
                 while not response.isclosed():
                     remaining = deadline - time.monotonic()
                     if remaining <= 0:
-                        raise FeedError('Feed request timed out. Try again later.')
+                        raise FeedError(f'{cap} request timed out. Try again later.')
                     wire.settimeout(min(remaining, 8))
-                    chunk = response.read1(min(65536, MAX_BYTES + 1 - len(data)))
+                    chunk = response.read1(min(65536, max_bytes + 1 - len(data)))
                     if not chunk:
                         break
                     data.extend(chunk)
-                    if len(data) > MAX_BYTES:
-                        raise FeedError('The feed exceeds the 2 MB import limit.')
-                return bytes(data), url
+                    if len(data) > max_bytes:
+                        if not truncate:
+                            raise FeedError(f'The {label} exceeds the {limit_text} limit.')
+                        del data[max_bytes:]
+                        truncated = True
+                        break
+                return Fetched(bytes(data), url, response.getheader('Content-Type', '') or '', truncated)
             finally:
                 conn.close()
                 if wire is not None:
                     wire.close()
         except FeedError:
             raise
+        except TimeoutError as exc:
+            raise FeedError(f'{cap} request timed out. Try again later.') from exc
         except (OSError, http.client.HTTPException) as exc:
-            raise FeedError('Could not download the feed (network, TLS or timeout error). Try again later.') from exc
+            raise FeedError(f'Could not download the {label} (network, TLS or timeout error). Try again later.') from exc
         except ValueError as exc:
-            raise FeedError('The feed or its redirect has an invalid URL.') from exc
-    raise FeedError('The feed redirected too many times.')
+            raise FeedError(f'The {label} or its redirect has an invalid URL.') from exc
+    raise FeedError(f'The {label} redirected too many times.')
+
+
+def fetch_feed(url: str) -> tuple[bytes, str]:
+    """Resolve/check each redirect and pin the connection to a checked address."""
+    fetched = fetch_public(url, accept='application/atom+xml, application/rss+xml, application/xml, text/xml',
+                           max_bytes=MAX_BYTES, seconds=FETCH_SECONDS)
+    return fetched.data, fetched.url
 
 
 class PlainText(HTMLParser):

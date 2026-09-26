@@ -17,7 +17,7 @@ from pydantic import (
 )
 from sqlmodel import Session, col, select
 
-from rundown import presentation
+from rundown import presentation, preview_token
 from rundown.db import session
 from rundown.library import _stamp, saved_transaction
 from rundown.models import (
@@ -27,6 +27,7 @@ from rundown.models import (
     RetrievedItem,
     TopicCapture,
     TopicEditorial,
+    TopicLinkSource,
     TopicPresentation,
 )
 from rundown.show import TopicIn
@@ -34,6 +35,7 @@ from rundown.show import TopicIn
 MAX_TITLE = 200
 MAX_LABEL = 30
 MAX_SOURCE_TEXT = 50000
+SourceRow = InboxSource | RetrievedItem | TopicLinkSource
 
 router = APIRouter(prefix="/inbox", tags=["topic-inbox"])
 url_adapter = TypeAdapter(HttpUrl)
@@ -127,6 +129,9 @@ class CaptureIn(BaseModel):
     note: str = Field(default="", max_length=10000)
     source_url: str = Field(default="", max_length=2048)
     duration: int = Field(default=120, ge=15, le=3600, strict=True)
+    # A token the preview endpoint issued for exactly this source_url; the
+    # client never sends provider fields directly.
+    preview: str | None = Field(default=None, min_length=1, max_length=preview_token.MAX_TOKEN)
 
     @field_validator("title", "label", mode="before")
     @classmethod
@@ -154,6 +159,8 @@ class CaptureIn(BaseModel):
             raise ValueError("A link topic needs its source URL.")
         if self.kind == "write" and self.source_url:
             raise ValueError("A written topic has no source URL; use a link topic.")
+        if self.preview is not None and self.kind != "link":
+            raise ValueError("A preview belongs to a link topic.")
         return self
 
 
@@ -180,6 +187,30 @@ def create_capture(db: Session, *, kind: str, title: str, label: str | None, not
     return item
 
 
+def attach_preview(db: Session, topic_id: str, meta: dict, now: float) -> None:
+    """Store an accepted preview as provenance plus card metadata. The topic
+    row, its title, note and entered URL are what the user typed; the full
+    fetched headline stays here untruncated."""
+    thumb = meta.get("thumbnail") if isinstance(meta.get("thumbnail"), dict) else None
+    image = presentation.safe_image_url(thumb.get("url")) if thumb else None
+    width = presentation.dimension(thumb.get("width")) if thumb and image else None
+    height = presentation.dimension(thumb.get("height")) if thumb and image else None
+    kind = str(meta.get("kind") or "article")
+    site = presentation.clean_text(meta.get("site_name"), presentation.MAX_CREATOR)
+    description = presentation.clean_text(meta.get("description"), 6000)
+    db.add(TopicLinkSource(inbox_topic_id=topic_id, kind=kind, entered_url=str(meta.get("source_url") or ""),
+                           resolved_url=str(meta.get("resolved_url") or ""), feed_name=site,
+                           original_title=presentation.clean_text(meta.get("title"), 1000), body_text=description,
+                           creator=presentation.clean_text(meta.get("creator"), presentation.MAX_CREATOR),
+                           published_at=presentation.clean_text(meta.get("published_at"), 120), imported_at=now,
+                           truncated=bool(meta.get("truncated"))))
+    db.add(TopicPresentation(inbox_topic_id=topic_id, provider=kind,
+                             creator=presentation.clean_text(meta.get("creator"), presentation.MAX_CREATOR) or site,
+                             excerpt=description[:presentation.MAX_EXCERPT], thumbnail_url=image, thumbnail_width=width,
+                             thumbnail_height=height, media_seconds=None, state="ready" if image else "partial",
+                             reason=None if image else "The source offered no usable image.", fetched_at=now))
+
+
 def lookup(db: Session, topic_id: str) -> InboxTopic:
     item = db.get(InboxTopic, topic_id)
     if item is None:
@@ -192,21 +223,28 @@ def check_revision(item: InboxTopic, revision: int) -> None:
         raise HTTPException(409, "Inbox topic changed on another screen. Your edits are kept; reload before retrying.")
 
 
-def get_source(db: Session, topic_id: str) -> InboxSource | RetrievedItem | None:
-    return db.get(InboxSource, topic_id) or db.exec(select(RetrievedItem).where(RetrievedItem.inbox_topic_id == topic_id)).first()
+def get_source(db: Session, topic_id: str) -> SourceRow | None:
+    return (db.get(InboxSource, topic_id)
+            or db.exec(select(RetrievedItem).where(RetrievedItem.inbox_topic_id == topic_id)).first()
+            or db.get(TopicLinkSource, topic_id))
 
 
-def all_sources(db: Session) -> dict[str, InboxSource | RetrievedItem]:
-    return {s.inbox_topic_id: s for s in [*db.exec(select(InboxSource)).all(), *db.exec(select(RetrievedItem)).all()]}
+def all_sources(db: Session) -> dict[str, SourceRow]:
+    return {s.inbox_topic_id: s for s in [*db.exec(select(TopicLinkSource)).all(), *db.exec(select(InboxSource)).all(),
+                                          *db.exec(select(RetrievedItem)).all()]}
 
 
-def source_detail(source: InboxSource | RetrievedItem | None) -> dict | None:
+def source_detail(source: SourceRow | None) -> dict | None:
     if source is None:
         return None
-    return {"kind": source.platform if isinstance(source, RetrievedItem) else "rss", "feed_id": source.feed_id, "feed_name": source.feed_name,
-            "original_title": source.original_title, "body_text": source.body_text,
-            "published_at": source.published_at, "imported_at": _stamp(source.imported_at),
-            "truncated": source.truncated}
+    kind = source.platform if isinstance(source, RetrievedItem) else source.kind if isinstance(source, TopicLinkSource) else "rss"
+    detail = {"kind": kind, "feed_id": source.feed_id, "feed_name": source.feed_name,
+              "original_title": source.original_title, "body_text": source.body_text,
+              "published_at": source.published_at, "imported_at": _stamp(source.imported_at),
+              "truncated": source.truncated}
+    if isinstance(source, TopicLinkSource):
+        detail.update(entered_url=source.entered_url, resolved_url=source.resolved_url, creator=source.creator)
+    return detail
 
 
 def editorial_detail(row: TopicEditorial | None) -> dict:
@@ -238,7 +276,7 @@ def sidecars(db: Session, topic_id: str) -> dict:
             "capture": db.get(TopicCapture, topic_id), "attachments": attachments_of(db, topic_id)}
 
 
-def display_title(item: InboxTopic, source: InboxSource | RetrievedItem | None, capture: TopicCapture | None) -> str:
+def display_title(item: InboxTopic, source: SourceRow | None, capture: TopicCapture | None) -> str:
     """The full headline a card shows: the import's original title, the capture's title, else the live label."""
     if capture is not None:
         return capture.display_title
@@ -247,7 +285,7 @@ def display_title(item: InboxTopic, source: InboxSource | RetrievedItem | None, 
     return item.text
 
 
-def detail(item: InboxTopic, source: InboxSource | RetrievedItem | None = None,
+def detail(item: InboxTopic, source: SourceRow | None = None,
            presentation_row: TopicPresentation | None = None, editorial: TopicEditorial | None = None,
            capture: TopicCapture | None = None, attachments: list[Attachment] | None = None) -> dict:
     return {
@@ -297,10 +335,22 @@ def capture_topic(payload: CaptureTopic) -> dict:
 
 @router.post("/capture", status_code=201)
 def capture_from_discover(payload: CaptureIn) -> dict:
-    """Write or link a topic from Discover. Links are stored, never fetched."""
+    """Write or link a topic from Discover. Links are stored, never fetched
+    here; an accepted preview arrives as a server-issued token."""
+    meta = None
+    if payload.preview is not None:
+        try:
+            meta = preview_token.verify(payload.preview, payload.source_url)
+        except preview_token.TokenError as exc:
+            raise HTTPException(409, str(exc)) from exc
     with saved_transaction() as db:
+        now = time.time()
         item = create_capture(db, kind=payload.kind, title=payload.title, label=payload.label, note=payload.note,
-                              duration=payload.duration, source_url=payload.source_url)
+                              duration=payload.duration, source_url=payload.source_url, now=now)
+        if meta is not None:
+            assert item.id is not None
+            attach_preview(db, item.id, meta, now)
+            db.flush()
         return full_detail(db, item)
 
 

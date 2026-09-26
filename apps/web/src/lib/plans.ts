@@ -28,6 +28,15 @@ export function suggestLabel(title: string): string {
   return (space >= 18 ? head.slice(0, space) : head).trim()
 }
 
+/** A fetched headline as a starting title: at most 200 characters, cut back to a word when one is near the end. The full headline stays in the preview token. */
+export function boundedTitle(headline: string): string {
+  const clean = cleanTitle(headline)
+  if (clean.length <= MAX_TITLE) return clean
+  const head = clean.slice(0, MAX_TITLE)
+  const space = head.lastIndexOf(" ")
+  return (space >= 150 ? head.slice(0, space) : head).trim()
+}
+
 export function labelProblem(label: string): string | null {
   const clean = cleanTitle(label)
   if (clean.length === 0) return "Choose a live label."

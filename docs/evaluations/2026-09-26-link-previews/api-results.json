@@ -1,0 +1,1031 @@
+{
+ "previews": [
+  {
+   "url": "http://127.0.0.1:8192/articles/offwhite.html",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/offwhite.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html",
+    "title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+    "description": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+    "site_name": "Surface Notes",
+    "creator": "Tomas Reyes",
+    "published_at": "2026-09-22T09:00:00Z",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+     "width": 1200,
+     "height": 630
+    },
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:52:38.089822+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/redirect",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/redirect",
+    "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html?from=redirect",
+    "title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+    "description": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+    "site_name": "Surface Notes",
+    "creator": "Tomas Reyes",
+    "published_at": "2026-09-22T09:00:00Z",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+     "width": 1200,
+     "height": 630
+    },
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:52:40.206901+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/long-headline.html",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/long-headline.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/long-headline.html",
+    "title": "A very long fictional headline about how a small coastal newsroom rebuilt its entire archive by hand over eleven winters, and what the people who did it say they would tell anyone starting the same job today without a budget, a plan or a deadline",
+    "description": "Relative image, no dimensions, mixed-case property name.",
+    "site_name": "127.0.0.1",
+    "creator": "127.0.0.1",
+    "published_at": null,
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/cover-rel.png",
+     "width": null,
+     "height": null
+    },
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:52:42.320989+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/body-only.html",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/body-only.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/body-only.html",
+    "title": "Body-only page: plain title only",
+    "description": "",
+    "site_name": "127.0.0.1",
+    "creator": "127.0.0.1",
+    "published_at": null,
+    "thumbnail": null,
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:52:44.430294+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/xss.html",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/xss.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/xss.html",
+    "title": "Quotes \"and\" in a headline",
+    "description": "Description with tags & entities",
+    "site_name": "127.0.0.1",
+    "creator": "127.0.0.1",
+    "published_at": null,
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/second.png",
+     "width": null,
+     "height": null
+    },
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:52:46.546569+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/oversize.html",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/oversize.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/oversize.html",
+    "title": "Oversize page headline",
+    "description": "Metadata placed before the cap.",
+    "site_name": "127.0.0.1",
+    "creator": "127.0.0.1",
+    "published_at": null,
+    "thumbnail": null,
+    "truncated": true,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:52:48.667093+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/oversize-late.html",
+   "status": 502,
+   "body": {
+    "detail": "The page offered no title or preview metadata. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/forbidden",
+   "status": 502,
+   "body": {
+    "detail": "The site refused the request (HTTP 403). Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/ratelimited",
+   "status": 502,
+   "body": {
+    "detail": "The site is rate limiting requests (HTTP 429). Try again later. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/missing",
+   "status": 502,
+   "body": {
+    "detail": "The page was not found (HTTP 404). Check the link. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/server-error",
+   "status": 502,
+   "body": {
+    "detail": "The site returned HTTP 503. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/notes.json",
+   "status": 502,
+   "body": {
+    "detail": "The link is not an HTML page, so there is no page metadata to preview. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/image.png",
+   "status": 502,
+   "body": {
+    "detail": "The link is not an HTML page, so there is no page metadata to preview. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/malformed.html",
+   "status": 502,
+   "body": {
+    "detail": "The page offered no title or preview metadata. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/no-metadata.html",
+   "status": 502,
+   "body": {
+    "detail": "The page offered no title or preview metadata. Save the link and add a title manually."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/private-redirect",
+   "status": 502,
+   "body": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/loopback-redirect",
+   "status": 502,
+   "body": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/loop",
+   "status": 502,
+   "body": {
+    "detail": "The page redirected too many times."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/bad-length.html",
+   "status": 502,
+   "body": {
+    "detail": "The page sent an invalid length header."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/gzip.html",
+   "status": 502,
+   "body": {
+    "detail": "The page sent compressed content despite requesting plain HTML."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/slow.html",
+   "status": 502,
+   "body": {
+    "detail": "Page request timed out. Try again later."
+   }
+  },
+  {
+   "url": "https://x.com/user/status/123",
+   "status": 422,
+   "body": {
+    "detail": "X posts have no image preview here. Save the link and add context manually."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@user",
+   "status": 422,
+   "body": {
+    "detail": "Paste a full HTTPS X post or TikTok video link. Short/share links and profile URLs are not supported."
+   }
+  },
+  {
+   "url": "ftp://example.com/x",
+   "status": 422,
+   "body": {
+    "detail": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "url"
+      ],
+      "msg": "Value error, Use an absolute http or https source URL without credentials.",
+      "input": "ftp://example.com/x",
+      "ctx": {
+       "error": {}
+      }
+     }
+    ]
+   }
+  },
+  {
+   "url": "http://user:pw@example.com/x",
+   "status": 422,
+   "body": {
+    "detail": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "url"
+      ],
+      "msg": "Value error, Use an absolute http or https source URL without credentials.",
+      "input": "http://user:pw@example.com/x",
+      "ctx": {
+       "error": {}
+      }
+     }
+    ]
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/offwhite.html\\",
+   "status": 422,
+   "body": {
+    "detail": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "url"
+      ],
+      "msg": "Value error, Source URL cannot contain whitespace or backslashes.",
+      "input": "http://127.0.0.1:8192/articles/offwhite.html\\",
+      "ctx": {
+       "error": {}
+      }
+     }
+    ]
+   }
+  },
+  {
+   "url": "http://10.0.0.1/secret",
+   "status": 502,
+   "body": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "url": "http://127.0.0.1:1/secret",
+   "status": 502,
+   "body": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "url": "http://localhost:8192/articles/offwhite.html",
+   "status": 502,
+   "body": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001?utm=x",
+   "status": 200,
+   "body": {
+    "kind": "tiktok",
+    "source_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001?utm=x",
+    "resolved_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001",
+    "title": "Fixing a shop sign with a finger and a marker #kerning #type",
+    "description": "Fixing a shop sign with a finger and a marker #kerning #type",
+    "site_name": "TikTok",
+    "creator": "synthetic.maker",
+    "published_at": null,
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/portrait.png",
+     "width": 360,
+     "height": 640
+    },
+    "truncated": false,
+    "token": "eyJraW5kIjoidGlrdG9rIiwi\u2026",
+    "expires_at": "2026-09-26T22:53:47.394932+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000002",
+   "status": 502,
+   "body": {
+    "detail": "Provider denied access. Check API approval, credentials and quota. Save the link and add the caption manually."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000003",
+   "status": 502,
+   "body": {
+    "detail": "Provider rate limit reached. Wait before collecting again. Save the link and add the caption manually."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000005",
+   "status": 502,
+   "body": {
+    "detail": "TikTok did not return a public video caption. Save the link and add context manually."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000007",
+   "status": 502,
+   "body": {
+    "detail": "Provider response could not be read. No items were imported. Save the link and add the caption manually."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000008",
+   "status": 502,
+   "body": {
+    "detail": "TikTok did not return a public video caption. Save the link and add context manually."
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000004",
+   "status": 200,
+   "body": {
+    "kind": "tiktok",
+    "source_url": "https://www.tiktok.com/@u/video/7000000000000000004",
+    "resolved_url": "https://www.tiktok.com/@u/video/7000000000000000004",
+    "title": "Huge caption word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word wo",
+    "description": "Huge caption word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word wo",
+    "site_name": "TikTok",
+    "creator": "verbose.maker",
+    "published_at": null,
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/portrait.png",
+     "width": 360,
+     "height": 640
+    },
+    "truncated": true,
+    "token": "eyJraW5kIjoidGlrdG9rIiwi\u2026",
+    "expires_at": "2026-09-26T22:54:00.063537+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "https://www.tiktok.com/@u/video/7000000000000000006",
+   "status": 200,
+   "body": {
+    "kind": "tiktok",
+    "source_url": "https://www.tiktok.com/@u/video/7000000000000000006",
+    "resolved_url": "https://www.tiktok.com/@u/video/7000000000000000006",
+    "title": "Private thumbnail host is dropped",
+    "description": "Private thumbnail host is dropped",
+    "site_name": "TikTok",
+    "creator": "edge.maker",
+    "published_at": null,
+    "thumbnail": null,
+    "truncated": false,
+    "token": "eyJraW5kIjoidGlrdG9rIiwi\u2026",
+    "expires_at": "2026-09-26T22:54:02.178688+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "url": "http://127.0.0.1:8192/articles/offwhite.html",
+   "status": 200,
+   "body": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/offwhite.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html",
+    "title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+    "description": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+    "site_name": "Surface Notes",
+    "creator": "Tomas Reyes",
+    "published_at": "2026-09-22T09:00:00Z",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+     "width": 1200,
+     "height": 630
+    },
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIs\u2026",
+    "expires_at": "2026-09-26T22:54:04.292928+00:00",
+    "mode": "fixture"
+   }
+  }
+ ],
+ "captures": [
+  {
+   "case": "article ok",
+   "status": 201,
+   "body": {
+    "id": "d27a04bc-61ad-4680-b878-76213d5ccabf",
+    "revision": 1,
+    "text": "My edited headline",
+    "duration": 120,
+    "notes": "",
+    "source_url": "http://127.0.0.1:8192/articles/offwhite.html",
+    "archived": false,
+    "created_at": "2026-09-26T22:24:04.298378+00:00",
+    "updated_at": "2026-09-26T22:24:04.298378+00:00",
+    "source": {
+     "kind": "article",
+     "feed_id": "",
+     "feed_name": "Surface Notes",
+     "original_title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+     "body_text": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+     "published_at": "2026-09-22T09:00:00Z",
+     "imported_at": "2026-09-26T22:24:04.298378+00:00",
+     "truncated": false,
+     "entered_url": "http://127.0.0.1:8192/articles/offwhite.html",
+     "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html",
+     "creator": "Tomas Reyes"
+    },
+    "topic": {
+     "text": "My edited headline",
+     "duration": 120,
+     "notes": "Source: http://127.0.0.1:8192/articles/offwhite.html"
+    },
+    "presentation": {
+     "provider": "article",
+     "creator": "Tomas Reyes",
+     "excerpt": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+      "width": 1200,
+      "height": 630
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-26T22:24:04.298378+00:00"
+    },
+    "editorial": {
+     "revision": 1,
+     "saved": true,
+     "note": "my note",
+     "updated_at": "2026-09-26T22:24:04.298378+00:00"
+    },
+    "capture": {
+     "kind": "link",
+     "display_title": "My edited headline",
+     "source_text": "",
+     "attachments": [],
+     "created_at": "2026-09-26T22:24:04.298378+00:00"
+    }
+   }
+  },
+  {
+   "case": "tiktok ok",
+   "status": 201,
+   "body": {
+    "id": "2a9242cd-e517-487d-89f8-babdd9a2b27a",
+    "revision": 1,
+    "text": "Kerning sign fix",
+    "duration": 120,
+    "notes": "",
+    "source_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001?utm=x",
+    "archived": false,
+    "created_at": "2026-09-26T22:24:04.328876+00:00",
+    "updated_at": "2026-09-26T22:24:04.328876+00:00",
+    "source": {
+     "kind": "tiktok",
+     "feed_id": "",
+     "feed_name": "TikTok",
+     "original_title": "Fixing a shop sign with a finger and a marker #kerning #type",
+     "body_text": "Fixing a shop sign with a finger and a marker #kerning #type",
+     "published_at": "",
+     "imported_at": "2026-09-26T22:24:04.328876+00:00",
+     "truncated": false,
+     "entered_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001?utm=x",
+     "resolved_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001",
+     "creator": "synthetic.maker"
+    },
+    "topic": {
+     "text": "Kerning sign fix",
+     "duration": 120,
+     "notes": "Source: https://www.tiktok.com/@synthetic.maker/video/7000000000000000001?utm=x"
+    },
+    "presentation": {
+     "provider": "tiktok",
+     "creator": "synthetic.maker",
+     "excerpt": "Fixing a shop sign with a finger and a marker #kerning #type",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/portrait.png",
+      "width": 360,
+      "height": 640
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-26T22:24:04.328876+00:00"
+    },
+    "editorial": {
+     "revision": 1,
+     "saved": true,
+     "note": "portrait check",
+     "updated_at": "2026-09-26T22:24:04.328876+00:00"
+    },
+    "capture": {
+     "kind": "link",
+     "display_title": "Fixing a shop sign with a finger and a marker #kerning #type",
+     "source_text": "",
+     "attachments": [],
+     "created_at": "2026-09-26T22:24:04.328876+00:00"
+    }
+   }
+  }
+ ],
+ "checks": [
+  {
+   "name": "article preview 200 with first og:image dims",
+   "ok": true,
+   "detail": {
+    "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+    "width": 1200,
+    "height": 630
+   }
+  },
+  {
+   "name": "body/script/style og:title ignored, og:title beats <title>",
+   "ok": true,
+   "detail": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose"
+  },
+  {
+   "name": "preview creates no inbox row",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "redirect: entered url preserved, resolved differs",
+   "ok": true,
+   "detail": {
+    "source_url": "http://127.0.0.1:8192/articles/redirect",
+    "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html?from=redirect"
+   }
+  },
+  {
+   "name": "long headline kept in full, relative image resolved, no dims",
+   "ok": true,
+   "detail": {
+    "len": 246,
+    "thumb": {
+     "url": "http://127.0.0.1:8192/thumbs/cover-rel.png",
+     "width": null,
+     "height": null
+    }
+   }
+  },
+  {
+   "name": "body-only og metas ignored: plain <title>, no image/description",
+   "ok": true,
+   "detail": {
+    "kind": "article",
+    "source_url": "http://127.0.0.1:8192/articles/body-only.html",
+    "resolved_url": "http://127.0.0.1:8192/articles/body-only.html",
+    "title": "Body-only page: plain title only",
+    "description": "",
+    "site_name": "127.0.0.1",
+    "creator": "127.0.0.1",
+    "published_at": null,
+    "thumbnail": null,
+    "truncated": false,
+    "token": "eyJraW5kIjoiYXJ0aWNsZSIsInNvdXJjZV91cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgxOTIvYXJ0aWNsZXMvYm9keS1vbmx5Lmh0bWwiLCJyZXNvbHZlZF91cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgxOTIvYXJ0aWNsZXMvYm9keS1vbmx5Lmh0bWwiLCJ0aXRsZSI6IkJvZHktb25seSBwYWdlOiBwbGFpbiB0aXRsZSBvbmx5IiwiZGVzY3JpcHRpb24iOiIiLCJzaXRlX25hbWUiOiIxMjcuMC4wLjEiLCJjcmVhdG9yIjoiMTI3LjAuMC4xIiwicHVibGlzaGVkX2F0IjpudWxsLCJ0aHVtYm5haWwiOm51bGwsInRydW5jYXRlZCI6ZmFsc2UsImlhdCI6MTc5MDQ2MTM2NC40MzAyOTR9.VJ-2UUVocsvC2eMabzpg6ml1ttMHV7XWp-3fRfCqqhg",
+    "expires_at": "2026-09-26T22:52:44.430294+00:00",
+    "mode": "fixture"
+   }
+  },
+  {
+   "name": "escaped/tag-like metadata reduced to plain text; javascript: image dropped; twitter:image fallback",
+   "ok": true,
+   "detail": {
+    "title": "Quotes \"and\" in a headline",
+    "site": "127.0.0.1",
+    "desc": "Description with tags & entities",
+    "thumb": {
+     "url": "http://127.0.0.1:8192/thumbs/second.png",
+     "width": null,
+     "height": null
+    }
+   }
+  },
+  {
+   "name": "oversize page with head in cap: truncated preview",
+   "ok": true,
+   "detail": true
+  },
+  {
+   "name": "oversize page with metadata beyond cap: 502 clear message",
+   "ok": true,
+   "detail": {
+    "detail": "The page offered no title or preview metadata. Save the link and add a title manually."
+   }
+  },
+  {
+   "name": "forbidden: 502 with \"403\" and no remote body",
+   "ok": true,
+   "detail": "The site refused the request (HTTP 403). Save the link and add a title manually."
+  },
+  {
+   "name": "ratelimited: 502 with \"429\" and no remote body",
+   "ok": true,
+   "detail": "The site is rate limiting requests (HTTP 429). Try again later. Save the link and add a title manually."
+  },
+  {
+   "name": "missing: 502 with \"404\" and no remote body",
+   "ok": true,
+   "detail": "The page was not found (HTTP 404). Check the link. Save the link and add a title manually."
+  },
+  {
+   "name": "server-error: 502 with \"503\" and no remote body",
+   "ok": true,
+   "detail": "The site returned HTTP 503. Save the link and add a title manually."
+  },
+  {
+   "name": "notes.json: 502 with \"not an HTML page\" and no remote body",
+   "ok": true,
+   "detail": "The link is not an HTML page, so there is no page metadata to preview. Save the link and add a title manually."
+  },
+  {
+   "name": "image.png: 502 with \"not an HTML page\" and no remote body",
+   "ok": true,
+   "detail": "The link is not an HTML page, so there is no page metadata to preview. Save the link and add a title manually."
+  },
+  {
+   "name": "malformed.html: 502 with \"no title\" and no remote body",
+   "ok": true,
+   "detail": "The page offered no title or preview metadata. Save the link and add a title manually."
+  },
+  {
+   "name": "no-metadata.html: 502 with \"no title\" and no remote body",
+   "ok": true,
+   "detail": "The page offered no title or preview metadata. Save the link and add a title manually."
+  },
+  {
+   "name": "private-redirect: 502 with \"public internet address\" and no remote body",
+   "ok": true,
+   "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+  },
+  {
+   "name": "loopback-redirect: 502 with \"public internet address\" and no remote body",
+   "ok": true,
+   "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+  },
+  {
+   "name": "loop: 502 with \"too many times\" and no remote body",
+   "ok": true,
+   "detail": "The page redirected too many times."
+  },
+  {
+   "name": "bad-length.html: 502 with \"invalid length\" and no remote body",
+   "ok": true,
+   "detail": "The page sent an invalid length header."
+  },
+  {
+   "name": "gzip.html: 502 with \"compressed\" and no remote body",
+   "ok": true,
+   "detail": "The page sent compressed content despite requesting plain HTML."
+  },
+  {
+   "name": "slow page: timed out within cap",
+   "ok": true,
+   "detail": {
+    "detail": "Page request timed out. Try again later."
+   }
+  },
+  {
+   "name": "https://x.com/user/status/123 -> 422",
+   "ok": true,
+   "detail": {
+    "detail": "X posts have no image preview here. Save the link and add context manually."
+   }
+  },
+  {
+   "name": "https://www.tiktok.com/@user -> 422",
+   "ok": true,
+   "detail": {
+    "detail": "Paste a full HTTPS X post or TikTok video link. Short/share links and profile URLs are not supported."
+   }
+  },
+  {
+   "name": "ftp://example.com/x -> 422",
+   "ok": true,
+   "detail": {
+    "detail": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "url"
+      ],
+      "msg": "Value error, Use an absolute http or https source URL without credentials.",
+      "input": "ftp://example.com/x",
+      "ctx": {
+       "error": {}
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "http://user:pw@example.com/x -> 422",
+   "ok": true,
+   "detail": {
+    "detail": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "url"
+      ],
+      "msg": "Value error, Use an absolute http or https source URL without credentials.",
+      "input": "http://user:pw@example.com/x",
+      "ctx": {
+       "error": {}
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "http://127.0.0.1:8192/articles/offwhite. -> 422",
+   "ok": true,
+   "detail": {
+    "detail": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "url"
+      ],
+      "msg": "Value error, Source URL cannot contain whitespace or backslashes.",
+      "input": "http://127.0.0.1:8192/articles/offwhite.html\\",
+      "ctx": {
+       "error": {}
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "http://10.0.0.1/secret -> 502",
+   "ok": true,
+   "detail": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "name": "http://127.0.0.1:1/secret -> 502",
+   "ok": true,
+   "detail": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "name": "http://localhost:8192/articles/offwhite. -> 502",
+   "ok": true,
+   "detail": {
+    "detail": "Link previews require a public internet address; private and loopback targets are blocked."
+   }
+  },
+  {
+   "name": "tiktok preview: caption, creator, portrait dims retained",
+   "ok": true,
+   "detail": {
+    "url": "http://127.0.0.1:8192/thumbs/portrait.png",
+    "width": 360,
+    "height": 640
+   }
+  },
+  {
+   "name": "tiktok 2: 502 \"denied\"",
+   "ok": true,
+   "detail": {
+    "detail": "Provider denied access. Check API approval, credentials and quota. Save the link and add the caption manually."
+   }
+  },
+  {
+   "name": "tiktok 3: 502 \"rate limit\"",
+   "ok": true,
+   "detail": {
+    "detail": "Provider rate limit reached. Wait before collecting again. Save the link and add the caption manually."
+   }
+  },
+  {
+   "name": "tiktok 5: 502 \"caption\"",
+   "ok": true,
+   "detail": {
+    "detail": "TikTok did not return a public video caption. Save the link and add context manually."
+   }
+  },
+  {
+   "name": "tiktok 7: 502 \"could not be read\"",
+   "ok": true,
+   "detail": {
+    "detail": "Provider response could not be read. No items were imported. Save the link and add the caption manually."
+   }
+  },
+  {
+   "name": "tiktok 8: 502 \"caption\"",
+   "ok": true,
+   "detail": {
+    "detail": "TikTok did not return a public video caption. Save the link and add context manually."
+   }
+  },
+  {
+   "name": "tiktok huge caption bounded: title<=1000, description<=6000, truncated",
+   "ok": true,
+   "detail": {
+    "t": 1000,
+    "d": 6000
+   }
+  },
+  {
+   "name": "tiktok private thumbnail host dropped, caption kept",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "cached repeat 200, then immediate different url 429",
+   "ok": true,
+   "detail": {
+    "detail": "Wait two seconds before previewing another link."
+   }
+  },
+  {
+   "name": "capture with token 201: source article + presentation + user title/note kept",
+   "ok": true,
+   "detail": {
+    "source": {
+     "kind": "article",
+     "feed_id": "",
+     "feed_name": "Surface Notes",
+     "original_title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+     "body_text": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+     "published_at": "2026-09-22T09:00:00Z",
+     "imported_at": "2026-09-26T22:24:04.298378+00:00",
+     "truncated": false,
+     "entered_url": "http://127.0.0.1:8192/articles/offwhite.html",
+     "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html",
+     "creator": "Tomas Reyes"
+    },
+    "presentation": {
+     "provider": "article",
+     "creator": "Tomas Reyes",
+     "excerpt": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+      "width": 1200,
+      "height": 630
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-26T22:24:04.298378+00:00"
+    }
+   }
+  },
+  {
+   "name": "readback GET equals create response source/presentation",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "token bound to entered url: swapped url 409, nothing saved",
+   "ok": true,
+   "detail": {
+    "detail": "The preview was made for a different link. Preview again, or save the link without it."
+   }
+  },
+  {
+   "name": "query-string change also 409",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "malformed token -> 409 (not 500): 'e1sTAA'",
+   "ok": true,
+   "detail": {
+    "detail": "The preview is not valid. Preview the link again, or save it without the preview."
+   }
+  },
+  {
+   "name": "malformed token -> 409 (not 500): 'IyfQ.\u00e9'",
+   "ok": true,
+   "detail": {
+    "detail": "The preview is not valid. Preview the link again, or save it without the preview."
+   }
+  },
+  {
+   "name": "malformed token -> 409 (not 500): 'nsense'",
+   "ok": true,
+   "detail": {
+    "detail": "The preview is not valid. Preview the link again, or save it without the preview."
+   }
+  },
+  {
+   "name": "malformed token -> 409 (not 500): 'sTK4.x'",
+   "ok": true,
+   "detail": {
+    "detail": "The preview is not valid. Preview the link again, or save it without the preview."
+   }
+  },
+  {
+   "name": "preview with kind write -> 422",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "manual save without token still 201 with null source/presentation",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "tiktok capture: source tiktok, creator, portrait 360x640 persisted",
+   "ok": true,
+   "detail": {
+    "provider": "tiktok",
+    "creator": "synthetic.maker",
+    "excerpt": "Fixing a shop sign with a finger and a marker #kerning #type",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/portrait.png",
+     "width": 360,
+     "height": 640
+    },
+    "media_seconds": null,
+    "state": "ready",
+    "reason": null,
+    "fetched_at": "2026-09-26T22:24:04.328876+00:00"
+   }
+  },
+  {
+   "name": "long headline: 200-char title stored, full fetched headline in source.original_title",
+   "ok": true,
+   "detail": {
+    "title_len": 197,
+    "src_len": 246
+   }
+  },
+  {
+   "name": "live state unchanged by previews/captures",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "saved day snapshot unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "seed topic untouched",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "manual_id": "cd1a539a-18b6-4c98-89ae-4b2ec2dc4ab6",
+ "ids": {
+  "article": "d27a04bc-61ad-4680-b878-76213d5ccabf",
+  "tiktok": "2a9242cd-e517-487d-89f8-babdd9a2b27a",
+  "long": "c5a8bfd5-95ec-46e3-9d5e-775abe1d9b85"
+ }
+}

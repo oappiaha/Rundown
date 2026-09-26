@@ -81,3 +81,21 @@ test("isTypingTarget covers inputs, textareas and editable elements only", () =>
   expect(isTypingTarget(div)).toBe(false)
   expect(isTypingTarget(null)).toBe(false)
 })
+
+test("an excerpt that repeats the headline (a TikTok caption) is dropped so the source text appears once", () => {
+  const caption = "Fixing a shop sign with a finger and a marker #kerning #type"
+  const item = {
+    id: "t1", revision: 1, text: "Kerning sign fix", duration: 120, notes: "", source_url: "https://www.tiktok.com/@m/video/1", archived: false, created_at: "", updated_at: "",
+    topic: { text: "Kerning sign fix", duration: 120, notes: "" },
+    source: { kind: "tiktok" as const, feed_id: "", feed_name: "TikTok", original_title: caption, body_text: caption, published_at: null, imported_at: "", truncated: false },
+    presentation: { provider: "tiktok", creator: "m", excerpt: caption, thumbnail: { url: "https://cdn.example/p.png", width: 360, height: 640 }, media_seconds: null, state: "ready" as const, reason: null, fetched_at: "" },
+    editorial: { revision: 0, saved: false, note: "", updated_at: null },
+    capture: { kind: "link" as const, display_title: caption, source_text: "", attachments: [], created_at: "" },
+  }
+  const card = cardOf(item)
+  expect(card.title).toBe(caption)
+  expect(card.excerpt).toBe("")
+  expect(card.kindLabel).toBe("TikTok link")
+  expect(card.sourceKind).toBe("tiktok")
+  expect(card.portrait).toBe(true)
+})

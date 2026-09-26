@@ -1,0 +1,308 @@
+{
+ "checks": [
+  {
+   "name": "link tab says nothing is fetched until Preview",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "typing a link fetches nothing (no preview request, no topic)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "article review card: headline, publisher/author, fixture mode, served thumbnail 1200\u00d7630",
+   "ok": true,
+   "detail": "Article \u00b7 Tomas Reyes \u00b7 fixtureOff-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chosePure white is "
+  },
+  {
+   "name": "title prefilled from headline; live label shown \u226430; note untouched",
+   "ok": true,
+   "detail": "Off-white is a decision:"
+  },
+  {
+   "name": "no topic created by previewing",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Discover card: full headline, \"Article link\", publisher, tag Article, served thumbnail",
+   "ok": true,
+   "detail": "Article linkTomas ReyesSep 22, 2026"
+  },
+  {
+   "name": "API readback: source article/original headline/publisher, presentation thumbnail 1200\u00d7630, entered URL, note, label",
+   "ok": true,
+   "detail": {
+    "source": {
+     "kind": "article",
+     "feed_id": "",
+     "feed_name": "Surface Notes",
+     "original_title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+     "body_text": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+     "published_at": "2026-09-22T09:00:00Z",
+     "imported_at": "2026-09-26T22:34:13.942104+00:00",
+     "truncated": false,
+     "entered_url": "http://127.0.0.1:8192/articles/offwhite.html",
+     "resolved_url": "http://127.0.0.1:8192/articles/offwhite.html",
+     "creator": "Tomas Reyes"
+    },
+    "presentation": {
+     "provider": "article",
+     "creator": "Tomas Reyes",
+     "excerpt": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+      "width": 1200,
+      "height": 630
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-26T22:34:13.942104+00:00"
+    }
+   }
+  },
+  {
+   "name": "after reload the article card still shows headline/publisher/thumbnail",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "tiktok review card: caption, creator, portrait thumbnail 360\u00d7640 with portrait class",
+   "ok": true,
+   "detail": "TikTok \u00b7 synthetic.maker \u00b7 fixtureFixing a shop sign with a finger and a marker #kerning #typeFixing a shop sign with a "
+  },
+  {
+   "name": "tiktok title prefilled with caption and live label offered",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Discover tiktok card: \"TikTok link\", creator, tag Video, portrait figure",
+   "ok": true,
+   "detail": "TikTok linksynthetic.maker"
+  },
+  {
+   "name": "API readback: tiktok source caption/creator, portrait 360\u00d7640, canonical resolved + entered URL with query",
+   "ok": true,
+   "detail": {
+    "kind": "tiktok",
+    "feed_id": "",
+    "feed_name": "TikTok",
+    "original_title": "Fixing a shop sign with a finger and a marker #kerning #type",
+    "body_text": "Fixing a shop sign with a finger and a marker #kerning #type",
+    "published_at": "",
+    "imported_at": "2026-09-26T22:34:16.195630+00:00",
+    "truncated": false,
+    "entered_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001?utm_source=paste",
+    "resolved_url": "https://www.tiktok.com/@synthetic.maker/video/7000000000000000001",
+    "creator": "synthetic.maker"
+   }
+  },
+  {
+   "name": "forbidden: preview error shown with \"HTTP 403\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: The site refused the request (HTTP 403). Save the link and add a title manually. Save the link without it."
+  },
+  {
+   "name": "ratelimited: preview error shown with \"HTTP 429\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: The site is rate limiting requests (HTTP 429). Try again later. Save the link and add a title manually. Save the link without it."
+  },
+  {
+   "name": "missing: preview error shown with \"HTTP 404\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: The page was not found (HTTP 404). Check the link. Save the link and add a title manually. Save the link without it."
+  },
+  {
+   "name": "notes.json: preview error shown with \"not an HTML page\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: The link is not an HTML page, so there is no page metadata to preview. Save the link and add a title manually. Save the link without it."
+  },
+  {
+   "name": "malformed.html: preview error shown with \"no title\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: The page offered no title or preview metadata. Save the link and add a title manually. Save the link without it."
+  },
+  {
+   "name": "oversize-late.html: preview error shown with \"no title\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: The page offered no title or preview metadata. Save the link and add a title manually. Save the link without it."
+  },
+  {
+   "name": "private-redirect: preview error shown with \"public internet address\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: Link previews require a public internet address; private and loopback targets are blocked. Save the link without it."
+  },
+  {
+   "name": "loopback-redirect: preview error shown with \"public internet address\", no remote body, save stays offered",
+   "ok": true,
+   "detail": "Preview failed: Link previews require a public internet address; private and loopback targets are blocked. Save the link without it."
+  },
+  {
+   "name": "failures created nothing",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "manual save after failed preview: card exists, no source/presentation, URL + note as typed",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "fetching state shown",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "title typed during the 3 s fetch kept; full headline in card; note untouched",
+   "ok": true,
+   "detail": "Your title was kept \u00b7 the fetched headline is saved with the source"
+  },
+  {
+   "name": "editing the link drops the preview and submit falls back to Create topic",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "response for an edited-away link ignored: no preview card, typed title intact, nothing created",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "long headline prefills \u2264200 editable title, card keeps full headline, hint says shortened",
+   "ok": true,
+   "detail": 197
+  },
+  {
+   "name": "server 409 on a bad token: message shown, form intact, nothing created",
+   "ok": true,
+   "detail": "Preview not saved: The preview is not valid. Preview the link again, or save it without the preview. Everything you typed is kept; press Create topic to save wi"
+  },
+  {
+   "name": "after 409 the same form saved without preview: title/label/note/URL as typed, no source",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "live clock unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "saved day snapshot unchanged (revision + note)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "seed topic unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "390px: preview card renders without horizontal overflow",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "fresh browser context: article card with publisher and thumbnail",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "health: 4xx/5xx are exactly the 9 intended 502 previews + 1 intended 409; console errors are only the browser echo of those; aborted requests are live-state polls + the one abandoned preview",
+   "ok": true,
+   "detail": {
+    "unexpected": [],
+    "other_console": [],
+    "other_failed": [],
+    "resource_lines": 10,
+    "aborted_preview": 1
+   }
+  }
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+  "Failed to load resource: the server responded with a status of 409 (Conflict)"
+ ],
+ "failed_requests": [
+  "http://127.0.0.1:3189/rundown/state",
+  "http://127.0.0.1:3189/rundown/state",
+  "http://127.0.0.1:3189/rundown/state",
+  "http://127.0.0.1:3189/link-previews/preview"
+ ],
+ "responses_4xx5xx": [
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   502,
+   "http://127.0.0.1:3189/link-previews/preview"
+  ],
+  [
+   409,
+   "http://127.0.0.1:3189/inbox/capture"
+  ]
+ ],
+ "screens": [
+  "01-article-link-typed",
+  "02-article-preview-review",
+  "03-article-card",
+  "04-article-card-after-reload",
+  "05-tiktok-preview-review",
+  "06-tiktok-card",
+  "07-preview-failure-403",
+  "08-manual-card-after-failure",
+  "09a-typing-while-fetching",
+  "09-typed-title-protected",
+  "10-stale-response-ignored",
+  "11-long-headline-bounded-title",
+  "12-token-409-form-kept",
+  "13-phone-preview"
+ ],
+ "ids": {
+  "article": "b881de62-f318-4de8-a0e9-593d47be89a7",
+  "tiktok": "ceb0f7e5-ded3-4395-b13c-e73ec054f0e3",
+  "manual": "af6bd92e-30c2-40fb-8ad0-89f19fe2790e",
+  "long_manual": "0ca2505c-4128-4f5a-8b70-4c85860325f4"
+ },
+ "status": "completed"
+}

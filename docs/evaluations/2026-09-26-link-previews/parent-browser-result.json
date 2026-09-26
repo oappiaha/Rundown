@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "real API-backed delayed preview",
+    "typed title and note survive response",
+    "preview save -> card image decoded",
+    "API provenance/editorial readback",
+    "reload",
+    "mobile capture width"
+  ]
+}

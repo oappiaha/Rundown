@@ -13,6 +13,7 @@ from rundown.db import init_db
 from rundown.feeds import router as feeds_router
 from rundown.inbox import router as inbox_router
 from rundown.library import router as library_router
+from rundown.link_previews import router as link_previews_router
 from rundown.obs_bridge import router as obs_router
 from rundown.plans import router as plans_router
 from rundown.preparation import router as preparation_router
@@ -58,6 +59,7 @@ app.include_router(research_router)
 app.include_router(analysis_router)
 app.include_router(retrieval_router)
 app.include_router(social_links_router)
+app.include_router(link_previews_router)
 
 OVERLAY_DIR = Path(__file__).resolve().parents[2] / "overlay"
 WEB_DIST_DIR = Path(__file__).resolve().parents[2] / "web" / "dist"

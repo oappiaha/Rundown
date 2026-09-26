@@ -156,7 +156,7 @@ function TopicCard({ item, index, variant, lead, draft, onSave, onDraft, onUseTh
   const overLimit = notesLength(draft.text) > MAX_NOTES
   const when = dateLabel(card.published)
   const duration = card.mediaSeconds !== null ? formatDuration(card.mediaSeconds) : null
-  const tag = card.kind === "youtube" ? `Video${duration ? ` · ${duration}` : ""}` : card.kind === "manual" ? "Your idea" : card.kind === "reddit" ? "Thread" : null
+  const tag = card.kind === "youtube" ? `Video${duration ? ` · ${duration}` : ""}` : card.sourceKind === "tiktok" ? "Video" : card.sourceKind === "article" ? "Article" : card.kind === "manual" ? "Your idea" : card.kind === "reddit" ? "Thread" : null
   const canReadMore = card.fullText.trim().length > 0 && card.fullText.trim() !== card.excerpt
   const status = draft.pending
     ? "Saving…"

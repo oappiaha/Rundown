@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": [
+    "preview read-only",
+    "redirect attribution",
+    "URL/signature binding",
+    "persisted preview/source/note",
+    "private redirect rejection",
+    "manual fallback",
+    "plans/live preservation"
+  ]
+}
