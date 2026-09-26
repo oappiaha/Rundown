@@ -9,3 +9,5 @@ The implemented UI includes Discover Focus/Explore, persistent notes/bookmarks, 
 Uploads are raw-body requests. Image validation checks signatures/header dimensions, not complete pixel decoding; undecodable images fall back in the browser. PDFs are stored/downloaded, not parsed or OCRed. These are limits, not proof that all media formats are validated completely.
 
 Deployment: attempted SSH to documented beezy@wolf-4 port 22; connection refused. No production service, database, OBS or host settings changed. Push is authorized for this release. Deployment remains pending access to the confirmed host.
+
+Release pushed to origin/main at a9ea039; exact remote SHA matched local HEAD. Owned disposable fixture/API/Vite supervisor stopped after acceptance. Production deployment is still pending SSH access.
