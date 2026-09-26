@@ -1,0 +1,76 @@
+INFO:     Started server process [18916]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8185 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51545 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /inbox HTTP/1.1" 201 Created
+INFO:     127.0.0.1:51545 - "POST /research/ai/input HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /rundown/topics HTTP/1.1" 200 OK
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=0.059 events=9 completed=True elapsed_seconds=0.067
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/e67ccf4e-fff3-471b-bc61-6dcd09cb8f39 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:51545 - "POST /research/ai/runs/e67ccf4e-fff3-471b-bc61-6dcd09cb8f39/propose HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/shows HTTP/1.1" 201 Created
+INFO:     127.0.0.1:51545 - "GET /shows/c0db1c97-caa7-4684-be6b-6a9a91916422 HTTP/1.1" 200 OK
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=None events=0 completed=False elapsed_seconds=0.008
+research_analysis run=f410220d-eb3d-4e7d-a113-ff1ec19da8c3 failure=connection elapsed_seconds=0.009
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/f410220d-eb3d-4e7d-a113-ff1ec19da8c3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:51552 - "GET /research/ai/runs/16d45088-173e-4a28-a95c-62f70358e347 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51552 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51552 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=None events=0 completed=False elapsed_seconds=30.011
+research_analysis run=16d45088-173e-4a28-a95c-62f70358e347 failure=timeout_read elapsed_seconds=30.012
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/16d45088-173e-4a28-a95c-62f70358e347 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:51746 - "GET /research/ai/runs/89015169-0fc7-4073-8565-aa99ab5ed01e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51746 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51746 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=0.008 events=9 completed=True elapsed_seconds=32.112
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/89015169-0fc7-4073-8565-aa99ab5ed01e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:51545 - "POST /research/ai/runs/89015169-0fc7-4073-8565-aa99ab5ed01e/propose HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/shows HTTP/1.1" 201 Created
+INFO:     127.0.0.1:51545 - "GET /shows/2c4345ff-c3cc-45bd-9275-4c0417711565 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51983 - "GET /research/ai/runs/50aa36b4-eb00-46f2-a725-24d2060690a1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51983 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51983 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=0.007 events=1 completed=False elapsed_seconds=30.010
+research_analysis run=50aa36b4-eb00-46f2-a725-24d2060690a1 failure=timeout_read elapsed_seconds=30.010
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/50aa36b4-eb00-46f2-a725-24d2060690a1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:52077 - "GET /research/ai/runs/8f256128-804a-487e-ba5d-6492a154c1a2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52077 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52077 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=0.007 events=1 completed=False elapsed_seconds=60.002
+research_analysis run=8f256128-804a-487e-ba5d-6492a154c1a2 failure=deadline elapsed_seconds=60.003
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/8f256128-804a-487e-ba5d-6492a154c1a2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_stream input_hash=acac7308c5de403c1f91fbe62227cca3add663b53376a90d5d986ca6e1705acc first_event_seconds=0.008 events=8 completed=False elapsed_seconds=0.008
+research_analysis run=a69a94af-4fd0-4425-b557-be6a1c9ff962 failure=invalid_output elapsed_seconds=0.009
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /research/ai/runs/a69a94af-4fd0-4425-b557-be6a1c9ff962 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:51545 - "POST /research/ai/generate HTTP/1.1" 429 Too Many Requests
+INFO:     127.0.0.1:51545 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51545 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [18916]

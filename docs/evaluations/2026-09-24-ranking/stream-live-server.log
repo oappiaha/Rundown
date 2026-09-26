@@ -1,0 +1,26 @@
+INFO:     Started server process [77898]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8187 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54245 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /shows HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "POST /research/ai/input HTTP/1.1" 200 OK
+research_stream input_hash=78ed684a51bed403d437ceccfe69aa318ac19a412b0bf5c83d7ea2a9360fd6d9 first_event_seconds=1.118 events=651 completed=True elapsed_seconds=31.103
+INFO:     127.0.0.1:54245 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /research/ai/runs/fdbe60af-211d-4e84-bde4-adc6e1f349d7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "POST /research/ai/generate HTTP/1.1" 429 Too Many Requests
+INFO:     127.0.0.1:54245 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /shows HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "POST /research/ai/runs/fdbe60af-211d-4e84-bde4-adc6e1f349d7/propose HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "POST /research/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "POST /research/shows HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54245 - "GET /shows/1a4ff7eb-bb19-463d-a3fe-92e36e968e0d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54245 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [77898]

@@ -1,0 +1,23 @@
+{
+  "frozen_before_generation": true,
+  "input_hash": "78ed684a51bed403d437ceccfe69aa318ac19a412b0bf5c83d7ea2a9360fd6d9",
+  "manual_duplicate_id": "ff2c1e6f-5199-484a-9e65-7dc931de33ae",
+  "manual_duplicate_url": "https://www.youtube.com/watch?v=No-3Wpnqr4U",
+  "expectations": [
+    "All three concrete workflow videos outrank all six fashion/sports distractors.",
+    "Concrete workflow evidence outranks generic showcases/promotional claims.",
+    "Manual duplicate groups with its original tutorial.",
+    "Distinct workflow videos stay separate despite shared AI subject.",
+    "Sparse/promotional descriptions produce cautious reasons; no invented video contents or verified outcomes.",
+    "Shortlist includes three distinct workflow videos, one per duplicate group; manual pins/priority/category still win."
+  ],
+  "limits": "Single public-description smoke sample; no transcripts/video validation; no general accuracy claim.",
+  "generation_policy": {
+    "attempts": 1,
+    "automatic_retries": 0,
+    "output_token_cap": 5000,
+    "daily_limit": 1,
+    "persistent_enablement": false,
+    "approved": false
+  }
+}

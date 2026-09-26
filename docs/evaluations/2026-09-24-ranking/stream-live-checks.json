@@ -1,0 +1,7 @@
+{
+  "exact_recovery": true,
+  "new_id_cap_429": true,
+  "sources_live_shows_unchanged_by_generation": true,
+  "shortlist_saved_exactly": true,
+  "source_urls_retained": true
+}

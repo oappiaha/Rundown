@@ -1,0 +1,791 @@
+{
+ "checks": [
+  {
+   "name": "live show is playing before imports",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "YouTube fixture import succeeded with 3 topics",
+   "ok": true,
+   "detail": {
+    "id": "bc532054-9c21-4386-98fa-0abdb086e856",
+    "started_at": "2026-09-25T05:14:55.910055+00:00",
+    "finished_at": "2026-09-25T05:14:55.928044+00:00",
+    "duplicates": 0,
+    "error": null,
+    "revision": 1,
+    "source_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+    "status": "succeeded",
+    "created": 3,
+    "skipped": 0,
+    "mode": "fixture"
+   }
+  },
+  {
+   "name": "RSS fixture import succeeded with 4 topics",
+   "ok": true,
+   "detail": {
+    "status": "succeeded",
+    "created": 4,
+    "duplicates": 0,
+    "skipped": 0,
+    "error": null
+   }
+  },
+  {
+   "name": "YouTube presentation readback: creator + served thumbnail + full title kept",
+   "ok": true,
+   "detail": {
+    "provider": "youtube",
+    "creator": "Frame & Field",
+    "excerpt": "Directors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/long-take.png",
+     "width": 480,
+     "height": 360
+    },
+    "media_seconds": null,
+    "state": "ready",
+    "reason": null,
+    "fetched_at": "2026-09-25T05:14:55.925724+00:00"
+   }
+  },
+  {
+   "name": "RSS presentation readback: author + media:thumbnail",
+   "ok": true,
+   "detail": {
+    "provider": "rss",
+    "creator": "Tomas Reyes",
+    "excerpt": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold. On screens the choice is stranger, because the light comes from behind.",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+     "width": 1200,
+     "height": 630
+    },
+    "media_seconds": null,
+    "state": "ready",
+    "reason": null,
+    "fetched_at": "2026-09-25T05:14:55.938800+00:00"
+   }
+  },
+  {
+   "name": "unsafe/malformed YouTube thumbnail dropped, topic kept (partial)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "portrait RSS media:content retained with dimensions",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "all imported items start with default editorial",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Discover nav opens the Discover surface with the full YouTube headline",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "served thumbnail decoded in the browser (480x360, lazy: not fetched before scrolling to it)",
+   "ok": true,
+   "detail": [
+    480,
+    360,
+    "http://127.0.0.1:8192/thumbs/long-take.png",
+    "lazy",
+    0
+   ]
+  },
+  {
+   "name": "creator and source label visible on the card",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "original source link points at the real URL, opens in a new tab",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "artwork fallback for \"How a foley artist builds a footstep (br\u2026\"",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "artwork fallback for \"Article whose cover image returns 404\u2026\"",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "artwork fallback for \"The grid that ran a newspaper for forty \u2026\"",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "artwork fallback for \"Article with no image at all\u2026\"",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "article cover thumbnail decoded",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "no broken <img> left in the document",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "bookmark persisted through the editorial endpoint (revision 1)",
+   "ok": true,
+   "detail": {
+    "revision": 1,
+    "saved": true,
+    "note": "",
+    "updated_at": "2026-09-25T05:14:57.891847+00:00"
+   }
+  },
+  {
+   "name": "arrow keys / j inside the note reach the textarea and do not scroll the feed",
+   "ok": true,
+   "detail": [
+    1990,
+    1990,
+    "jAsk about the long take"
+   ]
+  },
+  {
+   "name": "status says unsaved before explicit save",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "note persisted (revision 2), bookmark kept",
+   "ok": true,
+   "detail": {
+    "revision": 2,
+    "saved": true,
+    "note": "Ask about the long take",
+    "updated_at": "2026-09-25T05:14:58.625374+00:00"
+   }
+  },
+  {
+   "name": "source text, imported notes, topic revision and presentation untouched by editorial writes",
+   "ok": true,
+   "detail": {
+    "revision": true,
+    "text": true,
+    "notes": true,
+    "source_url": true,
+    "source": true,
+    "topic": true,
+    "updated_at": true,
+    "presentation": true
+   }
+  },
+  {
+   "name": "after reload in a fresh context the bookmark shows",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "after reload the saved note shows",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Saved filter lists only the bookmarked topic",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "other screen wrote revision 3",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "stale save refused: conflict shown with theirs, draft kept, stored note untouched",
+   "ok": true,
+   "detail": {
+    "alert": "This note changed on another screen. Your text is kept above. Theirs: theirsKeep mine and save againUse theirs",
+    "stored": {
+     "revision": 3,
+     "saved": true,
+     "note": "theirs",
+     "updated_at": "2026-09-25T05:14:59.197025+00:00"
+    }
+   }
+  },
+  {
+   "name": "direct stale PUT returns 409",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "resubmitting against revision 3 saves the draft (revision 4)",
+   "ok": true,
+   "detail": {
+    "revision": 4,
+    "saved": true,
+    "note": "mine (draft)",
+    "updated_at": "2026-09-25T05:14:59.360309+00:00"
+   }
+  },
+  {
+   "name": "duplicate imports create nothing",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "duplicate import left bookmark, note, presentation and source unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "inbox still has exactly 7 topics",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "390px: no horizontal overflow (document and stage)",
+   "ok": true,
+   "detail": {
+    "docW": 390,
+    "innerW": 390,
+    "stageW": 390,
+    "stageC": 390
+   }
+  },
+  {
+   "name": "390px: swipe/scroll snaps to a following card (progress moved, aligned to card start)",
+   "ok": true,
+   "detail": [
+    0,
+    1,
+    "1 / 7",
+    0.25
+   ]
+  },
+  {
+   "name": "390px Explore: broken cover falls back and no horizontal overflow",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "390px: arrow in note keeps the feed still",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Inbox view still lists the imported idea by its live label",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Sources view lists the feed",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Live view shows the running topic",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "live current topic/time untouched by imports and editorial writes",
+   "ok": true,
+   "detail": {
+    "elapsed": 9.2,
+    "remaining_before": 3600,
+    "remaining_after": 3591,
+    "drift": -0.23
+   }
+  },
+  {
+   "name": "no unexpected failed network requests or console errors",
+   "ok": true,
+   "detail": {
+    "failed": [
+     "http://127.0.0.1:3189/rundown/state",
+     "http://127.0.0.1:3189/rundown/state",
+     "http://127.0.0.1:3189/rundown/state",
+     "http://127.0.0.1:3189/rundown/state"
+    ],
+    "console": [
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 409 (Conflict)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+   }
+  }
+ ],
+ "api": {
+  "live_before": {
+   "revision": 2,
+   "topics": [
+    {
+     "id": "7d5ba405-b355-4590-85ab-076bff3226b4",
+     "text": "On air",
+     "duration": 3600,
+     "notes": "Already live"
+    }
+   ],
+   "current_topic_id": "7d5ba405-b355-4590-85ab-076bff3226b4",
+   "remaining_seconds": 3600,
+   "paused": false,
+   "server_time": "2026-09-25T05:14:55.903139+00:00"
+  },
+  "youtube_import": {
+   "id": "bc532054-9c21-4386-98fa-0abdb086e856",
+   "started_at": "2026-09-25T05:14:55.910055+00:00",
+   "finished_at": "2026-09-25T05:14:55.928044+00:00",
+   "duplicates": 0,
+   "error": null,
+   "revision": 1,
+   "source_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+   "status": "succeeded",
+   "created": 3,
+   "skipped": 0,
+   "mode": "fixture"
+  },
+  "rss_import": {
+   "id": "93a0e467-afef-4717-8394-842c55f8ba7f",
+   "feed_id": "9364c300-cc9e-4828-8047-a50ea5f8203d",
+   "status": "succeeded",
+   "started_at": "2026-09-25T05:14:55.933493+00:00",
+   "finished_at": "2026-09-25T05:14:55.941075+00:00",
+   "created": 4,
+   "duplicates": 0,
+   "skipped": 0,
+   "examined": 4,
+   "error": null,
+   "warnings": [],
+   "items": []
+  },
+  "inbox_after_import": [
+   {
+    "id": "cf67409e-980c-4411-be7a-005e57bc4e18",
+    "revision": 1,
+    "text": "Article with no image at all",
+    "duration": 120,
+    "notes": "Feed: Surface Notes\n\nOriginal title: Article with no image at all\n\nText-first card.",
+    "source_url": "https://example.com/no-image",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.940765+00:00",
+    "updated_at": "2026-09-25T05:14:55.940765+00:00",
+    "source": {
+     "kind": "rss",
+     "feed_id": "9364c300-cc9e-4828-8047-a50ea5f8203d",
+     "feed_name": "Surface Notes",
+     "original_title": "Article with no image at all",
+     "body_text": "Text-first card.",
+     "published_at": null,
+     "imported_at": "2026-09-25T05:14:55.940765+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "Article with no image at all",
+     "duration": 120,
+     "notes": "Feed: Surface Notes\n\nOriginal title: Article with no image at all\n\nText-first card.\n\nSource: https://example.com/no-image"
+    },
+    "presentation": {
+     "provider": "rss",
+     "creator": "Surface Notes",
+     "excerpt": "Text-first card.",
+     "thumbnail": null,
+     "media_seconds": null,
+     "state": "partial",
+     "reason": "The source offered no usable image.",
+     "fetched_at": "2026-09-25T05:14:55.940765+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   },
+   {
+    "id": "2d9d3097-f0ee-41ca-af4a-c7c29172a488",
+    "revision": 1,
+    "text": "Article whose cover image retu",
+    "duration": 120,
+    "notes": "Feed: Surface Notes\n\nOriginal title: Article whose cover image returns 404\n\nThe card must still render with artwork.",
+    "source_url": "https://example.com/broken-cover",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.940346+00:00",
+    "updated_at": "2026-09-25T05:14:55.940346+00:00",
+    "source": {
+     "kind": "rss",
+     "feed_id": "9364c300-cc9e-4828-8047-a50ea5f8203d",
+     "feed_name": "Surface Notes",
+     "original_title": "Article whose cover image returns 404",
+     "body_text": "The card must still render with artwork.",
+     "published_at": null,
+     "imported_at": "2026-09-25T05:14:55.940346+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "Article whose cover image retu",
+     "duration": 120,
+     "notes": "Feed: Surface Notes\n\nOriginal title: Article whose cover image returns 404\n\nThe card must still render with artwork.\n\nSource: https://example.com/broken-cover"
+    },
+    "presentation": {
+     "provider": "rss",
+     "creator": "Surface Notes",
+     "excerpt": "The card must still render with artwork.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/gone.png",
+      "width": null,
+      "height": null
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-25T05:14:55.940346+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   },
+   {
+    "id": "62c6d563-f525-40d7-aca2-bb4e6c28dfbb",
+    "revision": 1,
+    "text": "Kerning in twelve seconds (por",
+    "duration": 120,
+    "notes": "Feed: Surface Notes\n\nOriginal title: Kerning in twelve seconds (portrait cover)\n\nA type designer fixes a shop sign with a finger and a marker.",
+    "source_url": "https://example.com/kerning",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.939914+00:00",
+    "updated_at": "2026-09-25T05:14:55.939914+00:00",
+    "source": {
+     "kind": "rss",
+     "feed_id": "9364c300-cc9e-4828-8047-a50ea5f8203d",
+     "feed_name": "Surface Notes",
+     "original_title": "Kerning in twelve seconds (portrait cover)",
+     "body_text": "A type designer fixes a shop sign with a finger and a marker.",
+     "published_at": null,
+     "imported_at": "2026-09-25T05:14:55.939914+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "Kerning in twelve seconds (por",
+     "duration": 120,
+     "notes": "Feed: Surface Notes\n\nOriginal title: Kerning in twelve seconds (portrait cover)\n\nA type designer fixes a shop sign with a finger and a marker.\n\nSource: https://example.com/kerning"
+    },
+    "presentation": {
+     "provider": "rss",
+     "creator": "Surface Notes",
+     "excerpt": "A type designer fixes a shop sign with a finger and a marker.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/portrait.png",
+      "width": 180,
+      "height": 320
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-25T05:14:55.939914+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   },
+   {
+    "id": "e4ec4d24-d315-4a22-a2fe-9218596e0834",
+    "revision": 1,
+    "text": "Off-white is a decision: paper",
+    "duration": 120,
+    "notes": "Feed: Surface Notes\n\nOriginal title: Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose\n\nPure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.\nOn screens the choice is stranger, because the light comes from behind.",
+    "source_url": "https://example.com/off-white",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.938800+00:00",
+    "updated_at": "2026-09-25T05:14:55.938800+00:00",
+    "source": {
+     "kind": "rss",
+     "feed_id": "9364c300-cc9e-4828-8047-a50ea5f8203d",
+     "feed_name": "Surface Notes",
+     "original_title": "Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose",
+     "body_text": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.\nOn screens the choice is stranger, because the light comes from behind.",
+     "published_at": "Tue, 22 Sep 2026 09:00:00 GMT",
+     "imported_at": "2026-09-25T05:14:55.938800+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "Off-white is a decision: paper",
+     "duration": 120,
+     "notes": "Feed: Surface Notes\n\nOriginal title: Off-white is a decision: paper makers, gallery painters and screen designers on the colour nobody thinks they chose\n\nPure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold.\nOn screens the choice is stranger, because the light comes from behind.\n\nSource: https://example.com/off-white"
+    },
+    "presentation": {
+     "provider": "rss",
+     "creator": "Tomas Reyes",
+     "excerpt": "Pure white is a lab value; off-white is a temperature. Museums warm their walls by a few points so paintings do not look cold. On screens the choice is stranger, because the light comes from behind.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/offwhite.png",
+      "width": 1200,
+      "height": 630
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-25T05:14:55.938800+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   },
+   {
+    "id": "6674dc39-8788-4f53-861e-66b72499c764",
+    "revision": 1,
+    "text": "The grid that ran a newspaper ",
+    "duration": 120,
+    "notes": "Youtube \u00b7 Film craft\nOriginal title: The grid that ran a newspaper for forty years (no thumbnail offered)\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Set in Metal\n\nA video essay on the twelve-column system one Zurich daily never abandoned.",
+    "source_url": "https://www.youtube.com/watch?v=vid00000003",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.927794+00:00",
+    "updated_at": "2026-09-25T05:14:55.927794+00:00",
+    "source": {
+     "kind": "youtube",
+     "feed_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+     "feed_name": "Film craft",
+     "original_title": "The grid that ran a newspaper for forty years (no thumbnail offered)",
+     "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: Set in Metal\n\nA video essay on the twelve-column system one Zurich daily never abandoned.",
+     "published_at": "2026-09-25T05:14:54.919657+00:00",
+     "imported_at": "2026-09-25T05:14:55.927794+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "The grid that ran a newspaper ",
+     "duration": 120,
+     "notes": "Youtube \u00b7 Film craft\nOriginal title: The grid that ran a newspaper for forty years (no thumbnail offered)\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Set in Metal\n\nA video essay on the twelve-column system one Zurich daily never abandoned.\n\nSource: https://www.youtube.com/watch?v=vid00000003"
+    },
+    "presentation": {
+     "provider": "youtube",
+     "creator": "Set in Metal",
+     "excerpt": "A video essay on the twelve-column system one Zurich daily never abandoned.",
+     "thumbnail": null,
+     "media_seconds": null,
+     "state": "partial",
+     "reason": "The source offered no usable image.",
+     "fetched_at": "2026-09-25T05:14:55.927794+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   },
+   {
+    "id": "40c16144-0ad1-4b97-bc47-12b79c8d89dd",
+    "revision": 1,
+    "text": "How a foley artist builds a fo",
+    "duration": 120,
+    "notes": "Youtube \u00b7 Film craft\nOriginal title: How a foley artist builds a footstep (broken thumbnail on purpose)\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Below the Line\n\nSeven minutes inside a pit of gravel, a pair of borrowed boots and a lot of listening.",
+    "source_url": "https://www.youtube.com/watch?v=vid00000002",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.927388+00:00",
+    "updated_at": "2026-09-25T05:14:55.927388+00:00",
+    "source": {
+     "kind": "youtube",
+     "feed_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+     "feed_name": "Film craft",
+     "original_title": "How a foley artist builds a footstep (broken thumbnail on purpose)",
+     "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: Below the Line\n\nSeven minutes inside a pit of gravel, a pair of borrowed boots and a lot of listening.",
+     "published_at": "2026-09-25T05:14:54.919657+00:00",
+     "imported_at": "2026-09-25T05:14:55.927388+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "How a foley artist builds a fo",
+     "duration": 120,
+     "notes": "Youtube \u00b7 Film craft\nOriginal title: How a foley artist builds a footstep (broken thumbnail on purpose)\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Below the Line\n\nSeven minutes inside a pit of gravel, a pair of borrowed boots and a lot of listening.\n\nSource: https://www.youtube.com/watch?v=vid00000002"
+    },
+    "presentation": {
+     "provider": "youtube",
+     "creator": "Below the Line",
+     "excerpt": "Seven minutes inside a pit of gravel, a pair of borrowed boots and a lot of listening.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/missing.png",
+      "width": 480,
+      "height": 360
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-25T05:14:55.927388+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   },
+   {
+    "id": "47168e20-556a-408c-af02-3629194674f6",
+    "revision": 1,
+    "text": "Why the long take came back: h",
+    "duration": 120,
+    "notes": "Youtube \u00b7 Film craft\nOriginal title: Why the long take came back: how one-shot scenes went from stunt to scheduling decision\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Frame & Field\n\nDirectors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+    "source_url": "https://www.youtube.com/watch?v=vid00000001",
+    "archived": false,
+    "created_at": "2026-09-25T05:14:55.925724+00:00",
+    "updated_at": "2026-09-25T05:14:55.925724+00:00",
+    "source": {
+     "kind": "youtube",
+     "feed_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+     "feed_name": "Film craft",
+     "original_title": "Why the long take came back: how one-shot scenes went from stunt to scheduling decision",
+     "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: Frame & Field\n\nDirectors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+     "published_at": "2026-09-25T05:14:54.919657+00:00",
+     "imported_at": "2026-09-25T05:14:55.925724+00:00",
+     "truncated": false
+    },
+    "topic": {
+     "text": "Why the long take came back: h",
+     "duration": 120,
+     "notes": "Youtube \u00b7 Film craft\nOriginal title: Why the long take came back: how one-shot scenes went from stunt to scheduling decision\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Frame & Field\n\nDirectors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.\n\nSource: https://www.youtube.com/watch?v=vid00000001"
+    },
+    "presentation": {
+     "provider": "youtube",
+     "creator": "Frame & Field",
+     "excerpt": "Directors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+     "thumbnail": {
+      "url": "http://127.0.0.1:8192/thumbs/long-take.png",
+      "width": 480,
+      "height": 360
+     },
+     "media_seconds": null,
+     "state": "ready",
+     "reason": null,
+     "fetched_at": "2026-09-25T05:14:55.925724+00:00"
+    },
+    "editorial": {
+     "revision": 0,
+     "saved": false,
+     "note": "",
+     "updated_at": null
+    }
+   }
+  ],
+  "after_note": {
+   "id": "47168e20-556a-408c-af02-3629194674f6",
+   "revision": 1,
+   "text": "Why the long take came back: h",
+   "duration": 120,
+   "notes": "Youtube \u00b7 Film craft\nOriginal title: Why the long take came back: how one-shot scenes went from stunt to scheduling decision\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Frame & Field\n\nDirectors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+   "source_url": "https://www.youtube.com/watch?v=vid00000001",
+   "archived": false,
+   "created_at": "2026-09-25T05:14:55.925724+00:00",
+   "updated_at": "2026-09-25T05:14:55.925724+00:00",
+   "source": {
+    "kind": "youtube",
+    "feed_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+    "feed_name": "Film craft",
+    "original_title": "Why the long take came back: how one-shot scenes went from stunt to scheduling decision",
+    "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: Frame & Field\n\nDirectors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+    "published_at": "2026-09-25T05:14:54.919657+00:00",
+    "imported_at": "2026-09-25T05:14:55.925724+00:00",
+    "truncated": false
+   },
+   "topic": {
+    "text": "Why the long take came back: h",
+    "duration": 120,
+    "notes": "Youtube \u00b7 Film craft\nOriginal title: Why the long take came back: how one-shot scenes went from stunt to scheduling decision\nPublished: 2026-09-25T05:14:54.919657+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Frame & Field\n\nDirectors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.\n\nSource: https://www.youtube.com/watch?v=vid00000001"
+   },
+   "presentation": {
+    "provider": "youtube",
+    "creator": "Frame & Field",
+    "excerpt": "Directors used to hide cuts inside whip pans and doorways. Today the reason to hold a shot is simpler: a camera that can move like a person and a crew that rehearses a scene like a play.",
+    "thumbnail": {
+     "url": "http://127.0.0.1:8192/thumbs/long-take.png",
+     "width": 480,
+     "height": 360
+    },
+    "media_seconds": null,
+    "state": "ready",
+    "reason": null,
+    "fetched_at": "2026-09-25T05:14:55.925724+00:00"
+   },
+   "editorial": {
+    "revision": 2,
+    "saved": true,
+    "note": "Ask about the long take",
+    "updated_at": "2026-09-25T05:14:58.625374+00:00"
+   }
+  },
+  "stale_409": 409,
+  "duplicate_imports": [
+   {
+    "id": "4851a1b4-c668-4c44-8580-30b1f871312f",
+    "started_at": "2026-09-25T05:15:01.593385+00:00",
+    "finished_at": "2026-09-25T05:15:01.600559+00:00",
+    "duplicates": 3,
+    "error": null,
+    "revision": 1,
+    "source_id": "dadc5405-c835-47a9-afbb-f8ae29437f98",
+    "status": "succeeded",
+    "created": 0,
+    "skipped": 0,
+    "mode": "fixture"
+   },
+   {
+    "status": "succeeded",
+    "created": 0,
+    "duplicates": 4
+   }
+  ],
+  "live_after": {
+   "revision": 2,
+   "topics": [
+    {
+     "id": "7d5ba405-b355-4590-85ab-076bff3226b4",
+     "text": "On air",
+     "duration": 3600,
+     "notes": "Already live"
+    }
+   ],
+   "current_topic_id": "7d5ba405-b355-4590-85ab-076bff3226b4",
+   "remaining_seconds": 3591,
+   "paused": false,
+   "server_time": "2026-09-25T05:15:05.135119+00:00"
+  }
+ },
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 409 (Conflict)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "failed_requests": [
+  "http://127.0.0.1:3189/rundown/state",
+  "http://127.0.0.1:3189/rundown/state",
+  "http://127.0.0.1:3189/rundown/state",
+  "http://127.0.0.1:3189/rundown/state"
+ ],
+ "status": "completed"
+}

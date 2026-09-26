@@ -1,0 +1,136 @@
+{
+  "id": "fdbe60af-211d-4e84-bde4-adc6e1f349d7",
+  "status": "succeeded",
+  "brief": "Prioritize concrete, actionable AI filmmaking workflows for independent creators. Generic showcases rank below specific production workflows. Fashion runway promotions and unrelated football highlights are distractors. Judge descriptions only; do not assume video contents. Group identical coverage, not merely a shared subject.",
+  "selections": [
+    {
+      "id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "d8eef256-6c1e-4741-8098-cf9601b23a28",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "d5023dea-aee6-4685-aa98-fbd58540b2c9",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "56d09271-400d-48c8-866d-6f7f2c658d8d",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "7eb461f8-c568-4bca-b15c-9980e2b82c58",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "8d4a78c8-dd51-4b27-8bd3-68bc26db3c29",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "2bafce8d-ea11-4498-85f7-7fc8f12c399e",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "74ec01fd-69bf-4172-abfa-9e98328087be",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "57b38482-2fd6-4bbc-8198-15c0011fa9c6",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "ff2c1e6f-5199-484a-9e65-7dc931de33ae",
+      "revision": 1,
+      "preference_revision": 0
+    }
+  ],
+  "started_at": "2026-09-25T02:33:24.442050+00:00",
+  "model": "claude-sonnet-5",
+  "mode": "anthropic",
+  "stale": false,
+  "items": [
+    {
+      "id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "score": 88,
+      "category": "film-entertainment",
+      "group_id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "reason": "Describes a concrete 5-step AI filmmaking workflow (storyboard, character design, keyframes, clip generation, editing) with named tools (ChatGPT, Gemini, Midjourney, CapCut), matching the brief's focus on actionable production workflows for independent creators."
+    },
+    {
+      "id": "d8eef256-6c1e-4741-8098-cf9601b23a28",
+      "score": 96,
+      "category": "film-entertainment",
+      "group_id": "d8eef256-6c1e-4741-8098-cf9601b23a28",
+      "reason": "Highly specific, actionable AI filmmaking technique (Scene Foundation method) with detailed steps for consistent multi-angle shots, seeding/inpainting tips, and named tools (Higsfield, Adobe Firefly, Vizard Agent) — exactly the kind of concrete production workflow the brief prioritizes."
+    },
+    {
+      "id": "d5023dea-aee6-4685-aa98-fbd58540b2c9",
+      "score": 90,
+      "category": "film-entertainment",
+      "group_id": "d5023dea-aee6-4685-aa98-fbd58540b2c9",
+      "reason": "Presents a detailed 7-phase AI filmmaking workflow using a single master prompt to generate script, characters, and video via Google Flow and Gemini, a concrete production process fitting the brief's actionable workflow focus."
+    },
+    {
+      "id": "56d09271-400d-48c8-866d-6f7f2c658d8d",
+      "score": 3,
+      "category": "fashion-industry",
+      "group_id": "56d09271-400d-48c8-866d-6f7f2c658d8d",
+      "reason": "A designer runway show promotion (Sandy Liang SS27), explicitly flagged as a distractor by the brief since it's unrelated to AI filmmaking workflows."
+    },
+    {
+      "id": "7eb461f8-c568-4bca-b15c-9980e2b82c58",
+      "score": 2,
+      "category": "fashion-industry",
+      "group_id": "7eb461f8-c568-4bca-b15c-9980e2b82c58",
+      "reason": "Generic runway/designer dress showcase with promotional hashtags, matching the brief's explicit distractor category of fashion runway promotions."
+    },
+    {
+      "id": "8d4a78c8-dd51-4b27-8bd3-68bc26db3c29",
+      "score": 2,
+      "category": "fashion-industry",
+      "group_id": "8d4a78c8-dd51-4b27-8bd3-68bc26db3c29",
+      "reason": "Milan Fashion Week runway coverage for Roberto Cavalli, an unrelated fashion promotion explicitly called out as a distractor in the brief."
+    },
+    {
+      "id": "2bafce8d-ea11-4498-85f7-7fc8f12c399e",
+      "score": 1,
+      "category": "uncategorized",
+      "group_id": "2bafce8d-ea11-4498-85f7-7fc8f12c399e",
+      "reason": "Football match highlights (Portugal vs Wales), an unrelated sports clip explicitly noted as a distractor per the brief."
+    },
+    {
+      "id": "74ec01fd-69bf-4172-abfa-9e98328087be",
+      "score": 1,
+      "category": "uncategorized",
+      "group_id": "74ec01fd-69bf-4172-abfa-9e98328087be",
+      "reason": "Short football skills clip with no connection to AI filmmaking workflows, matching the brief's football-highlights distractor category."
+    },
+    {
+      "id": "57b38482-2fd6-4bbc-8198-15c0011fa9c6",
+      "score": 1,
+      "category": "uncategorized",
+      "group_id": "57b38482-2fd6-4bbc-8198-15c0011fa9c6",
+      "reason": "Football free-kick highlight clip (Rashford), unrelated to the brief's AI filmmaking focus and matches the football-highlights distractor note."
+    },
+    {
+      "id": "ff2c1e6f-5199-484a-9e65-7dc931de33ae",
+      "score": 88,
+      "category": "film-entertainment",
+      "group_id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "reason": "Manual duplicate control entry with identical title, channel, and description as the 5-step AI workflow video by Aurora Zhang; same underlying content, grouped together."
+    }
+  ],
+  "input_tokens": 9015,
+  "output_tokens": 2985,
+  "error": null
+}

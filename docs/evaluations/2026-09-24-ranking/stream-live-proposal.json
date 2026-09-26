@@ -1,0 +1,140 @@
+{
+  "items": [
+    {
+      "id": "d8eef256-6c1e-4741-8098-cf9601b23a28",
+      "revision": 1,
+      "text": "AI Filmmaking Tutorial: Scene ",
+      "duration": 120,
+      "notes": "Youtube · Evaluation film\nOriginal title: AI Filmmaking Tutorial: Scene Foundation for Consistent Multi-Angle Shots\nPublished: 2026-09-24T18:03:10+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: peytonb37\n\nTired of AI shots that don’t match from angle to angle? In this video, I show my Scene Foundation method for AI filmmaking: build the world first (exterior + interior masters), then add characters, new angles, and lighting that stay consistent across a full sequence.\nWhat you’ll learn:\n- How to create a single-location horror house with consistent exteriors and interiors\n- Seeding and inpainting tips to fix doors/windows and geometry mismatches\n- Generating new angles and time-of-day variants (day, golden hour, midnight)\n- Compositing characters with correct perspective, shadows, and mood\n- Organizing boards and assembling a coherent edit\nTools mentioned:\n- Higsfield image models (Nano, Cream) for photoreal coverage\n- Adobe Firefly Boards for visual planning\n- Vizard Agent for end-to-end, prompt-driven editing (fill missing shots, color grade, audio, export)\nWhy it works:\n- Scene foundation anchors the model to real spatial data, reducing hallucinations and preserving continuity.\nWorkflow recap:\n- Step 1: Generate exterior + interior masters from one foundational image\n- Step 2: Expand angles; create day/night variants\n- Step 3: Build a neutral-base character and outfits\n- Step 4: Composite into rooms; refine with inpainting\n- Step 5: Board it, then assemble a timeline or prompt Vizard Agent for an auto-cut\nhttps://vizard.ai\nHashtags:\n#vizard #vizardai #AIfilmmaking #generativeAI #videoworkflow #storyboarding #colorgrading",
+      "source_url": "https://www.youtube.com/watch?v=zm6cSwNVp0g",
+      "archived": false,
+      "created_at": "2026-09-24T19:43:04.932280+00:00",
+      "updated_at": "2026-09-24T19:43:04.932280+00:00",
+      "source": {
+        "kind": "youtube",
+        "feed_id": "film",
+        "feed_name": "Evaluation film",
+        "original_title": "AI Filmmaking Tutorial: Scene Foundation for Consistent Multi-Angle Shots",
+        "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: peytonb37\n\nTired of AI shots that don’t match from angle to angle? In this video, I show my Scene Foundation method for AI filmmaking: build the world first (exterior + interior masters), then add characters, new angles, and lighting that stay consistent across a full sequence.\nWhat you’ll learn:\n- How to create a single-location horror house with consistent exteriors and interiors\n- Seeding and inpainting tips to fix doors/windows and geometry mismatches\n- Generating new angles and time-of-day variants (day, golden hour, midnight)\n- Compositing characters with correct perspective, shadows, and mood\n- Organizing boards and assembling a coherent edit\nTools mentioned:\n- Higsfield image models (Nano, Cream) for photoreal coverage\n- Adobe Firefly Boards for visual planning\n- Vizard Agent for end-to-end, prompt-driven editing (fill missing shots, color grade, audio, export)\nWhy it works:\n- Scene foundation anchors the model to real spatial data, reducing hallucinations and preserving continuity.\nWorkflow recap:\n- Step 1: Generate exterior + interior masters from one foundational image\n- Step 2: Expand angles; create day/night variants\n- Step 3: Build a neutral-base character and outfits\n- Step 4: Composite into rooms; refine with inpainting\n- Step 5: Board it, then assemble a timeline or prompt Vizard Agent for an auto-cut\nhttps://vizard.ai\nHashtags:\n#vizard #vizardai #AIfilmmaking #generativeAI #videoworkflow #storyboarding #colorgrading",
+        "published_at": "2026-09-24T18:03:10+00:00",
+        "imported_at": "2026-09-24T19:43:04.932280+00:00",
+        "truncated": false
+      },
+      "topic": {
+        "text": "AI Filmmaking Tutorial: Scene ",
+        "duration": 120,
+        "notes": "Youtube · Evaluation film\nOriginal title: AI Filmmaking Tutorial: Scene Foundation for Consistent Multi-Angle Shots\nPublished: 2026-09-24T18:03:10+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: peytonb37\n\nTired of AI shots that don’t match from angle to angle? In this video, I show my Scene Foundation method for AI filmmaking: build the world first (exterior + interior masters), then add characters, new angles, and lighting that stay consistent across a full sequence.\nWhat you’ll learn:\n- How to create a single-location horror house with consistent exteriors and interiors\n- Seeding and inpainting tips to fix doors/windows and geometry mismatches\n- Generating new angles and time-of-day variants (day, golden hour, midnight)\n- Compositing characters with correct perspective, shadows, and mood\n- Organizing boards and assembling a coherent edit\nTools mentioned:\n- Higsfield image models (Nano, Cream) for photoreal coverage\n- Adobe Firefly Boards for visual planning\n- Vizard Agent for end-to-end, prompt-driven editing (fill missing shots, color grade, audio, export)\nWhy it works:\n- Scene foundation anchors the model to real spatial data, reducing hallucinations and preserving continuity.\nWorkflow recap:\n- Step 1: Generate exterior + interior masters from one foundational image\n- Step 2: Expand angles; create day/night variants\n- Step 3: Build a neutral-base character and outfits\n- Step 4: Composite into rooms; refine with inpainting\n- Step 5: Board it, then assemble a timeline or prompt Vizard Agent for an auto-cut\nhttps://vizard.ai\nHashtags:\n#vizard #vizardai #AIfilmmaking #generativeAI #videoworkflow #storyboarding #colorgrading\n\nSource: https://www.youtube.com/watch?v=zm6cSwNVp0g"
+      },
+      "preferences": {
+        "revision": 0,
+        "category": null,
+        "priority": 0,
+        "pinned": false,
+        "excluded": false
+      },
+      "category": "ai-innovation",
+      "category_origin": "keyword suggestion",
+      "score": 25,
+      "reasons": [
+        "Priority 0/3: +0",
+        "Freshness from source publication time: +20",
+        "Saved context: +5"
+      ],
+      "full_title": "AI Filmmaking Tutorial: Scene Foundation for Consistent Multi-Angle Shots",
+      "group_id": "d8eef256-6c1e-4741-8098-cf9601b23a28",
+      "related_count": 0
+    },
+    {
+      "id": "d5023dea-aee6-4685-aa98-fbd58540b2c9",
+      "revision": 1,
+      "text": "Create 30 मिनट Long Ai Videos ",
+      "duration": 120,
+      "notes": "Youtube · Evaluation film\nOriginal title: Create 30 मिनट Long Ai Videos l Full Tutorial ✅\nPublished: 2026-09-24T11:56:59+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Skillify Khushi\n\nCreate 30 मिनट  Long Ai Videos l  Full Tutorial ✅ 2026\nCreate 30 Minute Long AI Videos with one click\nCreate 30 Minute Long AI Videos Like @SarvatraHindutva | Full Workflow\nIn this video, I’ll show you how to create long-form, 30-minute AI videos using just ONE Master Prompt.\nThe entire workflow is built around a single prompt that can generate everything you need to take an idea from concept to a complete AI video.\n🚀 What You’ll Learn:\n• One Master Prompt\n• 7-Phase AI Filmmaking Workflow\n• Complete engaging script with a strong hook\n• Full screenplay with scene-by-scene breakdown\n• Consistent characters throughout the entire story\n• Detailed Character Sheets for every important character\n• Detailed scene-by-scene image prompts\n• Image-to-video prompts for every scene\n• Complete visual continuity and storytelling workflow\nFor the visuals, we'll create the characters and scene-by-scene images using Google Flow, and then turn those images into cinematic videos using Gemini Omni Flash.\nThe goal is simple: instead of manually figuring out the story, characters, screenplay, image prompts, and video prompts separately, you can use ONE Master Prompt to structure the entire filmmaking process.\nBy the end of this tutorial, you’ll have a complete workflow for creating long-form AI videos with consistent characters, detailed visuals, and cinematic scenes — even for 30-minute videos.\nWatch the full tutorial and follow the workflow step-by-step.\n▶️ Join our Telegram:\nhttps://t.me/skillifykhushi/46\n📌 Your Queries:\nai video, long ai video, 30 minute ai video, long form ai video, ai filmmaking, ai filmmaking tutorial, ai video kaise banaye, long ai video kaise banaye, 30 minute ai video kaise banaye, ai movie kaise banaye, ai cinematic video, cinematic ai video, ai storytelling, ai story video, ai story kaise banaye, ai screenplay, ai script generator, ai script kaise banaye, ai master prompt, one master prompt, master prompt for ai video, ai video workflow, ai filmmaking workflow, 7 phase ai filmmaking, consistent characters ai, consistent character ai video, character consistency ai, ai character sheet, character sheet ai, scene by scene ai video, scene wise image prompts, image prompts for ai video, image to video prompts, ai image generation, ai image to video, google flow, google flow tutorial, google flow ai, google flow video, google flow image generation, google flow filmmaking, omni flash, omni flash tutorial, gemini omni flash, omni flash image to video, image to video ai, ai video generation, ai video editing, cinematic ai filmmaking, ai movie making, ai movie tutorial, sarvatra hindutva, sarvatra hindutva style, ai videos like sarvatra hindutva, ai documentary, ai documentary kaise banaye, long form ai content, ai content creation, ai tools 2026, chatgpt prompts, chatgpt master prompt, ai prompts, one prompt ai video, free ai tools, hindi ai gyaan\n#aivideo\n#afilmmaking\n#aivideoediting\n#googleflow\n#omniflash\n#gemini\n#aiprompts\n#masterprompt\n#aistorytelling\n#aistory\n#aicinema\n#aifilm\n#aivideogenerator\n#aivideotutorial\n#aicontent\n#aitools\n#ai2026\n#hindi aigyaan\n#krishnasudamamilan",
+      "source_url": "https://www.youtube.com/watch?v=KUN8IKNtlcY",
+      "archived": false,
+      "created_at": "2026-09-24T19:43:04.932683+00:00",
+      "updated_at": "2026-09-24T19:43:04.932683+00:00",
+      "source": {
+        "kind": "youtube",
+        "feed_id": "film",
+        "feed_name": "Evaluation film",
+        "original_title": "Create 30 मिनट Long Ai Videos l Full Tutorial ✅",
+        "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: Skillify Khushi\n\nCreate 30 मिनट  Long Ai Videos l  Full Tutorial ✅ 2026\nCreate 30 Minute Long AI Videos with one click\nCreate 30 Minute Long AI Videos Like @SarvatraHindutva | Full Workflow\nIn this video, I’ll show you how to create long-form, 30-minute AI videos using just ONE Master Prompt.\nThe entire workflow is built around a single prompt that can generate everything you need to take an idea from concept to a complete AI video.\n🚀 What You’ll Learn:\n• One Master Prompt\n• 7-Phase AI Filmmaking Workflow\n• Complete engaging script with a strong hook\n• Full screenplay with scene-by-scene breakdown\n• Consistent characters throughout the entire story\n• Detailed Character Sheets for every important character\n• Detailed scene-by-scene image prompts\n• Image-to-video prompts for every scene\n• Complete visual continuity and storytelling workflow\nFor the visuals, we'll create the characters and scene-by-scene images using Google Flow, and then turn those images into cinematic videos using Gemini Omni Flash.\nThe goal is simple: instead of manually figuring out the story, characters, screenplay, image prompts, and video prompts separately, you can use ONE Master Prompt to structure the entire filmmaking process.\nBy the end of this tutorial, you’ll have a complete workflow for creating long-form AI videos with consistent characters, detailed visuals, and cinematic scenes — even for 30-minute videos.\nWatch the full tutorial and follow the workflow step-by-step.\n▶️ Join our Telegram:\nhttps://t.me/skillifykhushi/46\n📌 Your Queries:\nai video, long ai video, 30 minute ai video, long form ai video, ai filmmaking, ai filmmaking tutorial, ai video kaise banaye, long ai video kaise banaye, 30 minute ai video kaise banaye, ai movie kaise banaye, ai cinematic video, cinematic ai video, ai storytelling, ai story video, ai story kaise banaye, ai screenplay, ai script generator, ai script kaise banaye, ai master prompt, one master prompt, master prompt for ai video, ai video workflow, ai filmmaking workflow, 7 phase ai filmmaking, consistent characters ai, consistent character ai video, character consistency ai, ai character sheet, character sheet ai, scene by scene ai video, scene wise image prompts, image prompts for ai video, image to video prompts, ai image generation, ai image to video, google flow, google flow tutorial, google flow ai, google flow video, google flow image generation, google flow filmmaking, omni flash, omni flash tutorial, gemini omni flash, omni flash image to video, image to video ai, ai video generation, ai video editing, cinematic ai filmmaking, ai movie making, ai movie tutorial, sarvatra hindutva, sarvatra hindutva style, ai videos like sarvatra hindutva, ai documentary, ai documentary kaise banaye, long form ai content, ai content creation, ai tools 2026, chatgpt prompts, chatgpt master prompt, ai prompts, one prompt ai video, free ai tools, hindi ai gyaan\n#aivideo\n#afilmmaking\n#aivideoediting\n#googleflow\n#omniflash\n#gemini\n#aiprompts\n#masterprompt\n#aistorytelling\n#aistory\n#aicinema\n#aifilm\n#aivideogenerator\n#aivideotutorial\n#aicontent\n#aitools\n#ai2026\n#hindi aigyaan\n#krishnasudamamilan",
+        "published_at": "2026-09-24T11:56:59+00:00",
+        "imported_at": "2026-09-24T19:43:04.932683+00:00",
+        "truncated": false
+      },
+      "topic": {
+        "text": "Create 30 मिनट Long Ai Videos ",
+        "duration": 120,
+        "notes": "Youtube · Evaluation film\nOriginal title: Create 30 मिनट Long Ai Videos l Full Tutorial ✅\nPublished: 2026-09-24T11:56:59+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Skillify Khushi\n\nCreate 30 मिनट  Long Ai Videos l  Full Tutorial ✅ 2026\nCreate 30 Minute Long AI Videos with one click\nCreate 30 Minute Long AI Videos Like @SarvatraHindutva | Full Workflow\nIn this video, I’ll show you how to create long-form, 30-minute AI videos using just ONE Master Prompt.\nThe entire workflow is built around a single prompt that can generate everything you need to take an idea from concept to a complete AI video.\n🚀 What You’ll Learn:\n• One Master Prompt\n• 7-Phase AI Filmmaking Workflow\n• Complete engaging script with a strong hook\n• Full screenplay with scene-by-scene breakdown\n• Consistent characters throughout the entire story\n• Detailed Character Sheets for every important character\n• Detailed scene-by-scene image prompts\n• Image-to-video prompts for every scene\n• Complete visual continuity and storytelling workflow\nFor the visuals, we'll create the characters and scene-by-scene images using Google Flow, and then turn those images into cinematic videos using Gemini Omni Flash.\nThe goal is simple: instead of manually figuring out the story, characters, screenplay, image prompts, and video prompts separately, you can use ONE Master Prompt to structure the entire filmmaking process.\nBy the end of this tutorial, you’ll have a complete workflow for creating long-form AI videos with consistent characters, detailed visuals, and cinematic scenes — even for 30-minute videos.\nWatch the full tutorial and follow the workflow step-by-step.\n▶️ Join our Telegram:\nhttps://t.me/skillifykhushi/46\n📌 Your Queries:\nai video, long ai video, 30 minute ai video, long form ai video, ai filmmaking, ai filmmaking tutorial, ai video kaise banaye, long ai video kaise banaye, 30 minute ai video kaise banaye, ai movie kaise banaye, ai cinematic video, cinematic ai video, ai storytelling, ai story video, ai story kaise banaye, ai screenplay, ai script generator, ai script kaise banaye, ai master prompt, one master prompt, master prompt for ai video, ai video workflow, ai filmmaking workflow, 7 phase ai filmmaking, consistent characters ai, consistent character ai video, character consistency ai, ai character sheet, character sheet ai, scene by scene ai video, scene wise image prompts, image prompts for ai video, image to video prompts, ai image generation, ai image to video, google flow, google flow tutorial, google flow ai, google flow video, google flow image generation, google flow filmmaking, omni flash, omni flash tutorial, gemini omni flash, omni flash image to video, image to video ai, ai video generation, ai video editing, cinematic ai filmmaking, ai movie making, ai movie tutorial, sarvatra hindutva, sarvatra hindutva style, ai videos like sarvatra hindutva, ai documentary, ai documentary kaise banaye, long form ai content, ai content creation, ai tools 2026, chatgpt prompts, chatgpt master prompt, ai prompts, one prompt ai video, free ai tools, hindi ai gyaan\n#aivideo\n#afilmmaking\n#aivideoediting\n#googleflow\n#omniflash\n#gemini\n#aiprompts\n#masterprompt\n#aistorytelling\n#aistory\n#aicinema\n#aifilm\n#aivideogenerator\n#aivideotutorial\n#aicontent\n#aitools\n#ai2026\n#hindi aigyaan\n#krishnasudamamilan\n\nSource: https://www.youtube.com/watch?v=KUN8IKNtlcY"
+      },
+      "preferences": {
+        "revision": 0,
+        "category": null,
+        "priority": 0,
+        "pinned": false,
+        "excluded": false
+      },
+      "category": "ai-innovation",
+      "category_origin": "keyword suggestion",
+      "score": 25,
+      "reasons": [
+        "Priority 0/3: +0",
+        "Freshness from source publication time: +20",
+        "Saved context: +5"
+      ],
+      "full_title": "Create 30 मिनट Long Ai Videos l Full Tutorial ✅",
+      "group_id": "d5023dea-aee6-4685-aa98-fbd58540b2c9",
+      "related_count": 0
+    },
+    {
+      "id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "revision": 1,
+      "text": "AI Video 5-Step workflow in 3 ",
+      "duration": 120,
+      "notes": "Youtube · Evaluation film\nOriginal title: AI Video 5-Step workflow in 3 Minutes (Walkthrough)\nPublished: 2026-09-24T18:13:09+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Aurora Zhang\n\nI spent three days exploring AI filmmaking through 15 tutorials on YouTube, Bilibili, and Xiaohongshu. This is the workflow I used to make my first AI-generated video.\nFrom an idea to a finished sequence:\n01 — Storyboard\n02 — Main visual and character design\n03 — Keyframes\n04 — Generate video clips\n05 — Editing and sound\nThe tools were only part of the process. Figuring out what I wanted the images to feel like was a different challenge—and something I'm still working on.\nTools I used: ChatGPT, Gemini, Midjourney, TapNow, and CapCut.\nHere's Aurora. I explore technology through hands-on experiments, visual storytelling, and conversations with the people building it.\n#AIFilmmaking #AIVideo #CreativeProcess",
+      "source_url": "https://www.youtube.com/watch?v=No-3Wpnqr4U",
+      "archived": false,
+      "created_at": "2026-09-24T19:43:04.930978+00:00",
+      "updated_at": "2026-09-24T19:43:04.930978+00:00",
+      "source": {
+        "kind": "youtube",
+        "feed_id": "film",
+        "feed_name": "Evaluation film",
+        "original_title": "AI Video 5-Step workflow in 3 Minutes (Walkthrough)",
+        "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: Aurora Zhang\n\nI spent three days exploring AI filmmaking through 15 tutorials on YouTube, Bilibili, and Xiaohongshu. This is the workflow I used to make my first AI-generated video.\nFrom an idea to a finished sequence:\n01 — Storyboard\n02 — Main visual and character design\n03 — Keyframes\n04 — Generate video clips\n05 — Editing and sound\nThe tools were only part of the process. Figuring out what I wanted the images to feel like was a different challenge—and something I'm still working on.\nTools I used: ChatGPT, Gemini, Midjourney, TapNow, and CapCut.\nHere's Aurora. I explore technology through hands-on experiments, visual storytelling, and conversations with the people building it.\n#AIFilmmaking #AIVideo #CreativeProcess",
+        "published_at": "2026-09-24T18:13:09+00:00",
+        "imported_at": "2026-09-24T19:43:04.930978+00:00",
+        "truncated": false
+      },
+      "topic": {
+        "text": "AI Video 5-Step workflow in 3 ",
+        "duration": 120,
+        "notes": "Youtube · Evaluation film\nOriginal title: AI Video 5-Step workflow in 3 Minutes (Walkthrough)\nPublished: 2026-09-24T18:13:09+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: Aurora Zhang\n\nI spent three days exploring AI filmmaking through 15 tutorials on YouTube, Bilibili, and Xiaohongshu. This is the workflow I used to make my first AI-generated video.\nFrom an idea to a finished sequence:\n01 — Storyboard\n02 — Main visual and character design\n03 — Keyframes\n04 — Generate video clips\n05 — Editing and sound\nThe tools were only part of the process. Figuring out what I wanted the images to feel like was a different challenge—and something I'm still working on.\nTools I used: ChatGPT, Gemini, Midjourney, TapNow, and CapCut.\nHere's Aurora. I explore technology through hands-on experiments, visual storytelling, and conversations with the people building it.\n#AIFilmmaking #AIVideo #CreativeProcess\n\nSource: https://www.youtube.com/watch?v=No-3Wpnqr4U"
+      },
+      "preferences": {
+        "revision": 0,
+        "category": null,
+        "priority": 0,
+        "pinned": false,
+        "excluded": false
+      },
+      "category": "ai-innovation",
+      "category_origin": "keyword suggestion",
+      "score": 25,
+      "reasons": [
+        "Priority 0/3: +0",
+        "Freshness from source publication time: +20",
+        "Saved context: +5"
+      ],
+      "full_title": "AI Video 5-Step workflow in 3 Minutes (Walkthrough)",
+      "group_id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "related_count": 1
+    }
+  ],
+  "warnings": [
+    "AI suggestions need review. Reorder, add or remove stories before saving."
+  ],
+  "method": "ai-research-v1"
+}

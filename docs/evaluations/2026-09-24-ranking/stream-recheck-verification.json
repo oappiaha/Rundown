@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "mode": "slow",
+      "elapsed_seconds": 32.17,
+      "result": {
+        "id": "56f5c404-28bc-4735-8e4f-4672fb871da0",
+        "status": "succeeded",
+        "brief": "AI filmmaking workflows for creators",
+        "selections": [
+          {
+            "id": "682240e1-3707-45ac-87ce-86087461ffe9",
+            "revision": 1,
+            "preference_revision": 0
+          }
+        ],
+        "started_at": "2026-09-25T02:18:30.855096+00:00",
+        "model": "fixture-model",
+        "mode": "fixture",
+        "stale": false,
+        "items": [
+          {
+            "id": "682240e1-3707-45ac-87ce-86087461ffe9",
+            "score": 80,
+            "category": "ai-innovation",
+            "group_id": "682240e1-3707-45ac-87ce-86087461ffe9",
+            "reason": "Controlled fixture, not quality evidence."
+          }
+        ],
+        "input_tokens": 100,
+        "output_tokens": 50,
+        "error": null
+      }
+    },
+    {
+      "mode": "truncated",
+      "elapsed_seconds": 0.01,
+      "result": {
+        "id": "c28dae44-5496-4b01-937e-66059249f984",
+        "status": "failed",
+        "brief": "AI filmmaking workflows for creators",
+        "selections": [
+          {
+            "id": "682240e1-3707-45ac-87ce-86087461ffe9",
+            "revision": 1,
+            "preference_revision": 0
+          }
+        ],
+        "started_at": "2026-09-25T02:19:03.043490+00:00",
+        "model": "fixture-model",
+        "mode": "fixture",
+        "stale": false,
+        "items": [],
+        "input_tokens": null,
+        "output_tokens": null,
+        "error": "Provider returned invalid or incomplete analysis. No stories were changed."
+      }
+    }
+  ],
+  "provider_calls": [
+    "slow",
+    "truncated"
+  ],
+  "replay_no_retry": true,
+  "cap_429": true,
+  "source_live_preserved": true
+}

@@ -1,0 +1,92 @@
+{
+  "cases": [
+    {
+      "mode": "success",
+      "elapsed_seconds": 0.04,
+      "result": {
+        "id": "795d18c8-d8af-47cf-be5e-b840a034ec0b",
+        "status": "succeeded",
+        "brief": "AI filmmaking workflows for creators",
+        "selections": [
+          {
+            "id": "dd1cd1cc-520e-4640-8f63-aa5ac9e4debb",
+            "revision": 1,
+            "preference_revision": 0
+          }
+        ],
+        "started_at": "2026-09-24T19:39:44.905258+00:00",
+        "model": "fixture-model",
+        "mode": "fixture",
+        "stale": false,
+        "items": [
+          {
+            "id": "dd1cd1cc-520e-4640-8f63-aa5ac9e4debb",
+            "score": 80,
+            "category": "ai-innovation",
+            "group_id": "dd1cd1cc-520e-4640-8f63-aa5ac9e4debb",
+            "reason": "Controlled fixture, not quality evidence."
+          }
+        ],
+        "input_tokens": 100,
+        "output_tokens": 50,
+        "error": null
+      }
+    },
+    {
+      "mode": "disconnect",
+      "elapsed_seconds": 0.01,
+      "result": {
+        "id": "9620db8c-29c0-4309-b548-5cf72555dacf",
+        "status": "failed",
+        "brief": "AI filmmaking workflows for creators",
+        "selections": [
+          {
+            "id": "dd1cd1cc-520e-4640-8f63-aa5ac9e4debb",
+            "revision": 1,
+            "preference_revision": 0
+          }
+        ],
+        "started_at": "2026-09-24T19:39:44.943815+00:00",
+        "model": "fixture-model",
+        "mode": "fixture",
+        "stale": false,
+        "items": [],
+        "input_tokens": null,
+        "output_tokens": null,
+        "error": "Provider connection failed or timed out. Check usage before starting another analysis."
+      }
+    },
+    {
+      "mode": "delay",
+      "elapsed_seconds": 30.02,
+      "result": {
+        "id": "5aba43ea-9d51-43de-8693-b047d55cf94f",
+        "status": "failed",
+        "brief": "AI filmmaking workflows for creators",
+        "selections": [
+          {
+            "id": "dd1cd1cc-520e-4640-8f63-aa5ac9e4debb",
+            "revision": 1,
+            "preference_revision": 0
+          }
+        ],
+        "started_at": "2026-09-24T19:39:44.954019+00:00",
+        "model": "fixture-model",
+        "mode": "fixture",
+        "stale": false,
+        "items": [],
+        "input_tokens": null,
+        "output_tokens": null,
+        "error": "Provider connection failed or timed out. Check usage before starting another analysis."
+      }
+    }
+  ],
+  "provider_calls": [
+    "success",
+    "disconnect",
+    "delay"
+  ],
+  "replay_no_retry": true,
+  "cap_429": true,
+  "source_live_preserved": true
+}

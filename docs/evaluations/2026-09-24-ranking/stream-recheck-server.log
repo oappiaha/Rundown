@@ -1,0 +1,34 @@
+INFO:     Started server process [28296]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8185 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52253 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /inbox HTTP/1.1" 201 Created
+INFO:     127.0.0.1:52253 - "POST /research/ai/input HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52255 - "GET /research/ai/runs/56f5c404-28bc-4735-8e4f-4672fb871da0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52255 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52255 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_stream input_hash=e9aeca8d250ca75a20aeed11b0069b6fba8e8830407b16d424013e9830f7c93d first_event_seconds=0.026 events=9 completed=True elapsed_seconds=32.163
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "GET /research/ai/runs/56f5c404-28bc-4735-8e4f-4672fb871da0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:52253 - "POST /research/ai/runs/56f5c404-28bc-4735-8e4f-4672fb871da0/propose HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /research/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /research/shows HTTP/1.1" 201 Created
+INFO:     127.0.0.1:52253 - "GET /shows/fc15e900-f17e-455c-9cd3-20a71220efdb HTTP/1.1" 200 OK
+research_stream input_hash=e9aeca8d250ca75a20aeed11b0069b6fba8e8830407b16d424013e9830f7c93d first_event_seconds=0.005 events=8 completed=False elapsed_seconds=0.006
+research_analysis run=c28dae44-5496-4b01-937e-66059249f984 failure=invalid_output elapsed_seconds=0.006
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "GET /research/ai/runs/c28dae44-5496-4b01-937e-66059249f984 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:52253 - "POST /research/ai/generate HTTP/1.1" 429 Too Many Requests
+INFO:     127.0.0.1:52253 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52253 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28296]

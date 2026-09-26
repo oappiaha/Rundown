@@ -1,0 +1,397 @@
+[
+  {
+    "frame": 0,
+    "label": "01 \u2022 Empty control room \u2014 synthetic data",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 1,
+    "label": "02 \u2022 Sources \u2014 configure discovery",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 2,
+    "label": "03 \u2022 Search YouTube for filmmaking topics",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 3,
+    "label": "04 \u2022 Collect synthetic results into Inbox",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 4,
+    "label": "05 \u2022 Immediate recollection is rate-limited; no second request",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 5,
+    "label": "06 \u2022 Inbox \u2014 review imported topics",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 6,
+    "label": "07 \u2022 Review source and context",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 9,
+    "label": "08 \u2022 Original source metadata retained",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 10,
+    "label": "09 \u2022 Optional preparation \u2014 fixture AI",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 11,
+    "label": "10 \u2022 Review generated presenter notes \u2014 fake AI",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 12,
+    "label": "11 \u2022 Append only after review",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 13,
+    "label": "12 \u2022 Research \u2014 choose what fits tonight",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 14,
+    "label": "13 \u2022 Local shortlist \u2014 no AI required",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 15,
+    "label": "14 \u2022 Optional AI ranking branch",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 16,
+    "label": "15 \u2022 Review bounded AI input",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 17,
+    "label": "16 \u2022 AI ranking results \u2014 synthetic provider",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 18,
+    "label": "17 \u2022 Explicitly replace the shortlist",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 19,
+    "label": "18 \u2022 Preview the timed show before saving",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 20,
+    "label": "19 \u2022 Saved show \u2014 not yet live",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 21,
+    "label": "20 \u2022 Saved show editor \u2014 edit durations and order",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 22,
+    "label": "21 \u2022 Reorder, time and inspect presenter notes",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 23,
+    "label": "22 \u2022 Optional whole-show preparation",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 24,
+    "label": "23 \u2022 Review prepared notes for each segment",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 25,
+    "label": "24 \u2022 Activation is explicit \u2014 show starts paused",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 26,
+    "label": "25 \u2022 Show activated and cued",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 27,
+    "label": "26 \u2022 On air \u2014 timer and private presenter notes",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 28,
+    "label": "27 \u2022 Insert next with context while playing",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 30,
+    "label": "28 \u2022 Inserted without resetting the playing clock",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 31,
+    "label": "29 \u2022 OBS browser overlay \u2014 titles only",
+    "url": "http://127.0.0.1:8187/static/overlay.html"
+  },
+  {
+    "frame": 32,
+    "label": "30 \u2022 Next segment",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 33,
+    "label": "31 \u2022 Pause",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 34,
+    "label": "32 \u2022 Previous segment",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 35,
+    "label": "33 \u2022 Reset to top \u2014 paused",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 37,
+    "label": "34 \u2022 Manual capture with a source link",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 38,
+    "label": "35 \u2022 Public-link preview \u2014 synthetic text",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 39,
+    "label": "36 \u2022 Archive an idea",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 40,
+    "label": "37 \u2022 Archived ideas remain recoverable",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 41,
+    "label": "38 \u2022 Recollect saved search \u2014 zero duplicates added",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 42,
+    "label": "39 \u2022 Reddit collection \u2014 simulated approved access",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 43,
+    "label": "40 \u2022 Add an RSS feed",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 44,
+    "label": "41 \u2022 RSS import and provenance",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 45,
+    "label": "42 \u2022 Opt-in RSS schedule settings",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 46,
+    "label": "43 \u2022 Duplicate a reusable show",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 47,
+    "label": "44 \u2022 Independent show copy",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 49,
+    "label": "45 \u2022 Reuse a segment as an independent copy",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 51,
+    "label": "46 \u2022 Add a captured idea to the live draft",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 52,
+    "label": "47 \u2022 Captured idea staged, not live yet",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 53,
+    "label": "48 \u2022 Publish then jump to the audience segment",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 54,
+    "label": "49 \u2022 Published history and optional review",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 55,
+    "label": "50 \u2022 Review one segment after the show",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 56,
+    "label": "51 \u2022 Review saved without changing the live show",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 57,
+    "label": "52 \u2022 Manual editorial overrides",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 58,
+    "label": "53 \u2022 Exclude an irrelevant story",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 60,
+    "label": "54 \u2022 Search and filter updated research",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 61,
+    "label": "55 \u2022 Local unsaved edit",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 62,
+    "label": "56 \u2022 Simulated second screen \u2014 conflict protection",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 63,
+    "label": "57 \u2022 Both edits preserved after explicit merge",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 64,
+    "label": "58 \u2022 Connection loss is visible",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 65,
+    "label": "59 \u2022 Connection recovered",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 66,
+    "label": "60 \u2022 Phone \u2014 same live control room",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 67,
+    "label": "61 \u2022 Phone \u2014 quick insertion during playback",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 68,
+    "label": "62 \u2022 Phone \u2014 inserted and still playing",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 69,
+    "label": "63 \u2022 Phone \u2014 save the live rundown for reuse",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 70,
+    "label": "64 \u2022 Phone \u2014 live rundown saved independently",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 71,
+    "label": "65 \u2022 Manual show creation \u2014 no research or AI required",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 72,
+    "label": "66 \u2022 Public-link success \u2014 synthetic X preview",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 73,
+    "label": "67 \u2022 Review, append, save \u2014 source text is not automatic",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 74,
+    "label": "68 \u2022 TikTok caption preview \u2014 not video understanding",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 75,
+    "label": "69 \u2022 Unsaved changes guard",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 76,
+    "label": "70 \u2022 Keep editing preserves the draft",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 77,
+    "label": "71 \u2022 Explicit discard opens the chosen show",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 78,
+    "label": "72 \u2022 RSS schedule opted in for controlled due-job test",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 79,
+    "label": "73 \u2022 Scheduled import ran once \u2014 synthetic clock advanced",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 80,
+    "label": "74 \u2022 Import history includes scheduled and manual runs",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 81,
+    "label": "75 \u2022 Source failure is visible; existing ideas remain",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 82,
+    "label": "76 \u2022 Disabled source cannot import",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 83,
+    "label": "77 \u2022 Invalid duration blocked before publishing",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 84,
+    "label": "78 \u2022 Back to the control room",
+    "url": "http://127.0.0.1:8187/"
+  },
+  {
+    "frame": 85,
+    "label": "79 \u2022 Old AI results become stale after editorial changes",
+    "url": "http://127.0.0.1:8187/"
+  }
+]

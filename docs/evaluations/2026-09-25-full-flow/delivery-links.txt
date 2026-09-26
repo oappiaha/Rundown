@@ -1,0 +1,4 @@
+Full flow: http://reis-mac-mini.taildb04a2.ts.net:6767/v1/sessions/935320ef86f040728ffb50dc67cec152/resources/files/8e16c145e0c145ee86ba9cc584dcf795/content
+Core: http://reis-mac-mini.taildb04a2.ts.net:6767/v1/sessions/935320ef86f040728ffb50dc67cec152/resources/files/c8d9047ba0cb41c08c38a375186f58e4/content
+Alternatives: http://reis-mac-mini.taildb04a2.ts.net:6767/v1/sessions/935320ef86f040728ffb50dc67cec152/resources/files/e689edeefe5a411d8929e978dc933492/content
+Phone: http://reis-mac-mini.taildb04a2.ts.net:6767/v1/sessions/935320ef86f040728ffb50dc67cec152/resources/files/51b079fda5a24d75b3f2506a046cd3e2/content

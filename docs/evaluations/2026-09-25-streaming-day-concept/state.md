@@ -1,0 +1,3 @@
+# Streaming-day prototype iteration
+Sole owner: parent. Scratch copy of accepted discovery-concept; production app/read data untouched. Port3188 loopback, fresh Chromium contexts and localStorage. Goal: preserve visual design per user clarification, retain discovery; named dated show collections with independent order; create/manual-link/upload topics; quick notes persist; duplicate/invalid upload rejection preserves existing data; responsive screenshot and delivered standalone HTML.
+Acceptance: create two streaming days, add/reorder/remove without changing another day; new typed/link and uploaded text/image/PDF topics visible and persistent; invalid file/URL/date no state changes; previous notes/saves preserved; desktop390px phone flows. Seven iteration cap.

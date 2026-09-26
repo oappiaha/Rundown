@@ -1,0 +1,322 @@
+{
+  "passed": 63,
+  "total": 63,
+  "results": [
+    {
+      "check": "desktop: page loads with 12 focus cards",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: concept label visible",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: feed contains all four source types",
+      "ok": true,
+      "observed": "{'tiktok', 'reddit', 'article', 'youtube'}"
+    },
+    {
+      "check": "desktop: mouse wheel advances to second card",
+      "ok": true,
+      "observed": "oner -> grid"
+    },
+    {
+      "check": "desktop: ArrowDown moves to third card",
+      "ok": true,
+      "observed": "serve"
+    },
+    {
+      "check": "desktop: ArrowUp moves back to second card",
+      "ok": true,
+      "observed": "grid"
+    },
+    {
+      "check": "desktop: keyboard walk reaches all four source types",
+      "ok": true,
+      "observed": "{'tiktok', 'reddit', 'article', 'youtube'}"
+    },
+    {
+      "check": "desktop: Read more opens reader with 3 takeaways + 2 paragraphs",
+      "ok": true,
+      "observed": "on=True takeaways=3 paras=2"
+    },
+    {
+      "check": "desktop: background is inert while reader open",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Tab focus stays trapped inside reader",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: ArrowDown in reader shows next story",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Escape closes reader and feed sits on that story",
+      "ok": true,
+      "observed": "grid"
+    },
+    {
+      "check": "desktop: inert removed after close",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: navigated to a Sport story",
+      "ok": true,
+      "observed": "serve"
+    },
+    {
+      "check": "desktop: More like this does not move the current card",
+      "ok": true,
+      "observed": "scrollTop 1792->1792"
+    },
+    {
+      "check": "desktop: toast explains reorder-on-refresh with Undo",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Tune popover shows local weights (+2.0 Sport, 2 signals)",
+      "ok": true,
+      "observed": "Your feed, tuned locally | Order = base order + these weights. More/Less counts \u00b11 on a topic and \u00b10.5 on a source. Each save adds +0.5 to its topic. Nothing leaves this browser. | TOPICS | Film | 0.0"
+    },
+    {
+      "check": "desktop: Refresh puts all three Sport stories first",
+      "ok": true,
+      "observed": "['serve', 'aero', 'zone2', 'kerning']"
+    },
+    {
+      "check": "desktop: feed rerendered from top on refresh",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Undo keeps popover open",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Undo drops one signal (+1.0 Sport, 1 signal)",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Reset clears signals (0 signals)",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: order returns to base after reset+refresh",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Save toggles button state in place, card stays",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Saved badge shows 1",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: Note textarea receives focus on one tap",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "NEGATIVE desktop: ArrowDown/j/ArrowUp inside textarea do not change card",
+      "ok": true,
+      "observed": "still on grid; value='Rewatch the serve routine before Sundayj'"
+    },
+    {
+      "check": "desktop: note autosaved status shown",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: localStorage holds save + note",
+      "ok": true,
+      "observed": "{\"saved\": [\"grid\"], \"notes\": {\"grid\": \" jRewatch the serve routine before Sundayj\"}}"
+    },
+    {
+      "check": "desktop: Escape leaves the note field",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: j after leaving the note advances one card",
+      "ok": true,
+      "observed": "serve"
+    },
+    {
+      "check": "desktop: Saved tray lists both stories in save order with note preview",
+      "ok": true,
+      "observed": "['grid', 'serve']"
+    },
+    {
+      "check": "desktop: tray reorder moves item up",
+      "ok": true,
+      "observed": "['serve', 'grid']"
+    },
+    {
+      "check": "desktop: after reload Save state persists",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: after reload note text persists and is shown",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: after reload Saved badge shows 2 in tray order",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "explore: saved tile shows Saved + Has note",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "explore: renders 12 tiles, no horizontal overflow",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "explore: ArrowRight focuses the next tile",
+      "ok": true,
+      "observed": "grid"
+    },
+    {
+      "check": "explore: Enter opens reader on that tile",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "explore: save toggled in reader is mirrored on the tile in place",
+      "ok": true,
+      "observed": "true -> false"
+    },
+    {
+      "check": "focus: save toggled in Explore is reflected in the Focus card",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "focus: Design chip filters to design stories only",
+      "ok": true,
+      "observed": "['grid', 'offwhite', 'kerning']"
+    },
+    {
+      "check": "focus: Open source shows local explanation, no navigation",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "desktop: no console errors",
+      "ok": true,
+      "observed": "[]"
+    },
+    {
+      "check": "mobile: fresh profile starts clean (0 saved)",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: no horizontal overflow (focus)",
+      "ok": true,
+      "observed": "{'scrollW': 390, 'stageW': 390, 'clientW': 390, 'bad': []}"
+    },
+    {
+      "check": "mobile: first card actions fit without scrolling (no clipping)",
+      "ok": true,
+      "observed": "{'actionsBottom': 762.3504638671875, 'stageBottom': 844}"
+    },
+    {
+      "check": "mobile: touch swipe up advances to next card",
+      "ok": true,
+      "observed": "oner -> grid"
+    },
+    {
+      "check": "mobile: second swipe reaches third card",
+      "ok": true,
+      "observed": "serve"
+    },
+    {
+      "check": "mobile: tiktok card no horizontal overflow",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "NEGATIVE mobile: arrows while typing keep the same card",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: note textarea visible inside the card without large scroll",
+      "ok": true,
+      "observed": "{'taBottom': 831.234375, 'stageBottom': 844}"
+    },
+    {
+      "check": "mobile: Read more opens reader sheet with full body",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: reader sheet fits viewport width",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: Tune button shows pending dot after a signal",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: after Less Film + refresh, film stories are last three",
+      "ok": true,
+      "observed": "['smallweb', 'foley', 'dim', 'oner']"
+    },
+    {
+      "check": "mobile: reload keeps save + note + order",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: explore no horizontal overflow",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: explore shows saved tile state",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: saved tray opens as a sheet with the story and note",
+      "ok": true,
+      "observed": ""
+    },
+    {
+      "check": "mobile: no console errors",
+      "ok": true,
+      "observed": "[]"
+    },
+    {
+      "check": "NETWORK: every request stayed on 127.0.0.1:3187",
+      "ok": true,
+      "observed": "16 requests; external=[]"
+    }
+  ],
+  "ran_at": "2026-09-24 23:53:41"
+}

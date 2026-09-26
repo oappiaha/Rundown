@@ -1,0 +1,60 @@
+{
+ "db": "/private/tmp/rundown-discover-implementation/old-schema.db",
+ "tables_before": 26,
+ "tables_after": 28,
+ "new_tables": [
+  "topiceditorial",
+  "topicpresentation"
+ ],
+ "row_counts_before": {
+  "inboxsource": 1,
+  "inboxtopic": 3,
+  "retrievalsource": 1,
+  "retrieveditem": 1,
+  "rssfeed": 1,
+  "savedshow": 1
+ },
+ "row_counts_after": {
+  "inboxsource": 1,
+  "inboxtopic": 3,
+  "retrievalsource": 1,
+  "retrieveditem": 1,
+  "rssfeed": 1,
+  "savedshow": 1,
+  "topiceditorial": 1
+ },
+ "old_rows_byte_identical": true,
+ "old_columns_unchanged": true,
+ "inbox_items_readable": 3,
+ "presentation_editorial_per_item": {
+  "old-yt": [
+   null,
+   {
+    "revision": 0,
+    "saved": false,
+    "note": "",
+    "updated_at": null
+   }
+  ],
+  "old-rss": [
+   null,
+   {
+    "revision": 0,
+    "saved": false,
+    "note": "",
+    "updated_at": null
+   }
+  ],
+  "manual": [
+   null,
+   {
+    "revision": 0,
+    "saved": false,
+    "note": "",
+    "updated_at": null
+   }
+  ]
+ },
+ "editorial_write_on_old_row_ok": true,
+ "stale_editorial_status": 409
+}

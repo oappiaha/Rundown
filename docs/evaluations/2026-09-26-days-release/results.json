@@ -1,0 +1,512 @@
+{
+ "checks": [
+  {
+   "name": "live show is playing before preparation work",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "fixture imports succeeded",
+   "ok": true,
+   "detail": {
+    "yt": 3,
+    "rss": 4
+   }
+  },
+  {
+   "name": "legacy saved show reads stream_date null",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "days drawer opens as a modal dialog and takes focus",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "pending card shows the full headline and a pre-filled editable live label",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "an over-long label is refused visibly, nothing added",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "added with the chosen label; full headline kept in the list",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "closing the drawer returns focus to the opener",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "the same idea cannot be added twice to one day",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "both days hold the same two ideas as independent snapshots",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "full title vs short label distinction on the wire",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "snapshot carries the personal note and source",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Friday reordered/retimed/trimmed; Sunday unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "removed topic left no origin mapping",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "after reload the day shows the durable order, label and time",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "another screen changed the day (revision moved)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "stale edit is refused with a visible conflict and the local order kept",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Use theirs adopts the other screen's two topics",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "long capture title reveals the live label field",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "add-to-day is pre-ticked for the selected day",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Link card renders with source host, link and On-air label",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "link capture on the wire: full title, label, note, url, no fetch",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "link topic snapshot added to Friday with note + source",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "Write card keeps its note and is bookmarked",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "day opens in the existing Saved Shows editor with its topics and explicit Activate",
+   "ok": true,
+   "detail": [
+    "Friday live",
+    "",
+    "120",
+    "Long take is back",
+    "900",
+    "From elsewhere",
+    "60",
+    "Colour temperature",
+    "120"
+   ]
+  },
+  {
+   "name": "live clock/revision untouched by all preparation work",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "upload cover.png: durable row + file, byte-identical readback, safe headers",
+   "ok": true,
+   "detail": {
+    "type": "image/png",
+    "disposition": "inline; filename=\"cover.png\"; filename*=",
+    "files": [
+     "1e1647edccde41c89cf5a61f8f4c0117.png"
+    ]
+   }
+  },
+  {
+   "name": "upload photo.jpg: durable row + file, byte-identical readback, safe headers",
+   "ok": true,
+   "detail": {
+    "type": "image/jpeg",
+    "disposition": "inline; filename=\"photo.jpg\"; filename*=",
+    "files": [
+     "1df88e46787c43b6a3599e9531b941ad.jpg",
+     "1e1647edccde41c89cf5a61f8f4c0117.png"
+    ]
+   }
+  },
+  {
+   "name": "upload brief.pdf: durable row + file, byte-identical readback, safe headers",
+   "ok": true,
+   "detail": {
+    "type": "application/pdf",
+    "disposition": "attachment; filename=\"brief.pdf\"; filena",
+    "files": [
+     "1df88e46787c43b6a3599e9531b941ad.jpg",
+     "1e1647edccde41c89cf5a61f8f4c0117.png",
+     "9952c03a11b0418bb04458da9dd4dfbb.pdf"
+    ]
+   }
+  },
+  {
+   "name": "upload notes.txt: durable row + file, byte-identical readback, safe headers",
+   "ok": true,
+   "detail": {
+    "type": "text/plain",
+    "disposition": "attachment; filename=\"notes.txt\"; filena",
+    "files": [
+     "1df88e46787c43b6a3599e9531b941ad.jpg",
+     "1e1647edccde41c89cf5a61f8f4c0117.png",
+     "9952c03a11b0418bb04458da9dd4dfbb.pdf",
+     "e8c0cc0077af474999717ed73d7a8047.txt"
+    ]
+   }
+  },
+  {
+   "name": "upload outline.md: durable row + file, byte-identical readback, safe headers",
+   "ok": true,
+   "detail": {
+    "type": "text/markdown",
+    "disposition": "attachment; filename=\"outline.md\"; filen",
+    "files": [
+     "1df88e46787c43b6a3599e9531b941ad.jpg",
+     "1e1647edccde41c89cf5a61f8f4c0117.png",
+     "331e9ad4a5a443f29768729faa6e1ec0.md",
+     "9952c03a11b0418bb04458da9dd4dfbb.pdf",
+     "e8c0cc0077af474999717ed73d7a8047.txt"
+    ]
+   }
+  },
+  {
+   "name": "after reload the uploaded PNG cover decodes on the card from /attachments",
+   "ok": true,
+   "detail": [
+    320,
+    200,
+    "/attachments/1e1647edccde41c89cf5a61f8f4c0117"
+   ]
+  },
+  {
+   "name": "browser download of the PDF is byte-identical",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "TXT source text retained and shown as plain text",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "rejected upload too-big.txt explained in the sheet (1 MB)",
+   "ok": true,
+   "detail": "Choose a file smaller than 1 MB."
+  },
+  {
+   "name": "rejected upload vector.svg explained in the sheet (PNG, JPEG)",
+   "ok": true,
+   "detail": "Use a PNG, JPEG, PDF, TXT or Markdown file."
+  },
+  {
+   "name": "rejected upload broken.png explained in the sheet (malformed)",
+   "ok": true,
+   "detail": "Uploading rejected (422): This PNG file is malformed."
+  },
+  {
+   "name": "traversal filename is display-only; stored under the opaque id",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "rejected uploads left no rows or files (browser + API)",
+   "ok": true,
+   "detail": {
+    "before": {
+     "inboxtopic": 14,
+     "topiccapture": 7,
+     "topiceditorial": 8,
+     "attachment": 5,
+     "showplan": 2,
+     "showtopicorigin": 4,
+     "savedshow": 3
+    },
+    "after": {
+     "inboxtopic": 15,
+     "topiccapture": 8,
+     "topiceditorial": 9,
+     "attachment": 6,
+     "showplan": 2,
+     "showtopicorigin": 4,
+     "savedshow": 3
+    }
+   }
+  },
+  {
+   "name": "library note edit leaves the day snapshot unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "legacy duplicate keeps display titles under fresh ids; no stale mapping",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "legacy /shows PUT keeps origin for a relabel and drops mappings for removed rows",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "stale plan write \u2192 409 and nothing changed",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "live clock/revision still untouched at the end",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "phone: no horizontal overflow on Focus",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "phone: days sheet opens, fits the viewport, no overflow",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "phone: JPEG upload creates a card",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "phone: explore grid no horizontal overflow",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "no unexpected error responses seen by the browser (only provoked 404/409/422)",
+   "ok": true,
+   "detail": {
+    "bad": [
+     {
+      "status": 404,
+      "url": "http://127.0.0.1:8192/thumbs/gone.png",
+      "method": "GET"
+     },
+     {
+      "status": 404,
+      "url": "http://127.0.0.1:8192/thumbs/missing.png",
+      "method": "GET"
+     },
+     {
+      "status": 404,
+      "url": "http://127.0.0.1:8192/thumbs/gone.png",
+      "method": "GET"
+     },
+     {
+      "status": 409,
+      "url": "http://127.0.0.1:3189/plans/b3cdb11f-2e86-4d99-852f-197ebec30645",
+      "method": "PUT"
+     },
+     {
+      "status": 404,
+      "url": "http://127.0.0.1:8192/thumbs/gone.png",
+      "method": "GET"
+     },
+     {
+      "status": 422,
+      "url": "http://127.0.0.1:3189/attachments?title=Bad+broken.png&filename=broken.png&duration=120",
+      "method": "POST"
+     },
+     {
+      "status": 404,
+      "url": "http://127.0.0.1:8192/thumbs/missing.png",
+      "method": "GET"
+     }
+    ],
+    "console": [
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 409 (Conflict)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)",
+     "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+   }
+  },
+  {
+   "name": "no console errors other than those provoked resource failures",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "no failed network requests other than client-aborted live polls",
+   "ok": true,
+   "detail": [
+    {
+     "url": "http://127.0.0.1:3189/rundown/state",
+     "failure": "net::ERR_ABORTED"
+    },
+    {
+     "url": "http://127.0.0.1:3189/rundown/state",
+     "failure": "net::ERR_ABORTED"
+    },
+    {
+     "url": "http://127.0.0.1:3189/rundown/state",
+     "failure": "net::ERR_ABORTED"
+    },
+    {
+     "url": "http://127.0.0.1:3189/rundown/state",
+     "failure": "net::ERR_ABORTED"
+    }
+   ]
+  }
+ ],
+ "api": {
+  "live_before": {
+   "revision": 2,
+   "topics": [
+    {
+     "id": "da6705d7-b67d-4e46-9ba5-32984e4199f3",
+     "text": "On air",
+     "duration": 3600,
+     "notes": "Already live"
+    }
+   ],
+   "current_topic_id": "da6705d7-b67d-4e46-9ba5-32984e4199f3",
+   "remaining_seconds": 3600,
+   "paused": false,
+   "server_time": "2026-09-25T15:16:48.582310+00:00"
+  }
+ },
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 409 (Conflict)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "failed_requests": [
+  {
+   "url": "http://127.0.0.1:3189/rundown/state",
+   "failure": "net::ERR_ABORTED"
+  },
+  {
+   "url": "http://127.0.0.1:3189/rundown/state",
+   "failure": "net::ERR_ABORTED"
+  },
+  {
+   "url": "http://127.0.0.1:3189/rundown/state",
+   "failure": "net::ERR_ABORTED"
+  },
+  {
+   "url": "http://127.0.0.1:3189/rundown/state",
+   "failure": "net::ERR_ABORTED"
+  }
+ ],
+ "bad_responses": [
+  {
+   "status": 404,
+   "url": "http://127.0.0.1:8192/thumbs/gone.png",
+   "method": "GET"
+  },
+  {
+   "status": 404,
+   "url": "http://127.0.0.1:8192/thumbs/missing.png",
+   "method": "GET"
+  },
+  {
+   "status": 404,
+   "url": "http://127.0.0.1:8192/thumbs/gone.png",
+   "method": "GET"
+  },
+  {
+   "status": 409,
+   "url": "http://127.0.0.1:3189/plans/b3cdb11f-2e86-4d99-852f-197ebec30645",
+   "method": "PUT"
+  },
+  {
+   "status": 404,
+   "url": "http://127.0.0.1:8192/thumbs/gone.png",
+   "method": "GET"
+  },
+  {
+   "status": 422,
+   "url": "http://127.0.0.1:3189/attachments?title=Bad+broken.png&filename=broken.png&duration=120",
+   "method": "POST"
+  },
+  {
+   "status": 404,
+   "url": "http://127.0.0.1:8192/thumbs/missing.png",
+   "method": "GET"
+  }
+ ],
+ "screens": [
+  "01-desktop-days-label",
+  "02-desktop-days-reordered",
+  "03-desktop-days-conflict",
+  "04-desktop-capture-link",
+  "05-desktop-saved-show-editor",
+  "06-desktop-upload-cover",
+  "07-desktop-explore-after",
+  "08-mobile-focus",
+  "09-mobile-days",
+  "10-mobile-capture",
+  "11-mobile-explore"
+ ],
+ "db_counts": {
+  "inboxtopic": 16,
+  "topiccapture": 9,
+  "topiceditorial": 10,
+  "attachment": 7,
+  "showplan": 2,
+  "showtopicorigin": 5,
+  "savedshow": 4
+ },
+ "assets": [
+  "1df88e46787c43b6a3599e9531b941ad.jpg",
+  "1e1647edccde41c89cf5a61f8f4c0117.png",
+  "331e9ad4a5a443f29768729faa6e1ec0.md",
+  "34ec619dce35440aa293fff2520219fb.pdf",
+  "67b2f6b4162f45a7be8867cf38e06edb.jpg",
+  "9952c03a11b0418bb04458da9dd4dfbb.pdf",
+  "e8c0cc0077af474999717ed73d7a8047.txt"
+ ],
+ "status": "completed"
+}

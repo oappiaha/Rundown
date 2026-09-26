@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": [
+    "UI capture",
+    "UI two dated days",
+    "independent note snapshots",
+    "upload byte readback",
+    "invalid upload rejects",
+    "reload",
+    "mobile",
+    "live preservation"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "before": {
+    "revision": 2,
+    "topics": [
+      {
+        "id": "2753c92d-d971-4a48-adff-6a3532f75cde",
+        "text": "Small studio AI workflow",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Small studio AI workflow\nPublished: 2026-09-25T03:05:48.219236+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic practical workflow: script, shot list, keyframes, generate clips and review artifacts.\n\nSource: https://www.youtube.com/watch?v=demo0000002\n\nPrepared notes (AI-assisted, reviewed)\nSummary: Demo summary: review the supplied workflow before going live.\nTalking points:\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?"
+      },
+      {
+        "id": "cf0c70d5-0668-4d86-8c60-cab2a8616b55",
+        "text": "AI camera continuity",
+        "duration": 180,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: AI camera continuity\nPublished: 2026-09-25T03:05:48.219227+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nA synthetic tutorial: storyboard, matching camera angles, lighting and editing. Demo data, not real news.\n\nSummary\nDemo summary: review the supplied workflow before going live.\n\nTalking points\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?\n\nSource: https://www.youtube.com/watch?v=demo0000001"
+      }
+    ],
+    "current_topic_id": "2753c92d-d971-4a48-adff-6a3532f75cde",
+    "remaining_seconds": 75,
+    "paused": false,
+    "server_time": "2026-09-25T03:10:38.379304+00:00"
+  },
+  "after": {
+    "revision": 3,
+    "topics": [
+      {
+        "id": "2753c92d-d971-4a48-adff-6a3532f75cde",
+        "text": "Small studio AI workflow",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Small studio AI workflow\nPublished: 2026-09-25T03:05:48.219236+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic practical workflow: script, shot list, keyframes, generate clips and review artifacts.\n\nSource: https://www.youtube.com/watch?v=demo0000002\n\nPrepared notes (AI-assisted, reviewed)\nSummary: Demo summary: review the supplied workflow before going live.\nTalking points:\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?"
+      },
+      {
+        "id": "feeef466-9cf6-4b88-9725-0e46a15ddf1f",
+        "text": "Breaking studio update",
+        "duration": 90,
+        "notes": "Synthetic breaking update. Ask about practical implications. PRIVATE PRESENTER NOTE."
+      },
+      {
+        "id": "cf0c70d5-0668-4d86-8c60-cab2a8616b55",
+        "text": "AI camera continuity",
+        "duration": 180,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: AI camera continuity\nPublished: 2026-09-25T03:05:48.219227+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nA synthetic tutorial: storyboard, matching camera angles, lighting and editing. Demo data, not real news.\n\nSummary\nDemo summary: review the supplied workflow before going live.\n\nTalking points\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?\n\nSource: https://www.youtube.com/watch?v=demo0000001"
+      }
+    ],
+    "current_topic_id": "2753c92d-d971-4a48-adff-6a3532f75cde",
+    "remaining_seconds": 74,
+    "paused": false,
+    "server_time": "2026-09-25T03:10:38.867936+00:00"
+  }
+}

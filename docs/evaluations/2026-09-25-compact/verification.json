@@ -1,0 +1,13 @@
+{
+  "old_characters": 20183,
+  "new_characters": 12329,
+  "reduction_percent": 38.9,
+  "source_text_and_urls_preserved": true,
+  "manual_duplicate_context_preserved": true,
+  "edited_context_preserved": true,
+  "stale_revision_rejected": true,
+  "preview_source_live_unchanged": true,
+  "old_result_stale_and_propose_rejected": true,
+  "paid_calls": 0,
+  "live_latency_unmeasured": true
+}

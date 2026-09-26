@@ -1,0 +1,715 @@
+/* Rundown discovery concept — vanilla JS, no network, localStorage only. */
+(function () {
+  "use strict";
+
+  const STORIES = window.RUNDOWN_STORIES;
+  const KEY = "rundown.discovery.concept.v1";
+  const TOPICS = ["film", "design", "tech", "sport"];
+  const SOURCES = ["article", "youtube", "tiktok", "reddit"];
+  const LABEL = { film: "Film", design: "Design", tech: "Tech", sport: "Sport", article: "Article", youtube: "YouTube", tiktok: "TikTok", reddit: "Reddit" };
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  // ---------- state ----------
+  const defaults = () => ({
+    mode: "focus", topic: "all", saved: [], notes: {}, signals: [], rankedIds: null, custom: [], days: [], selectedDay: ""
+  });
+  let state = load();
+  STORIES.push(...state.custom);
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return defaults();
+      return Object.assign(defaults(), JSON.parse(raw));
+    } catch (e) { return defaults(); }
+  }
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); return true; } catch (e) { toast("Storage is full. Remove an attachment or use a smaller file."); return false; }
+  }
+
+  // ---------- ranking (deterministic, local) ----------
+  function weights() {
+    const w = { topic: {}, source: {} };
+    TOPICS.forEach(t => (w.topic[t] = 0));
+    SOURCES.forEach(s => (w.source[s] = 0));
+    state.signals.forEach(sig => {
+      const d = sig.type === "more" ? 1 : -1;
+      w.topic[sig.topic] += d;
+      w.source[sig.source] += d * 0.5;
+    });
+    state.saved.forEach(id => {
+      const s = byId(id); if (s) w.topic[s.topic] += 0.5;
+    });
+    return w;
+  }
+  function score(story, w) { return w.topic[story.topic] + w.source[story.source]; }
+  function rank() {
+    const w = weights();
+    const ordered = STORIES.map((s, i) => ({ s, i, sc: score(s, w) }))
+      .sort((a, b) => (b.sc - a.sc) || (a.i - b.i))
+      .map(x => x.s.id);
+    state.rankedIds = ordered;
+    persist();
+    return ordered;
+  }
+  function visibleStories() {
+    const ids = state.rankedIds && state.rankedIds.length === STORIES.length ? state.rankedIds : rank();
+    return ids.map(byId).filter(s => s && (state.topic === "all" || s.topic === state.topic));
+  }
+  function pendingReorder() {
+    // true when the persisted ranking differs from what current weights would produce
+    const w = weights();
+    const fresh = STORIES.map((s, i) => ({ s, i, sc: score(s, w) })).sort((a, b) => (b.sc - a.sc) || (a.i - b.i)).map(x => x.s.id);
+    return JSON.stringify(fresh) !== JSON.stringify(state.rankedIds);
+  }
+  function byId(id) { return STORIES.find(s => s.id === id); }
+
+  // ---------- svg art ----------
+  const PALETTES = [
+    { bg: "#e9e1cf", a: "#1b3fd4", b: "#16140f", c: "#f5f1e8" },
+    { bg: "#16140f", a: "#f5f1e8", b: "#c9f24d", c: "#1b3fd4" },
+    { bg: "#d9cbb3", a: "#b8432f", b: "#16140f", c: "#f5f1e8" },
+    { bg: "#1b3fd4", a: "#f5f1e8", b: "#c9f24d", c: "#16140f" },
+    { bg: "#f0ebdf", a: "#16140f", b: "#b8432f", c: "#1b3fd4" },
+    { bg: "#2b2a25", a: "#e9e1cf", b: "#c9f24d", c: "#b8432f" }
+  ];
+  let artSeq = 0;
+  function art(story, w, h) {
+    const p = PALETTES[story.art.palette % PALETTES.length];
+    const id = "g" + (artSeq++);
+    const W = w || 400, H = h || 300;
+    let shapes = "";
+    switch (story.art.kind) {
+      case "arc":
+        shapes = `<path d="M-20 ${H*0.95} A ${W*0.62} ${W*0.62} 0 0 1 ${W*1.1} ${H*0.95} Z" fill="${p.a}"/>
+          <circle cx="${W*0.72}" cy="${H*0.3}" r="${H*0.14}" fill="${p.b}"/>
+          <line x1="${W*0.08}" y1="${H*0.22}" x2="${W*0.5}" y2="${H*0.22}" stroke="${p.b}" stroke-width="2"/>
+          <line x1="${W*0.08}" y1="${H*0.3}" x2="${W*0.42}" y2="${H*0.3}" stroke="${p.b}" stroke-width="2"/>
+          <circle cx="${W*0.28}" cy="${H*0.62}" r="${H*0.06}" fill="${p.c}"/>`;
+        break;
+      case "grid": {
+        let g = "";
+        for (let i = 1; i < 8; i++) g += `<line x1="${W*i/8}" y1="0" x2="${W*i/8}" y2="${H}" stroke="${p.a}" stroke-opacity=".35" stroke-width="1"/>`;
+        for (let j = 1; j < 6; j++) g += `<line x1="0" y1="${H*j/6}" x2="${W}" y2="${H*j/6}" stroke="${p.a}" stroke-opacity=".35" stroke-width="1"/>`;
+        shapes = g + `<rect x="${W/8}" y="${H/6}" width="${W/4}" height="${H/3}" fill="${p.a}"/>
+          <rect x="${W*5/8}" y="${H*3/6}" width="${W/8}" height="${H/3}" fill="${p.b}"/>
+          <rect x="${W*4/8}" y="${H*1/6}" width="${W/8}" height="${H/6}" fill="${p.c}"/>
+          <circle cx="${W*6/8}" cy="${H*2/6}" r="${H/12}" fill="${p.a}"/>`;
+        break;
+      }
+      case "orbit":
+        shapes = `<circle cx="${W*0.5}" cy="${H*0.55}" r="${H*0.42}" fill="none" stroke="${p.a}" stroke-width="2"/>
+          <circle cx="${W*0.5}" cy="${H*0.55}" r="${H*0.28}" fill="none" stroke="${p.a}" stroke-width="2" stroke-dasharray="6 8"/>
+          <circle cx="${W*0.5}" cy="${H*0.55}" r="${H*0.12}" fill="${p.b}"/>
+          <circle cx="${W*0.5 + H*0.42*0.71}" cy="${H*0.55 - H*0.42*0.71}" r="${H*0.05}" fill="${p.c}"/>
+          <circle cx="${W*0.5 - H*0.28}" cy="${H*0.55}" r="${H*0.035}" fill="${p.a}"/>`;
+        break;
+      case "stripes": {
+        let s = "";
+        for (let i = -4; i < 14; i++) s += `<line x1="${W*i/10}" y1="${H}" x2="${W*i/10 + H*0.6}" y2="0" stroke="${p.a}" stroke-opacity=".5" stroke-width="3"/>`;
+        shapes = s + `<rect x="${W*0.18}" y="${H*0.22}" width="${W*0.36}" height="${H*0.56}" fill="${p.b}"/>
+          <rect x="${W*0.6}" y="${H*0.5}" width="${W*0.22}" height="${H*0.28}" fill="${p.c}"/>`;
+        break;
+      }
+      case "blob":
+        shapes = `<path d="M${W*0.2} ${H*0.5} C ${W*0.15} ${H*0.15}, ${W*0.6} ${H*0.05}, ${W*0.75} ${H*0.3} C ${W*0.92} ${H*0.55}, ${W*0.75} ${H*0.95}, ${W*0.45} ${H*0.9} C ${W*0.22} ${H*0.86}, ${W*0.24} ${H*0.75}, ${W*0.2} ${H*0.5} Z" fill="${p.a}"/>
+          <rect x="${W*0.55}" y="${H*0.55}" width="${W*0.32}" height="${H*0.32}" fill="${p.b}"/>
+          <circle cx="${W*0.3}" cy="${H*0.32}" r="${H*0.07}" fill="${p.c}"/>`;
+        break;
+      default: // diagonal
+        shapes = `<polygon points="0,${H} ${W},0 ${W},${H}" fill="${p.a}"/>
+          <circle cx="${W*0.3}" cy="${H*0.32}" r="${H*0.2}" fill="${p.b}"/>
+          <rect x="${W*0.62}" y="${H*0.58}" width="${W*0.2}" height="${W*0.2}" fill="${p.c}" transform="rotate(12 ${W*0.72} ${H*0.68})"/>`;
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration">
+      <defs><filter id="${id}"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .07 0"/></filter></defs>
+      <rect width="${W}" height="${H}" fill="${p.bg}"/>${shapes}
+      <rect width="${W}" height="${H}" filter="url(#${id})"/>
+    </svg>`;
+  }
+  const ICON = {
+    book: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M2.5 3.5h4a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 0-1.5-1.5h-4zM13.5 3.5h-4A1.5 1.5 0 0 0 8 5v8a1.5 1.5 0 0 1 1.5-1.5h4z"/></svg>',
+    play: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l9-5.5z"/></svg>',
+    bookmark: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 2.5h9v11l-4.5-3-4.5 3z"/></svg>',
+    bookmarkFill: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 2.5h9v11l-4.5-3-4.5 3z"/></svg>',
+    pen: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>',
+    up: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3M4 7l4-4 4 4"/></svg>',
+    down: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg>',
+    plus: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>',
+    minus: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h10"/></svg>',
+    x: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>',
+    arrow: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l6-6M6 5h5v5"/></svg>',
+    refresh: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 3v3h-3"/></svg>',
+    tune: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 4.5h6M12 4.5h1M3 11.5h1M7 11.5h6"/><circle cx="10.5" cy="4.5" r="1.8"/><circle cx="5.5" cy="11.5" r="1.8"/></svg>',
+    left: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>',
+    right: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>'
+  };
+
+  // ---------- rendering helpers ----------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function metaLine(s) {
+    const m = s.meta;
+    if (s.custom) return m.outlet;
+    if (s.source === "article") return `${m.outlet} · ${m.minutes} min read`;
+    if (s.source === "youtube") return `${m.channel} · ${m.duration}`;
+    if (s.source === "tiktok") return `${m.creator} · ${m.duration}`;
+    return `${m.sub} · ${m.upvotes} upvotes`;
+  }
+  function kicker(s) {
+    return `<div class="kicker"><span class="src">${LABEL[s.source]}</span><span class="dot"></span><span>${LABEL[s.topic]}</span><span class="dot"></span><span>${esc(metaLine(s))}</span></div>`;
+  }
+  function figure(s, opts) {
+    if (s.custom) return `<figure class="art personal">${s.attachment && s.attachment.type.startsWith("image/") ? `<img src="${s.attachment.data}" alt="${esc(s.title)}">` : art(s, 400, 300)}<figcaption class="media-tag"><span>${s.attachment ? esc(s.attachment.name) : s.meta.url ? "Your link" : "Your topic"}</span></figcaption></figure>`;
+    const vertical = s.source === "tiktok";
+    let tag = "";
+    if (s.source === "youtube") tag = `<figcaption class="media-tag">${ICON.play}<span>Sample frame · ${esc(s.meta.duration)} · no playback</span></figcaption>`;
+    if (s.source === "tiktok") tag = `<figcaption class="media-tag">${ICON.play}<span>Sample clip · ${esc(s.meta.duration)} · no playback</span></figcaption>`;
+    if (s.source === "article") tag = `<figcaption class="media-tag"><span>${s.meta.minutes} min · sample story</span></figcaption>`;
+    if (s.source === "reddit") tag = `<figcaption class="media-tag"><span>${esc(s.meta.sub)} · sample thread</span></figcaption>`;
+    if (vertical) {
+      return `<figure class="art vertical">${art(s, 400, 300)}<div class="phone">${art(s, 180, 320)}</div>${tag}</figure>`;
+    }
+    return `<figure class="art">${art(s, 400, 300)}${tag}</figure>`;
+  }
+  function thread(s) {
+    if (s.source !== "reddit") return "";
+    return `<div class="thread"><span class="up">${ICON.up}<b>${esc(s.meta.upvotes)}</b></span><span>${esc(s.meta.comments)} comments</span><span>posted by <b>${esc(s.meta.op)}</b></span></div>`;
+  }
+  function actions(s, brief) {
+    const saved = state.saved.includes(s.id);
+    const hasNote = !!(state.notes[s.id] && state.notes[s.id].trim());
+    return `<div class="actions">
+      ${brief ? `<button class="act read" data-act="read" aria-label="Read more">${ICON.book}<span>Read more</span></button>` : ""}
+      <button class="act save" data-act="save" aria-pressed="${saved}" aria-label="${saved ? "Unsave" : "Save"} story">${saved ? ICON.bookmarkFill : ICON.bookmark}<span>${saved ? "Saved" : "Save"}</span></button>
+      <button class="act note" data-act="note" aria-expanded="${hasNote}" aria-label="Add a note">${ICON.pen}<span>Note</span></button>
+      <button class="act" data-act="plan" aria-label="Add to streaming day">＋ Day</button>
+      <button class="act more" data-act="more" aria-label="More like this">${ICON.plus}<span>More<span class="txt-long"> like this</span></span></button>
+      <button class="act less" data-act="less" aria-label="Less like this">${ICON.minus}<span>Less</span></button>
+      <button class="act open" data-act="open" aria-label="Open source">${ICON.arrow}<span>Open source</span></button>
+    </div>
+    <div class="note-wrap" ${hasNote ? "" : "hidden"}>
+      <textarea rows="2" placeholder="A line for future you…" aria-label="Your note">${esc(state.notes[s.id] || "")}</textarea>
+      <span class="note-status">${hasNote ? "Saved on this device" : ""}</span>
+    </div>`;
+  }
+  function body(s, brief) {
+    if (brief) {
+      return `<div class="card-body">
+        ${kicker(s)}
+        <h2 class="title">${esc(s.title)}</h2>
+        <p class="dek">${esc(s.dek)}</p>
+        ${s.takeaways.length ? `<ul class="takeaways one"><li>${esc(s.takeaways[0])}</li></ul>` : ""}
+        ${actions(s, true)}
+      </div>`;
+    }
+    return `<div class="card-body">
+      ${kicker(s)}
+      <h2 class="title">${esc(s.title)}</h2>
+      <p class="dek">${esc(s.dek)}</p>
+      ${thread(s)}
+      <div class="section-label small">The rundown</div>
+      <ul class="takeaways">${s.takeaways.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+      <p class="para">${esc(s.body[0])}</p>
+      ${s.body[1] ? `<p class="para second">${esc(s.body[1])}</p>` : ""}
+      ${actions(s, false)}
+    </div>`;
+  }
+
+  // ---------- DOM refs ----------
+  const $ = sel => document.querySelector(sel);
+  const stage = $("#stage");
+  const chipsEl = $("#chips");
+  const progress = $("#progress");
+  const tray = $("#tray");
+  const reader = $("#reader");
+  const scrim = $("#scrim");
+  const tune = $("#tune");
+  const toastEl = $("#toast");
+  const savedBtn = $("#savedBtn");
+  const tuneBtn = $("#tuneBtn");
+  let current = 0;            // index into visibleStories() for focus mode / explore keyboard
+  let readerId = null;
+  let observer = null;
+  let toastTimer = null;
+  let lastFocus = null;
+
+  // ---------- render ----------
+  function renderChips() {
+    const items = [["all", "All"], ...TOPICS.map(t => [t, LABEL[t]])];
+    chipsEl.innerHTML = items.map(([v, l]) => `<button class="chip" data-topic="${v}" aria-pressed="${state.topic === v}">${l}</button>`).join("")
+      + `<span class="spacer"></span><button class="chip ghost" id="refreshBtn" title="Re-rank with your signals">${ICON.refresh}Refresh feed${pendingReorder() ? ' <span class="pending">· new order ready</span>' : ""}</button>`;
+    tuneBtn.classList.toggle("pending", pendingReorder());
+  }
+  function renderModes() {
+    document.querySelectorAll(".modes button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode === state.mode)));
+    stage.dataset.mode = state.mode;
+    progress.hidden = state.mode !== "focus";
+  }
+  function renderStage() {
+    if (observer) observer.disconnect();
+    const list = visibleStories();
+    if (state.mode === "focus") {
+      stage.innerHTML = `<div class="feed">${list.map(s => `<article class="card" data-id="${s.id}" tabindex="-1">
+        <div class="card-inner">${figure(s)}${body(s, true)}</div></article>`).join("")}</div>`;
+      renderProgress(list.length);
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            en.target.classList.add("in");
+            const idx = [...stage.querySelectorAll(".card")].indexOf(en.target);
+            if (idx >= 0 && en.intersectionRatio >= 0.5) { current = idx; markProgress(); }
+          }
+        });
+      }, { root: stage, threshold: [0.5] });
+      stage.querySelectorAll(".card").forEach(c => observer.observe(c));
+    } else {
+      stage.innerHTML = `<div class="grid">
+        <div class="section-label">${state.topic === "all" ? "Today's rundown" : LABEL[state.topic]} · ${list.length} stories</div>
+        ${list.map((s, i) => `<article class="tile${i === 0 ? " lead" : ""}" data-id="${s.id}" tabindex="0" role="button" aria-label="Open: ${esc(s.title)}">
+          ${figure(s)}
+          <div class="tile-side">${kicker(s)}<h3 class="title">${esc(s.title)}</h3><p class="dek">${esc(s.dek)}</p>
+          <div class="tile-foot"><button class="mini" data-act="save" aria-pressed="${state.saved.includes(s.id)}" aria-label="${state.saved.includes(s.id) ? "Unsave" : "Save"} story">${state.saved.includes(s.id) ? ICON.bookmarkFill : ICON.bookmark}<span>${state.saved.includes(s.id) ? "Saved" : "Save"}</span></button>
+          ${state.notes[s.id] && state.notes[s.id].trim() ? '<span class="notemark">Has note</span>' : ""}</div></div>
+        </article>`).join("")}
+      </div>`;
+      observer = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) en.target.classList.add("in"); }), { root: stage, threshold: 0.08 });
+      stage.querySelectorAll(".tile").forEach(t => observer.observe(t));
+    }
+    stage.scrollTop = 0;
+    current = 0; markProgress();
+  }
+  function renderProgress(n) {
+    progress.innerHTML = `<span class="n">${n} stories</span>` + Array.from({ length: n }, (_, i) => `<i data-i="${i}"></i>`).join("");
+  }
+  function markProgress() {
+    progress.querySelectorAll("i").forEach((el, i) => el.classList.toggle("on", i === current));
+    if (state.mode === "focus") {
+      const cards = stage.querySelectorAll(".card");
+      const n = progress.querySelector(".n"); if (n) n.textContent = `${current + 1} / ${cards.length}`;
+    }
+  }
+  function renderSavedBadge() {
+    savedBtn.querySelector(".count").textContent = state.saved.length;
+  }
+  function renderTray() {
+    const listEl = tray.querySelector(".panel-body");
+    if (!state.saved.length) {
+      listEl.innerHTML = `<div class="tray-empty"><b>Nothing saved yet</b>Tap Save on any story. Notes ride along.</div>`;
+      return;
+    }
+    listEl.innerHTML = `<div class="tray-list">${state.saved.map((id, i) => {
+      const s = byId(id); if (!s) return "";
+      const note = (state.notes[id] || "").trim();
+      return `<div class="tray-item" data-id="${id}">
+        <figure class="art">${art(s, 120, 120)}</figure>
+        <button class="open-link" data-act="jump" aria-label="Open ${esc(s.title)}"><div class="k">${LABEL[s.source]} · ${LABEL[s.topic]}</div><div class="t">${esc(s.title)}</div>${note ? `<div class="note-preview">${esc(note)}</div>` : ""}</button>
+        <div class="ctl">
+          <button data-act="up" aria-label="Move up" ${i === 0 ? "disabled" : ""}>${ICON.up}</button>
+          <button data-act="down" aria-label="Move down" ${i === state.saved.length - 1 ? "disabled" : ""}>${ICON.down}</button>
+          <button data-act="remove" aria-label="Remove from saved">${ICON.x}</button>
+        </div></div>`;
+    }).join("")}</div>`;
+  }
+  function renderTune() {
+    const w = weights();
+    const row = (k, v) => {
+      const cls = v > 0 ? "pos" : v < 0 ? "neg" : "";
+      const pct = Math.min(50, Math.abs(v) * 12.5);
+      return `<div class="row"><span>${LABEL[k]}</span><span class="bar"><i class="${v < 0 ? "neg" : ""}" style="width:${pct}%"></i></span><span class="w ${cls}">${v > 0 ? "+" : ""}${v.toFixed(1)}</span></div>`;
+    };
+    const saves = state.saved.length, sigs = state.signals.length;
+    tune.innerHTML = `<h4>Your feed, tuned locally</h4>
+      <div class="hint">Order = base order + these weights. More/Less counts ±1 on a topic and ±0.5 on a source. Each save adds +0.5 to its topic. Nothing leaves this browser.</div>
+      <div class="rows"><div class="group">Topics</div>${TOPICS.map(t => row(t, w.topic[t])).join("")}
+      <div class="group">Sources</div>${SOURCES.map(s => row(s, w.source[s])).join("")}</div>
+      <div class="hint">${sigs} signal${sigs === 1 ? "" : "s"} · ${saves} save${saves === 1 ? "" : "s"}${pendingReorder() ? " · <b>new order ready on refresh</b>" : ""}</div>
+      <div class="btns"><button class="act primary" data-act="refresh">${ICON.refresh}Refresh feed</button><button class="act" data-act="undo" ${sigs ? "" : "disabled"}>Undo last</button><button class="act" data-act="reset" ${sigs ? "" : "disabled"}>Reset</button></div>`;
+  }
+  function renderAll() { renderChips(); renderModes(); renderStage(); renderSavedBadge(); renderTray(); renderTune(); }
+
+  // ---------- toast ----------
+  function toast(html, action) {
+    clearTimeout(toastTimer);
+    toastEl.innerHTML = `<span class="msg">${html}</span>${action ? `<button data-act="toast-action">${action.label}</button>` : ""}<button class="quiet" data-act="toast-close" aria-label="Dismiss">Close</button>`;
+    toastEl._action = action ? action.fn : null;
+    toastEl.classList.add("on");
+    toastTimer = setTimeout(() => toastEl.classList.remove("on"), action ? 6000 : 3200);
+  }
+  toastEl.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.act === "toast-action" && toastEl._action) toastEl._action();
+    toastEl.classList.remove("on");
+  });
+
+  // ---------- actions ----------
+  function toggleSave(id) {
+    const on = state.saved.includes(id);
+    state.saved = on ? state.saved.filter(x => x !== id) : [...state.saved, id];
+    persist();
+    // update every visible control for this story in place; the card does not move
+    document.querySelectorAll(`[data-id="${id}"] [data-act="save"]`).forEach(b => {
+      b.setAttribute("aria-pressed", String(!on));
+      b.setAttribute("aria-label", (!on ? "Unsave" : "Save") + " story");
+      b.innerHTML = (!on ? ICON.bookmarkFill : ICON.bookmark) + `<span>${!on ? "Saved" : "Save"}</span>`;
+    });
+    renderSavedBadge(); renderTray(); renderTune(); renderChips();
+    toast(on ? "Removed from saved" : `Saved · <b>${LABEL[byId(id).topic]}</b> gets a small boost on refresh`);
+  }
+  function toggleNote(root) {
+    const wrap = root.querySelector(".note-wrap");
+    const btn = root.querySelector('[data-act="note"]');
+    const open = wrap.hidden;
+    wrap.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    if (open) wrap.querySelector("textarea").focus();
+  }
+  const noteTimers = {};
+  function noteInput(id, ta, statusEl) {
+    statusEl.textContent = "Saving…"; statusEl.classList.remove("ok");
+    clearTimeout(noteTimers[id]);
+    noteTimers[id] = setTimeout(() => {
+      const v = ta.value;
+      if (v.trim()) state.notes[id] = v; else delete state.notes[id];
+      persist();
+      statusEl.textContent = v.trim() ? "Saved on this device" : "";
+      statusEl.classList.add("ok");
+      renderTray();
+    }, 180);
+  }
+  function signal(type, id, btn) {
+    const s = byId(id);
+    state.signals.push({ type, topic: s.topic, source: s.source });
+    persist();
+    btn.classList.add("flash"); setTimeout(() => btn.classList.remove("flash"), 900);
+    renderTune(); renderChips();
+    toast(`${type === "more" ? "More" : "Less"} <b>${LABEL[s.topic]}</b> · ${LABEL[s.source]} — reorders on refresh`, { label: "Undo", fn: undo });
+  }
+  function undo() {
+    if (!state.signals.length) return;
+    state.signals.pop(); persist(); renderTune(); renderChips();
+    toast("Signal undone");
+  }
+  function reset() {
+    state.signals = []; persist(); renderTune(); renderChips();
+    toast("Signals reset · saves still count", { label: "Refresh now", fn: refresh });
+  }
+  function refresh() {
+    closePanels();
+    rank(); renderChips(); renderTune(); renderStage();
+    toast("Feed refreshed with your signals");
+  }
+  function openSource(id) {
+    const s = byId(id);
+    if (s.custom) {
+      if (s.attachment) { const a = document.createElement("a"); a.href = s.attachment.data; a.download = s.attachment.name; a.click(); return; }
+      if (s.meta.url) { window.open(s.meta.url, "_blank", "noopener,noreferrer"); return; }
+      toast("Your own topic · no external source"); return;
+    }
+    toast(`Sample story · would open <b>${esc(s.meta.url)}</b> · nothing here calls the network`);
+  }
+  function setMode(mode) {
+    if (state.mode === mode) return;
+    state.mode = mode; persist();
+    closePanels(); renderModes(); renderStage();
+  }
+  function setTopic(t) {
+    if (state.topic === t) return;
+    state.topic = t; rank(); persist(); renderChips(); renderStage(); renderTune();
+  }
+
+  // ---------- navigation ----------
+  function goTo(idx) {
+    const list = visibleStories();
+    if (!list.length) return;
+    idx = Math.max(0, Math.min(list.length - 1, idx));
+    if (reader.classList.contains("on")) { openReader(list[idx].id); return; }
+    if (state.mode === "focus") {
+      const cards = stage.querySelectorAll(".card");
+      cards[idx].scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+      current = idx; markProgress();
+    } else {
+      const tiles = stage.querySelectorAll(".tile");
+      tiles.forEach(t => t.classList.remove("active"));
+      tiles[idx].classList.add("active");
+      tiles[idx].focus({ preventScroll: true });
+      tiles[idx].scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "nearest" });
+      current = idx;
+    }
+  }
+  function isTyping(el) {
+    return el && (el.tagName === "TEXTAREA" || el.tagName === "INPUT" || el.tagName === "SELECT" || el.isContentEditable);
+  }
+  document.addEventListener("keydown", e => {
+    if (e.key === "Tab" && openDialog) {
+      const f = focusables(openDialog); if (!f.length) return;
+      const i = f.indexOf(document.activeElement);
+      if (e.shiftKey && (i <= 0)) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); }
+      return;
+    }
+    if (e.key === "Escape") { if (isTyping(e.target) && !openDialog) { e.target.blur(); return; } closePanels(); return; }
+    if (isTyping(e.target) || e.metaKey || e.ctrlKey || e.altKey || (openDialog && openDialog !== reader)) return;
+    const next = e.key === "ArrowDown" || e.key === "j" || (e.key === "ArrowRight" && state.mode !== "focus");
+    const prev = e.key === "ArrowUp" || e.key === "k" || (e.key === "ArrowLeft" && state.mode !== "focus");
+    if (next || prev) { e.preventDefault(); goTo(current + (next ? 1 : -1)); return; }
+    if (e.key === "Enter" && state.mode === "explore" && e.target.classList && e.target.classList.contains("tile")) { e.preventDefault(); openReader(e.target.dataset.id); }
+  });
+
+  // ---------- panels (modal: background inert + focus trap) ----------
+  const REGIONS = () => [document.querySelector(".top"), chipsEl, stage, progress, tray, reader, tune, dayPanel, createPanel];
+  let openDialog = null;
+  function setModal(active) {
+    openDialog = active;
+    REGIONS().forEach(el => { if (el !== active) { if (active) el.setAttribute("inert", ""); else el.removeAttribute("inert"); } });
+  }
+  function focusables(root) {
+    return [...root.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea, summary, [tabindex]:not([tabindex="-1"])')].filter(el => el.offsetParent !== null);
+  }
+  function openPanel(p) {
+    lastFocus = document.activeElement;
+    scrim.classList.add("on"); p.classList.add("on"); p.removeAttribute("aria-hidden");
+    setModal(p);
+    const first = p.querySelector("button"); if (first) first.focus();
+  }
+  function closePanels() {
+    let was = false;
+    const wasReader = reader.classList.contains("on");
+    [tray, reader, dayPanel, createPanel].forEach(p => { if (p.classList.contains("on")) { was = true; p.classList.remove("on"); p.setAttribute("aria-hidden", "true"); } });
+    scrim.classList.remove("on", "light");
+    if (tune.classList.contains("on")) was = true;
+    tune.classList.remove("on"); tuneBtn.setAttribute("aria-expanded", "false");
+    savedBtn.setAttribute("aria-expanded", "false");
+    setModal(null);
+    if (wasReader && readerId) { syncCard(readerId); if (state.mode === "focus") { const c = stage.querySelector(`.card[data-id="${readerId}"]`); if (c) { c.scrollIntoView({ behavior: "auto", block: "start" }); } } }
+    if (was && lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+    readerId = null;
+  }
+  // keep the feed card's note control in step with edits made in the reader
+  function syncCard(id) {
+    const host = stage.querySelector(`[data-id="${id}"]`); if (!host) return;
+    const ta = host.querySelector("textarea"); const wrap = host.querySelector(".note-wrap"); const btn = host.querySelector('[data-act="note"]');
+    const v = state.notes[id] || "";
+    if (ta) ta.value = v;
+    if (wrap && btn) { wrap.hidden = !v.trim(); btn.setAttribute("aria-expanded", String(!!v.trim())); const st = host.querySelector(".note-status"); if (st) st.textContent = v.trim() ? "Saved on this device" : ""; }
+    const mark = host.querySelector(".notemark"); if (mark && !v.trim()) mark.remove();
+  }
+  function openReader(id) {
+    const s = byId(id); if (!s) return;
+    const list = visibleStories();
+    const idx = list.findIndex(x => x.id === id);
+    if (idx >= 0) current = idx;
+    readerId = id;
+    reader.querySelector(".panel-body").innerHTML = `<div data-id="${id}" class="reader-story">${figure(s)}${body(s)}</div>`;
+    reader.querySelector(".label").textContent = `${idx + 1} / ${list.length}`;
+    if (!reader.classList.contains("on")) openPanel(reader);
+    reader.querySelector(".panel-body").scrollTop = 0;
+    stage.querySelectorAll(".tile").forEach(t => t.classList.toggle("active", t.dataset.id === id));
+  }
+  function toggleTray() {
+    if (tray.classList.contains("on")) { closePanels(); return; }
+    closePanels(); renderTray(); openPanel(tray); savedBtn.setAttribute("aria-expanded", "true");
+  }
+  function toggleTune() {
+    const on = tune.classList.contains("on");
+    closePanels();
+    if (on) return;
+    renderTune();
+    const r = tuneBtn.getBoundingClientRect();
+    tune.style.top = (r.bottom + 8) + "px";
+    tune.style.left = Math.max(16, Math.min(window.innerWidth - 16 - 340, r.right - 340)) + "px";
+    tune.classList.add("on"); tuneBtn.setAttribute("aria-expanded", "true");
+    scrim.classList.add("on", "light");
+    lastFocus = tuneBtn; setModal(tune);
+    const first = tune.querySelector("button"); if (first) first.focus();
+  }
+
+  // ---------- events (delegated) ----------
+  document.addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) {
+      const tile = e.target.closest(".tile");
+      if (tile) openReader(tile.dataset.id);
+      return;
+    }
+    const act = btn.dataset.act;
+    const host = btn.closest("[data-id]");
+    const id = host ? host.dataset.id : null;
+    if (btn.dataset.mode) return setMode(btn.dataset.mode);
+    if (btn.dataset.topic) return setTopic(btn.dataset.topic);
+    if (btn.id === "refreshBtn") return refresh();
+    if (btn.id === "savedBtn") return toggleTray();
+    if (btn.id === "tuneBtn") return toggleTune();
+    if (btn.classList.contains("close")) return closePanels();
+    if (btn.classList.contains("reader-prev")) return goTo(current - 1);
+    if (btn.classList.contains("reader-next")) return goTo(current + 1);
+    switch (act) {
+      case "save": e.stopPropagation(); return toggleSave(id);
+      case "note": return toggleNote(host);
+      case "read": return openReader(id);
+      case "more": case "less": return signal(act, id, btn);
+      case "open": return openSource(id);
+      case "refresh": return refresh();
+      case "undo": return undo();
+      case "reset": return reset();
+      case "jump": {
+        closePanels();
+        const list = visibleStories();
+        let idx = list.findIndex(s => s.id === id);
+        if (idx < 0) { state.topic = "all"; rank(); renderChips(); renderStage(); idx = visibleStories().findIndex(s => s.id === id); }
+        if (state.mode === "focus") setTimeout(() => goTo(idx), 60); else openReader(id);
+        return;
+      }
+      case "up": case "down": {
+        const i = state.saved.indexOf(id); const j = act === "up" ? i - 1 : i + 1;
+        if (j < 0 || j >= state.saved.length) return;
+        [state.saved[i], state.saved[j]] = [state.saved[j], state.saved[i]];
+        persist(); renderTray(); return;
+      }
+      case "remove": return toggleSave(id);
+    }
+  });
+  document.addEventListener("input", e => {
+    const ta = e.target;
+    if (ta.tagName !== "TEXTAREA") return;
+    const host = ta.closest("[data-id]"); if (!host) return;
+    noteInput(host.dataset.id, ta, host.querySelector(".note-status"));
+  });
+  // Tile activation via keyboard handled in keydown; prevent tile click when clicking inner buttons (handled above via stopPropagation for save).
+  scrim.addEventListener("click", closePanels);
+  window.addEventListener("resize", () => { if (tune.classList.contains("on")) closePanels(); });
+
+  // ---------- streaming-day planning and personal capture ----------
+  const dayPanel = document.getElementById("dayPanel");
+  const createPanel = document.getElementById("createPanel");
+  let pendingTopic = null;
+  let captureMode = "write";
+  const selectedDay = () => state.days.find(d => d.id === state.selectedDay);
+  const dayLabel = d => `${d.date} · ${d.name}`;
+  function mutate(fn) {
+    const before = JSON.stringify(state);
+    fn();
+    if (persist()) return true;
+    state = JSON.parse(before); return false;
+  }
+  function openDays(id = null) {
+    closePanels(); pendingTopic = id; renderDays(); openPanel(dayPanel);
+  }
+  function renderDays() {
+    const d = selectedDay();
+    dayPanel.querySelector('.panel-body').innerHTML = `
+      ${state.days.length ? `<label class="field">Streaming day<select id="daySelect" aria-label="Streaming day">${state.days.map(x => `<option value="${esc(x.id)}" ${d && d.id === x.id ? "selected" : ""}>${esc(dayLabel(x))}</option>`).join("")}</select></label>` : ""}
+      <details class="day-new" ${!d ? "open" : ""}><summary>＋ New streaming day</summary><form id="dayForm" class="compact-form">
+        <label class="field">Date<input name="date" type="date" required aria-label="Stream date"></label>
+        <label class="field">Name<input name="name" maxlength="80" required placeholder="Friday live" aria-label="Show name"></label>
+        <button class="act primary" type="submit">Create day</button><p class="form-error" role="alert"></p></form></details>
+      ${d ? `<div class="day-deck"><span class="lcd-caption">${esc(d.date)}</span><strong>${esc(d.name)}</strong><span>${d.topics.length} topics · ${d.topics.reduce((sum,t) => sum+t.minutes,0)} min</span></div>
+      ${pendingTopic ? `<div class="pending-topic"><span>${esc(byId(pendingTopic).title)}</span><button class="act primary" data-day-action="add-pending">${d.topics.some(t=>t.id===pendingTopic) ? "Already added" : "Add to this day"}</button></div>` : ""}
+      <details class="pick-saved"><summary>Add from saved (${state.saved.length})</summary><form id="savedPicker">${state.saved.length ? state.saved.map(id=>{const s=byId(id);return `<label class="pick-row"><input type="checkbox" name="topic" value="${esc(id)}" ${d.topics.some(t=>t.id===id)?"disabled":""}><span>${esc(s.title)}</span></label>`}).join("") : '<p class="muted">Save a topic while browsing to find it here.</p>'}<button class="act" type="submit">Add selected</button></form></details>
+      <div class="day-list">${d.topics.length ? d.topics.map((t,i)=>{const s=byId(t.id);return `<article class="day-item" data-daytopic="${esc(t.id)}"><span class="day-num">${String(i+1).padStart(2,"0")}</span><div class="day-item-body"><h3>${esc(s.title)}</h3><div class="day-row"><span class="muted">${esc(LABEL[s.topic])}</span><label class="duration"><input type="number" min="1" max="120" value="${t.minutes}" aria-label="Minutes for ${esc(s.title)}"> min</label></div><details class="day-note" ${state.notes[t.id]?"open":""}><summary>Note</summary><textarea rows="2" maxlength="10000" aria-label="Note for ${esc(s.title)}" placeholder="Your angle…">${esc(state.notes[t.id]||"")}</textarea></details></div><div class="day-controls"><button class="icon-btn" aria-label="Move topic up" data-day-action="up" ${i===0?"disabled":""}>↑</button><button class="icon-btn" aria-label="Move topic down" data-day-action="down" ${i===d.topics.length-1?"disabled":""}>↓</button><button class="icon-btn" aria-label="Remove from this day" data-day-action="remove">×</button></div></article>`}).join("") : '<p class="day-empty">A little room for good topics.<br><span>Browse and tap ＋ Day, or add something of your own.</span></p>'}</div>
+      <button class="act" data-day-action="new">＋ Create a topic for this day</button>` : '<p class="muted">Keep a separate running order for each stream.</p>'}`;
+  }
+  function addTopics(ids) {
+    const d = selectedDay(); if(!d) return;
+    if (mutate(()=> ids.forEach(id=>{ if(byId(id) && !d.topics.some(t=>t.id===id)) d.topics.push({id,minutes:5}); }))) {
+      pendingTopic=null; renderDays(); toast("Added to your streaming day");
+    }
+  }
+  dayPanel.addEventListener('submit', e=>{
+    e.preventDefault();
+    if(e.target.id==='savedPicker') { addTopics([...new FormData(e.target).getAll('topic')]); return; }
+    if(e.target.id!=='dayForm') return;
+    const data=new FormData(e.target), date=String(data.get('date')), name=String(data.get('name')).trim();
+    if(!name || !/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date)) || new Date(date).toISOString().slice(0,10)!==date) { e.target.querySelector('.form-error').textContent='Choose a date and a name.';return; }
+    const d={id:crypto.randomUUID(),date,name,topics:[]};
+    if(mutate(()=>{state.days.push(d);state.selectedDay=d.id;})) renderDays();
+  });
+  dayPanel.addEventListener('change',e=>{
+    if(e.target.id==='daySelect') { if(mutate(()=>state.selectedDay=e.target.value)) renderDays();return; }
+    const row=e.target.closest('[data-daytopic]');if(!row)return;
+    if(e.target.type==='number') { const n=Number(e.target.value);const t=selectedDay().topics.find(t=>t.id===row.dataset.daytopic);if(!Number.isInteger(n)||n<1||n>120){e.target.value=t.minutes;toast('Use 1–120 minutes');return;} if(mutate(()=>t.minutes=n))renderDays(); }
+  });
+  dayPanel.addEventListener('input',e=>{
+    if(e.target.tagName!=='TEXTAREA')return;
+    const id=e.target.closest('[data-daytopic]').dataset.daytopic;
+    if(mutate(()=>state.notes[id]=e.target.value)){syncCard(id);renderTray();}
+  });
+  dayPanel.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-day-action]');if(!btn)return;
+    const act=btn.dataset.dayAction;
+    if(act==='add-pending'){addTopics([pendingTopic]);return;}
+    if(act==='new'){openCreate(true);return;}
+    const row=btn.closest('[data-daytopic]'),d=selectedDay();if(!row||!d)return;
+    const i=d.topics.findIndex(t=>t.id===row.dataset.daytopic);
+    if(mutate(()=>{
+      if(act==='remove')d.topics.splice(i,1);
+      else {const j=i+(act==='up'?-1:1);if(j>=0&&j<d.topics.length)[d.topics[i],d.topics[j]]=[d.topics[j],d.topics[i]];}
+    }))renderDays();
+  });
+  function openCreate(forDay=false) {
+    closePanels();
+    if(!createPanel.querySelector('form'))renderCreate();
+    const box=createPanel.querySelector('[name="addToDay"]');box.disabled=!selectedDay();box.checked=forDay&&!!selectedDay();
+    createPanel.querySelector('.day-target').textContent=selectedDay()?`Add to ${dayLabel(selectedDay())}`:'Choose a streaming day to add it there';
+    openPanel(createPanel);
+  }
+  function renderCreate() {
+    createPanel.querySelector('.panel-body').innerHTML=`<div class="capture-tabs" role="group" aria-label="Topic input"><button class="act" data-capture="write" aria-pressed="true">Write</button><button class="act" data-capture="link" aria-pressed="false">Link</button><button class="act" data-capture="upload" aria-pressed="false">Upload</button></div>
+      <form id="topicForm" class="compact-form">
+      <label class="field capture-link" hidden>Source link<input type="url" name="url" placeholder="https://…" aria-label="Source link"><span class="muted">Link only · no automatic extraction</span></label>
+      <label class="field capture-upload" hidden>File<input type="file" name="file" accept=".txt,.md,.png,.jpg,.jpeg,.pdf" aria-label="Topic file"><span class="muted">Text, Markdown, image or PDF · up to 1 MB</span></label>
+      <label class="field">Title<input name="title" maxlength="160" required placeholder="What do you want to talk about?" aria-label="Topic title"></label>
+      <label class="field">Your note<textarea name="note" rows="3" maxlength="10000" placeholder="Your angle, a question, a reminder…" aria-label="Personal note"></textarea></label>
+      <label class="field">Topic<select name="category" aria-label="Topic category">${TOPICS.map(t=>`<option value="${t}">${LABEL[t]}</option>`).join('')}</select></label>
+      <label class="pick-row"><input name="addToDay" type="checkbox"><span class="day-target"></span></label>
+      <p class="form-error" role="alert"></p><button class="act primary" type="submit">Create topic</button></form>`;
+    captureMode='write';
+  }
+  createPanel.addEventListener('click',e=>{
+    const b=e.target.closest('[data-capture]');if(!b)return;
+    captureMode=b.dataset.capture;createPanel.querySelectorAll('[data-capture]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    createPanel.querySelector('.capture-link').hidden=captureMode!=='link';createPanel.querySelector('.capture-upload').hidden=captureMode!=='upload';
+    createPanel.querySelector('[name="url"]').required=captureMode==='link';createPanel.querySelector('[name="file"]').required=captureMode==='upload';
+  });
+  createPanel.addEventListener('change',e=>{
+    if(e.target.type!=='file'||!e.target.files[0])return;
+    const title=createPanel.querySelector('[name="title"]');if(!title.value)title.value=e.target.files[0].name.replace(/\.[^.]+$/,'').slice(0,160);
+  });
+  createPanel.addEventListener('submit',async e=>{
+    e.preventDefault();const f=e.target;if(f.id!=='topicForm')return;
+    const error=f.querySelector('.form-error'),submit=f.querySelector('[type="submit"]');error.textContent='';submit.disabled=true;
+    try {
+      const data=new FormData(f),title=String(data.get('title')).trim(),note=String(data.get('note')).trim();
+      if(!title)throw Error('Give this topic a title.');
+      let url='',attachment=null,body='';
+      if(captureMode==='link') { const u=new URL(String(data.get('url')));if(!['https:','http:'].includes(u.protocol))throw Error('Use an http or https link.');url=u.href; }
+      if(captureMode==='upload') {
+        const file=f.querySelector('[name="file"]').files[0];if(!file)throw Error('Choose a file.');
+        if(file.size>1048576)throw Error('Choose a file smaller than 1 MB.');
+        const ext=file.name.split('.').pop().toLowerCase();
+        if(['txt','md'].includes(ext)) { body=await file.text();if(body.includes('\u0000'))throw Error('Choose a plain-text file.');if(body.length>50000)throw Error('Keep text uploads under 50,000 characters.'); }
+        else {
+          const bytes=new Uint8Array(await file.arrayBuffer());
+          const pdf=ext==='pdf'&&String.fromCharCode(...bytes.slice(0,5))==='%PDF-';
+          const png=ext==='png'&&[137,80,78,71,13,10,26,10].every((v,i)=>bytes[i]===v);
+          const jpg=['jpg','jpeg'].includes(ext)&&bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+          if(!pdf&&!png&&!jpg)throw Error('Use a valid TXT, Markdown, PNG, JPEG or PDF file.');
+          const encoded=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result).split(',')[1]);r.onerror=()=>reject(Error('Could not read that file.'));r.readAsDataURL(file);});
+          const type=pdf?'application/pdf':png?'image/png':'image/jpeg';attachment={name:file.name,type,data:`data:${type};base64,${encoded}`};
+        }
+      }
+      const id=crypto.randomUUID(),s={id,custom:true,source:'article',topic:String(data.get('category')),title,dek:body?body.slice(0,170):url?'A link you brought to the conversation.':attachment?'Your uploaded material.':'An idea you brought to the conversation.',body:[body||'Your own topic.'],takeaways:[],meta:{outlet:attachment?attachment.name:body?'Uploaded text':url?'Your link':'Your idea',minutes:Math.max(1,Math.ceil(body.split(/\s+/).length/200)),url},art:{kind:'arc',palette:0},attachment};
+      const d=data.get('addToDay')&&selectedDay();
+      if(!mutate(()=>{state.custom.push(s);state.saved.push(id);state.notes[id]=note;state.rankedIds=null;if(d)d.topics.push({id,minutes:5});}))return;
+      STORIES.push(s);state.rankedIds=[id,...STORIES.filter(x=>x.id!==id).map(x=>x.id)];state.topic='all';persist();
+      closePanels();renderAll();renderCreate();if(d)openDays();toast(d?'Topic created and added to your day':'Topic created · saved to your library');
+    } catch(err){error.textContent=err.message==='Invalid URL'?'Use a complete http or https link.':err.message;}
+    finally{submit.disabled=false;}
+  });
+  document.getElementById('dayBtn').addEventListener('click',()=>openDays());
+  document.getElementById('newTopicBtn').addEventListener('click',()=>openCreate());
+  document.addEventListener('click',e=>{const b=e.target.closest('[data-act="plan"]');if(b)openDays(b.closest('[data-id]').dataset.id);});
+
+  // ---------- boot ----------
+  if (!state.rankedIds) rank();
+  renderAll();
+  window.__rundown = { get state() { return state; }, visible: () => visibleStories().map(s => s.id), weights, KEY };
+})();

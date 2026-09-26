@@ -1,0 +1,17 @@
+{
+  "errors": [],
+  "requests": [
+    "http://127.0.0.1:3187/",
+    "http://127.0.0.1:3187/assets/styles.css",
+    "http://127.0.0.1:3187/assets/data.js",
+    "http://127.0.0.1:3187/assets/app.js",
+    "http://127.0.0.1:3187/",
+    "http://127.0.0.1:3187/assets/styles.css",
+    "http://127.0.0.1:3187/assets/data.js",
+    "http://127.0.0.1:3187/assets/app.js",
+    "http://127.0.0.1:3187/",
+    "http://127.0.0.1:3187/assets/styles.css",
+    "http://127.0.0.1:3187/assets/data.js",
+    "http://127.0.0.1:3187/assets/app.js"
+  ]
+}

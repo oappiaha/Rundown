@@ -1,0 +1,33 @@
+INFO:     Started server process [30210]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8185 (Press CTRL+C to quit)
+INFO:     127.0.0.1:49669 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /inbox HTTP/1.1" 201 Created
+INFO:     127.0.0.1:49669 - "POST /research/ai/input HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /research/ai/runs/376b0fdb-a384-4fc8-bcfa-a229bef44879 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_analysis run=08252fab-8575-4baa-ad11-e49193bbbb6c failure=connection elapsed_seconds=0.003
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /research/ai/runs/08252fab-8575-4baa-ad11-e49193bbbb6c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:49673 - "GET /research/ai/runs/5d7202ac-0e75-4498-8b9f-d4c188f28aa7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49673 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49673 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+research_analysis run=5d7202ac-0e75-4498-8b9f-d4c188f28aa7 failure=timeout_read elapsed_seconds=30.005
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /research/ai/runs/5d7202ac-0e75-4498-8b9f-d4c188f28aa7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:49669 - "POST /research/ai/generate HTTP/1.1" 429 Too Many Requests
+INFO:     127.0.0.1:49669 - "GET /inbox HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /rundown/topics HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30210]

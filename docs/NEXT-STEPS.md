@@ -1,5 +1,7 @@
 # RUNDOWN — next build priorities
 
+**New session:** read [SESSION-HANDOFF.md](SESSION-HANDOFF.md) first for the current status, push blocker, and ordered execution plan. The entries below are historical reports; later rounds supersede earlier limitations.
+
 Reviewed September 15, 2026 against PRD/TDD v2.1 (`design docs/*v2 (1).md`),
 `ui/rundown-mockups.html`, registered FastAPI routes, and the actual frontend.
 This is an implementation assessment, not a deployment report.

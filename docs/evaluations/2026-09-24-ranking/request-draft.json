@@ -1,0 +1,55 @@
+{
+  "brief": "Prioritize concrete, actionable AI filmmaking workflows for independent creators. Generic showcases rank below specific production workflows. Fashion runway promotions and unrelated football highlights are distractors. Judge descriptions only; do not assume video contents. Group identical coverage, not merely a shared subject.",
+  "selections": [
+    {
+      "id": "fdc59133-8ffd-40ee-ac62-4b03f33fc0d3",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "d8eef256-6c1e-4741-8098-cf9601b23a28",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "d5023dea-aee6-4685-aa98-fbd58540b2c9",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "56d09271-400d-48c8-866d-6f7f2c658d8d",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "7eb461f8-c568-4bca-b15c-9980e2b82c58",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "8d4a78c8-dd51-4b27-8bd3-68bc26db3c29",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "2bafce8d-ea11-4498-85f7-7fc8f12c399e",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "74ec01fd-69bf-4172-abfa-9e98328087be",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "57b38482-2fd6-4bbc-8198-15c0011fa9c6",
+      "revision": 1,
+      "preference_revision": 0
+    },
+    {
+      "id": "ff2c1e6f-5199-484a-9e65-7dc931de33ae",
+      "revision": 1,
+      "preference_revision": 0
+    }
+  ]
+}

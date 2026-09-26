@@ -1,0 +1,409 @@
+{
+  "/rundown/state": {
+    "revision": 16,
+    "topics": [
+      {
+        "id": "fe93deab-3904-4243-946f-53385fe39536",
+        "text": "Small studio AI workflow",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Small studio AI workflow\nPublished: 2026-09-25T03:05:48.219236+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic practical workflow: script, shot list, keyframes, generate clips and review artifacts.\n\nSource: https://www.youtube.com/watch?v=demo0000002\n\nPrepared notes (AI-assisted, reviewed)\nSummary: Demo summary: review the supplied workflow before going live.\nTalking points:\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?"
+      },
+      {
+        "id": "8817514f-d13d-4c2c-9e5f-d5f5b157244c",
+        "text": "Phone follow-up",
+        "duration": 90,
+        "notes": "Synthetic topic added from a phone."
+      },
+      {
+        "id": "461ac67a-b677-41b9-badf-8962d7ca025f",
+        "text": "Edited breaking update",
+        "duration": 90,
+        "notes": "Synthetic breaking update. Ask about practical implications. PRIVATE PRESENTER NOTE."
+      },
+      {
+        "id": "81b1e14c-b67d-4a90-8824-01b4fedd7a09",
+        "text": "AI camera continuity",
+        "duration": 180,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: AI camera continuity\nPublished: 2026-09-25T03:05:48.219227+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nA synthetic tutorial: storyboard, matching camera angles, lighting and editing. Demo data, not real news.\n\nSummary\nDemo summary: review the supplied workflow before going live.\n\nTalking points\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?\n\nSource: https://www.youtube.com/watch?v=demo0000001"
+      },
+      {
+        "id": "f055f5da-070b-4455-bba4-8a19dd436f0a",
+        "text": "Other screen edit",
+        "duration": 120,
+        "notes": "Synthetic audience question: which camera setup is simplest?\n\nSource: https://x.com/demo/status/123456789"
+      }
+    ],
+    "current_topic_id": "fe93deab-3904-4243-946f-53385fe39536",
+    "remaining_seconds": 120,
+    "paused": true,
+    "server_time": "2026-09-25T03:24:19.078500+00:00"
+  },
+  "/inbox": {
+    "items": [
+      {
+        "id": "19de6e99-730f-41fa-888d-913c05d8d91d",
+        "revision": 1,
+        "text": "TikTok demo caption",
+        "duration": 120,
+        "notes": "TikTok public link\nPublic video caption only. Transcript, comments and video content were not retrieved.\nAuthor: Demo creator\n\nSynthetic public caption: compare lighting before exporting.",
+        "source_url": "https://www.tiktok.com/@demo/video/1234567890123456789",
+        "archived": false,
+        "created_at": "2026-09-25T03:19:21.218145+00:00",
+        "updated_at": "2026-09-25T03:19:21.218145+00:00",
+        "source": null,
+        "topic": {
+          "text": "TikTok demo caption",
+          "duration": 120,
+          "notes": "TikTok public link\nPublic video caption only. Transcript, comments and video content were not retrieved.\nAuthor: Demo creator\n\nSynthetic public caption: compare lighting before exporting.\n\nSource: https://www.tiktok.com/@demo/video/1234567890123456789"
+        }
+      },
+      {
+        "id": "2557ccf4-3d63-4bf2-b84d-33e1305ce051",
+        "revision": 4,
+        "text": "Manual audience question",
+        "duration": 120,
+        "notes": "Synthetic audience question: which camera setup is simplest?\n\nX public link\nPublic post text only. Replies, linked articles and attached media were not retrieved.\nAuthor: Demo creator\n\nSynthetic public post: compare lighting before exporting your film.",
+        "source_url": "https://x.com/demo/status/123456789",
+        "archived": false,
+        "created_at": "2026-09-25T03:11:38.924955+00:00",
+        "updated_at": "2026-09-25T03:19:19.804794+00:00",
+        "source": null,
+        "topic": {
+          "text": "Manual audience question",
+          "duration": 120,
+          "notes": "Synthetic audience question: which camera setup is simplest?\n\nX public link\nPublic post text only. Replies, linked articles and attached media were not retrieved.\nAuthor: Demo creator\n\nSynthetic public post: compare lighting before exporting your film.\n\nSource: https://x.com/demo/status/123456789"
+        }
+      },
+      {
+        "id": "e87a5120-40cb-461a-a494-526210bf3abd",
+        "revision": 1,
+        "text": "New editing workflow",
+        "duration": 120,
+        "notes": "Feed: Demo editing news\n\nOriginal title: New editing workflow\n\nSynthetic guide to editing, sound and final checks for a short film.",
+        "source_url": "https://example.com/editing",
+        "archived": false,
+        "created_at": "2026-09-25T03:12:19.891743+00:00",
+        "updated_at": "2026-09-25T03:12:19.891743+00:00",
+        "source": {
+          "kind": "rss",
+          "feed_id": "9e9717bb-c6bd-4604-8c51-4a4cd3cae0c1",
+          "feed_name": "Demo editing news",
+          "original_title": "New editing workflow",
+          "body_text": "Synthetic guide to editing, sound and final checks for a short film.",
+          "published_at": null,
+          "imported_at": "2026-09-25T03:12:19.891743+00:00",
+          "truncated": false
+        },
+        "topic": {
+          "text": "New editing workflow",
+          "duration": 120,
+          "notes": "Feed: Demo editing news\n\nOriginal title: New editing workflow\n\nSynthetic guide to editing, sound and final checks for a short film.\n\nSource: https://example.com/editing"
+        }
+      },
+      {
+        "id": "6564a800-e36a-41a7-802a-af2a7259340b",
+        "revision": 1,
+        "text": "Community camera tips",
+        "duration": 120,
+        "notes": "Reddit \u00b7 Demo community\nOriginal title: Community camera tips\nPublished: 2026-09-25T03:12:07.186110+00:00\n\nPost title and body only; linked articles and comments have not been retrieved.\nChannel/community: r/filmmaking\n\nSynthetic discussion: keeping AI shots consistent. Check lighting and reference frames.",
+        "source_url": "https://www.reddit.com/comments/abc123/",
+        "archived": false,
+        "created_at": "2026-09-25T03:12:07.187277+00:00",
+        "updated_at": "2026-09-25T03:12:07.187277+00:00",
+        "source": {
+          "kind": "reddit",
+          "feed_id": "03b0f135-4c6f-445b-a6cb-85bd8b1b4ca6",
+          "feed_name": "Demo community",
+          "original_title": "Community camera tips",
+          "body_text": "Post title and body only; linked articles and comments have not been retrieved.\nChannel/community: r/filmmaking\n\nSynthetic discussion: keeping AI shots consistent. Check lighting and reference frames.",
+          "published_at": "2026-09-25T03:12:07.186110+00:00",
+          "imported_at": "2026-09-25T03:12:07.187277+00:00",
+          "truncated": false
+        },
+        "topic": {
+          "text": "Community camera tips",
+          "duration": 120,
+          "notes": "Reddit \u00b7 Demo community\nOriginal title: Community camera tips\nPublished: 2026-09-25T03:12:07.186110+00:00\n\nPost title and body only; linked articles and comments have not been retrieved.\nChannel/community: r/filmmaking\n\nSynthetic discussion: keeping AI shots consistent. Check lighting and reference frames.\n\nSource: https://www.reddit.com/comments/abc123/"
+        }
+      },
+      {
+        "id": "40494add-deac-412a-a259-aee87f99d340",
+        "revision": 2,
+        "text": "AI camera continuity",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: AI camera continuity\nPublished: 2026-09-25T03:05:48.219227+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nA synthetic tutorial: storyboard, matching camera angles, lighting and editing. Demo data, not real news.\n\nSummary\nDemo summary: review the supplied workflow before going live.\n\nTalking points\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?",
+        "source_url": "https://www.youtube.com/watch?v=demo0000001",
+        "archived": false,
+        "created_at": "2026-09-25T03:05:48.224065+00:00",
+        "updated_at": "2026-09-25T03:07:34.338023+00:00",
+        "source": {
+          "kind": "youtube",
+          "feed_id": "315b61f4-eb21-4131-a0c3-9ae1beb47687",
+          "feed_name": "Demo filmmaking",
+          "original_title": "AI camera continuity",
+          "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nA synthetic tutorial: storyboard, matching camera angles, lighting and editing. Demo data, not real news.",
+          "published_at": "2026-09-25T03:05:48.219227+00:00",
+          "imported_at": "2026-09-25T03:05:48.224065+00:00",
+          "truncated": false
+        },
+        "topic": {
+          "text": "AI camera continuity",
+          "duration": 120,
+          "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: AI camera continuity\nPublished: 2026-09-25T03:05:48.219227+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nA synthetic tutorial: storyboard, matching camera angles, lighting and editing. Demo data, not real news.\n\nSummary\nDemo summary: review the supplied workflow before going live.\n\nTalking points\n- What changes the production process?\n- Which claims still need checking?\n- What can a small studio try first?\n\nSource: https://www.youtube.com/watch?v=demo0000001"
+        }
+      },
+      {
+        "id": "611fe158-e8b4-43a3-baee-e48d74c3fb77",
+        "revision": 1,
+        "text": "Weekend football scores",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Weekend football scores\nPublished: 2026-09-25T03:05:48.219239+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic football result, unrelated to filmmaking.",
+        "source_url": "https://www.youtube.com/watch?v=demo0000004",
+        "archived": false,
+        "created_at": "2026-09-25T03:05:48.226893+00:00",
+        "updated_at": "2026-09-25T03:05:48.226893+00:00",
+        "source": {
+          "kind": "youtube",
+          "feed_id": "315b61f4-eb21-4131-a0c3-9ae1beb47687",
+          "feed_name": "Demo filmmaking",
+          "original_title": "Weekend football scores",
+          "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic football result, unrelated to filmmaking.",
+          "published_at": "2026-09-25T03:05:48.219239+00:00",
+          "imported_at": "2026-09-25T03:05:48.226893+00:00",
+          "truncated": false
+        },
+        "topic": {
+          "text": "Weekend football scores",
+          "duration": 120,
+          "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Weekend football scores\nPublished: 2026-09-25T03:05:48.219239+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic football result, unrelated to filmmaking.\n\nSource: https://www.youtube.com/watch?v=demo0000004"
+        }
+      },
+      {
+        "id": "e70b1b6d-9019-4028-9aa9-7072b3fcc831",
+        "revision": 1,
+        "text": "Fashion runway teaser",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Fashion runway teaser\nPublished: 2026-09-25T03:05:48.219238+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic promotional fashion showcase; no practical filmmaking steps.",
+        "source_url": "https://www.youtube.com/watch?v=demo0000003",
+        "archived": false,
+        "created_at": "2026-09-25T03:05:48.226193+00:00",
+        "updated_at": "2026-09-25T03:05:48.226193+00:00",
+        "source": {
+          "kind": "youtube",
+          "feed_id": "315b61f4-eb21-4131-a0c3-9ae1beb47687",
+          "feed_name": "Demo filmmaking",
+          "original_title": "Fashion runway teaser",
+          "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic promotional fashion showcase; no practical filmmaking steps.",
+          "published_at": "2026-09-25T03:05:48.219238+00:00",
+          "imported_at": "2026-09-25T03:05:48.226193+00:00",
+          "truncated": false
+        },
+        "topic": {
+          "text": "Fashion runway teaser",
+          "duration": 120,
+          "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Fashion runway teaser\nPublished: 2026-09-25T03:05:48.219238+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic promotional fashion showcase; no practical filmmaking steps.\n\nSource: https://www.youtube.com/watch?v=demo0000003"
+        }
+      },
+      {
+        "id": "87554512-a1fa-47c3-a2ab-3029ce7dbb8d",
+        "revision": 1,
+        "text": "Small studio AI workflow",
+        "duration": 120,
+        "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Small studio AI workflow\nPublished: 2026-09-25T03:05:48.219236+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic practical workflow: script, shot list, keyframes, generate clips and review artifacts.",
+        "source_url": "https://www.youtube.com/watch?v=demo0000002",
+        "archived": false,
+        "created_at": "2026-09-25T03:05:48.225771+00:00",
+        "updated_at": "2026-09-25T03:05:48.225771+00:00",
+        "source": {
+          "kind": "youtube",
+          "feed_id": "315b61f4-eb21-4131-a0c3-9ae1beb47687",
+          "feed_name": "Demo filmmaking",
+          "original_title": "Small studio AI workflow",
+          "body_text": "Video description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic practical workflow: script, shot list, keyframes, generate clips and review artifacts.",
+          "published_at": "2026-09-25T03:05:48.219236+00:00",
+          "imported_at": "2026-09-25T03:05:48.225771+00:00",
+          "truncated": false
+        },
+        "topic": {
+          "text": "Small studio AI workflow",
+          "duration": 120,
+          "notes": "Youtube \u00b7 Demo filmmaking\nOriginal title: Small studio AI workflow\nPublished: 2026-09-25T03:05:48.219236+00:00\n\nVideo description only; transcript and video have not been retrieved.\nChannel/community: DEMO Studio\n\nSynthetic practical workflow: script, shot list, keyframes, generate clips and review artifacts.\n\nSource: https://www.youtube.com/watch?v=demo0000002"
+        }
+      }
+    ]
+  },
+  "/shows": {
+    "shows": [
+      {
+        "id": "e5ce94fa-b11b-4045-a136-2af6fa54b668",
+        "name": "DEMO Manual Show",
+        "revision": 1,
+        "topic_count": 1,
+        "total_seconds": 60,
+        "created_at": "2026-09-25T03:15:47.293851+00:00",
+        "updated_at": "2026-09-25T03:15:47.293851+00:00"
+      },
+      {
+        "id": "92044007-a612-475f-a2bf-eab1fffaa408",
+        "name": "DEMO Live Capture",
+        "revision": 1,
+        "topic_count": 5,
+        "total_seconds": 600,
+        "created_at": "2026-09-25T03:15:46.676207+00:00",
+        "updated_at": "2026-09-25T03:15:46.676207+00:00"
+      },
+      {
+        "id": "2e393e9a-6eaa-4478-ba81-4326b42ac643",
+        "name": "DEMO Next Episode",
+        "revision": 1,
+        "topic_count": 2,
+        "total_seconds": 300,
+        "created_at": "2026-09-25T03:12:47.967248+00:00",
+        "updated_at": "2026-09-25T03:12:47.967248+00:00"
+      },
+      {
+        "id": "0f8e8fb1-9376-4001-9715-39b04eea2d12",
+        "name": "DEMO Creator Tonight",
+        "revision": 3,
+        "topic_count": 2,
+        "total_seconds": 300,
+        "created_at": "2026-09-25T03:08:26.922956+00:00",
+        "updated_at": "2026-09-25T03:09:18.510735+00:00"
+      }
+    ]
+  },
+  "/retrieval": {
+    "sources": [
+      {
+        "id": "03b0f135-4c6f-445b-a6cb-85bd8b1b4ca6",
+        "revision": 1,
+        "scope": "filmmaking",
+        "limit": 20,
+        "enabled": true,
+        "updated_at": "2026-09-25T03:12:04.947321+00:00",
+        "name": "Demo community",
+        "query": "",
+        "platform": "reddit",
+        "freshness_hours": 168,
+        "default_duration": 120,
+        "created_at": "2026-09-25T03:12:04.947321+00:00",
+        "setup_reason": null,
+        "can_import": true,
+        "latest_run": {
+          "id": "311025fc-817c-4cbd-8605-94ea6caefc29",
+          "status": "succeeded",
+          "source_id": "03b0f135-4c6f-445b-a6cb-85bd8b1b4ca6",
+          "duplicates": 0,
+          "error": null,
+          "revision": 1,
+          "started_at": "2026-09-25T03:12:07.180375+00:00",
+          "finished_at": "2026-09-25T03:12:07.187829+00:00",
+          "created": 1,
+          "skipped": 0,
+          "mode": "fixture"
+        }
+      },
+      {
+        "id": "315b61f4-eb21-4131-a0c3-9ae1beb47687",
+        "revision": 1,
+        "scope": "",
+        "limit": 4,
+        "enabled": true,
+        "updated_at": "2026-09-25T03:05:48.106484+00:00",
+        "name": "Demo filmmaking",
+        "query": "AI camera workflow",
+        "platform": "youtube",
+        "freshness_hours": 168,
+        "default_duration": 120,
+        "created_at": "2026-09-25T03:05:48.106484+00:00",
+        "setup_reason": null,
+        "can_import": true,
+        "latest_run": {
+          "id": "b0ce1181-bb96-4a94-971b-440e02b8f853",
+          "status": "succeeded",
+          "source_id": "315b61f4-eb21-4131-a0c3-9ae1beb47687",
+          "duplicates": 4,
+          "error": null,
+          "revision": 1,
+          "started_at": "2026-09-25T03:12:03.884539+00:00",
+          "finished_at": "2026-09-25T03:12:03.911579+00:00",
+          "created": 0,
+          "skipped": 0,
+          "mode": "fixture"
+        }
+      }
+    ],
+    "providers": [
+      {
+        "platform": "youtube",
+        "setup_reason": null
+      },
+      {
+        "platform": "reddit",
+        "setup_reason": null
+      }
+    ],
+    "daily_limit": 20,
+    "used_today": 3,
+    "mode": "fixture"
+  },
+  "/feeds": {
+    "feeds": [
+      {
+        "id": "6a34fc9f-0c42-4800-81b0-5274e0c2caf9",
+        "revision": 2,
+        "name": "Demo unavailable feed",
+        "url": "http://127.0.0.1:8188/unavailable",
+        "default_duration": 120,
+        "enabled": false,
+        "created_at": "2026-09-25T03:20:47.182021+00:00",
+        "updated_at": "2026-09-25T03:21:18.380772+00:00",
+        "can_import": false,
+        "latest_run": {
+          "id": "bc5b5b97-279a-484e-867e-bf359a99b5c7",
+          "feed_id": "6a34fc9f-0c42-4800-81b0-5274e0c2caf9",
+          "status": "failed",
+          "started_at": "2026-09-25T03:20:47.253684+00:00",
+          "finished_at": "2026-09-25T03:20:47.256060+00:00",
+          "created": 0,
+          "duplicates": 0,
+          "skipped": 0,
+          "examined": 0,
+          "error": "The feed returned HTTP 404. Check the feed URL or try again later.",
+          "warnings": [],
+          "items": []
+        }
+      },
+      {
+        "id": "9e9717bb-c6bd-4604-8c51-4a4cd3cae0c1",
+        "revision": 1,
+        "name": "Demo editing news",
+        "url": "http://127.0.0.1:8188/demo.xml",
+        "default_duration": 120,
+        "enabled": true,
+        "created_at": "2026-09-25T03:12:19.757427+00:00",
+        "updated_at": "2026-09-25T03:12:19.757427+00:00",
+        "can_import": true,
+        "latest_run": {
+          "id": "ac8b0405-1aa0-40fe-9341-865aed3c6f2a",
+          "feed_id": "9e9717bb-c6bd-4604-8c51-4a4cd3cae0c1",
+          "status": "succeeded",
+          "started_at": "2026-09-25T03:20:15.064143+00:00",
+          "finished_at": "2026-09-25T03:20:15.071668+00:00",
+          "created": 0,
+          "duplicates": 1,
+          "skipped": 0,
+          "examined": 1,
+          "error": null,
+          "warnings": [],
+          "items": [
+            {
+              "title": "New editing workflow",
+              "reason": "Already captured; existing idea left unchanged."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

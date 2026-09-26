@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "topic": "2d9d3097-f0ee-41ca-af4a-c7c29172a488",
+  "checks": [
+    "real UI note save/readback",
+    "remote refresh conflict retains draft",
+    "explicit overwrite",
+    "reload",
+    "desktop/mobile screenshots",
+    "no horizontal overflow",
+    "source and live state preserved"
+  ]
+}

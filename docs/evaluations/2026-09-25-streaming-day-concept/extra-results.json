@@ -1,0 +1,8 @@
+{
+  "pdf_bytes_preserved_after_reload": true,
+  "quota_failure_rolls_back_and_preserves_draft": true,
+  "saved_picker_deduplicates": true,
+  "invalid_duration_rejected": true,
+  "day_note_saved": true,
+  "touch_swipe_works": true
+}

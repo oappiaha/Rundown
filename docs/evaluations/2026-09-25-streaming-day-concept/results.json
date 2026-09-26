@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "errors": [],
+  "requests": [
+    "http://127.0.0.1:3188/",
+    "http://127.0.0.1:3188/assets/styles.css",
+    "http://127.0.0.1:3188/assets/data.js",
+    "http://127.0.0.1:3188/assets/app.js",
+    "http://127.0.0.1:3188/",
+    "http://127.0.0.1:3188/assets/styles.css",
+    "http://127.0.0.1:3188/assets/data.js",
+    "http://127.0.0.1:3188/assets/app.js"
+  ],
+  "days": [
+    {
+      "id": "4eefcc35-aea3-4d37-94ab-700011008d60",
+      "date": "2026-09-25",
+      "name": "Friday live",
+      "topics": [
+        {
+          "id": "oner",
+          "minutes": 5
+        }
+      ]
+    },
+    {
+      "id": "ac895e01-9896-4df0-b857-5a1f4f85c23c",
+      "date": "2026-09-26",
+      "name": "Saturday conversations",
+      "topics": [
+        {
+          "id": "4ae96e43-5992-4f8f-8ef3-9e7e3a2f408c",
+          "minutes": 5
+        },
+        {
+          "id": "cea0dd81-fa13-4404-b621-e5d1ff547ac3",
+          "minutes": 5
+        }
+      ]
+    }
+  ],
+  "custom_count": 4,
+  "notes_preserved": true,
+  "invalid_and_oversize_rejected": true
+}
