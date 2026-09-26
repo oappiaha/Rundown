@@ -13,7 +13,7 @@ from sqlmodel import Session, col, select
 
 from rundown import show
 from rundown.db import session
-from rundown.models import SavedShow
+from rundown.models import SavedShow, ShowPlan, ShowTopicOrigin
 from rundown.show import ScheduleTopic, TopicIn
 
 router = APIRouter(prefix="/shows", tags=["saved-shows"])
@@ -86,17 +86,83 @@ def _stamp(value: float) -> str:
     return datetime.fromtimestamp(value, UTC).isoformat()
 
 
+def stream_date(saved: SavedShow) -> str | None:
+    """The additive streaming-day date, read through the show's own session so
+    every existing caller of summary/detail reports it without a new argument."""
+    db = Session.object_session(saved)
+    if db is None:
+        return None
+    plan = db.get(ShowPlan, saved.id)
+    return plan.stream_date if plan else None
+
+
 def summary(saved: SavedShow) -> dict:
     topics = _topics(saved)
     return {"id": saved.id, "name": saved.name, "revision": saved.revision,
             "topic_count": len(topics), "total_seconds": sum(t["duration"] for t in topics),
+            "stream_date": stream_date(saved),
             "created_at": _stamp(saved.created_at), "updated_at": _stamp(saved.updated_at)}
 
 
 def detail(saved: SavedShow) -> dict:
     return {"id": saved.id, "name": saved.name, "revision": saved.revision,
-            "topics": _topics(saved), "created_at": _stamp(saved.created_at),
-            "updated_at": _stamp(saved.updated_at)}
+            "topics": _topics(saved), "stream_date": stream_date(saved),
+            "created_at": _stamp(saved.created_at), "updated_at": _stamp(saved.updated_at)}
+
+
+# ---- Topic origins (additive display metadata) -------------------------------
+
+def origins(db: Session, show_id: str) -> dict[str, ShowTopicOrigin]:
+    rows = db.exec(select(ShowTopicOrigin).where(ShowTopicOrigin.show_id == show_id)).all()
+    return {row.topic_id: row for row in rows}
+
+
+def sync_origins(db: Session, saved: SavedShow, topics: list[dict]) -> None:
+    """After a show's topic list was replaced: a topic that is gone loses its
+    mapping, a topic whose live label changed keeps its origin with the new
+    label. Never creates a mapping."""
+    assert saved.id is not None
+    kept = {t["id"]: t for t in topics}
+    for topic_id, row in origins(db, saved.id).items():
+        if topic_id not in kept:
+            db.delete(row)
+        elif row.label != kept[topic_id]["text"]:
+            row.label = kept[topic_id]["text"]
+            db.add(row)
+
+
+def copy_origins(db: Session, source: SavedShow, copied: SavedShow, id_map: dict[str, str]) -> None:
+    """A duplicate keeps the same display metadata under its fresh topic ids."""
+    assert source.id is not None and copied.id is not None
+    now = time.time()
+    for topic_id, row in origins(db, source.id).items():
+        new_id = id_map.get(topic_id)
+        if new_id is not None:
+            db.add(ShowTopicOrigin(topic_id=new_id, show_id=copied.id, inbox_topic_id=row.inbox_topic_id,
+                                   display_title=row.display_title, label=row.label, created_at=now))
+
+
+def replace_topics(saved: SavedShow, entries: list[ScheduleTopic], name: str) -> list[dict]:
+    """Shared by the legacy /shows editor and the /plans editor: existing ids
+    must belong to this show and be unique; omitted notes are kept."""
+    old = {t["id"]: t for t in _topics(saved)}
+    seen = set()
+    topics = []
+    for entry in entries:
+        if entry.id is not None and (entry.id not in old or entry.id in seen):
+            raise HTTPException(422, "Existing topic IDs must be unique and belong to this saved show.")
+        topic_id = entry.id or str(uuid4())
+        seen.add(topic_id)
+        notes = entry.notes
+        if "notes" not in entry.model_fields_set and entry.id in old:
+            notes = old[entry.id]["notes"]
+        topics.append({"id": topic_id, "text": entry.text,
+                       "duration": entry.duration, "notes": notes})
+    saved.name = name
+    saved.topics_json = json.dumps(topics)
+    saved.revision += 1
+    saved.updated_at = time.time()
+    return topics
 
 
 def copy_topics(topics: list[dict]) -> list[dict]:
@@ -145,24 +211,9 @@ def update_show(show_id: str, payload: UpdateShow) -> dict:
     with saved_transaction() as db:
         saved = lookup(db, show_id)
         check_saved_revision(saved, payload.revision)
-        old = {t["id"]: t for t in _topics(saved)}
-        seen = set()
-        topics = []
-        for entry in payload.topics:
-            if entry.id is not None and (entry.id not in old or entry.id in seen):
-                raise HTTPException(422, "Existing topic IDs must be unique and belong to this saved show.")
-            topic_id = entry.id or str(uuid4())
-            seen.add(topic_id)
-            notes = entry.notes
-            if "notes" not in entry.model_fields_set and entry.id in old:
-                notes = old[entry.id]["notes"]
-            topics.append({"id": topic_id, "text": entry.text,
-                           "duration": entry.duration, "notes": notes})
-        saved.name = payload.name
-        saved.topics_json = json.dumps(topics)
-        saved.revision += 1
-        saved.updated_at = time.time()
+        topics = replace_topics(saved, payload.topics, payload.name)
         db.add(saved)
+        sync_origins(db, saved, topics)
         return detail(saved)
 
 
@@ -171,7 +222,11 @@ def duplicate_show(show_id: str, payload: DuplicateShow) -> dict:
     with saved_transaction() as db:
         source = lookup(db, show_id)
         check_saved_revision(source, payload.revision)
-        return detail(create(db, payload.name, _topics(source)))
+        originals = _topics(source)
+        copied = create(db, payload.name, originals)
+        db.flush()
+        copy_origins(db, source, copied, {o["id"]: c["id"] for o, c in zip(originals, _topics(copied), strict=True)})
+        return detail(copied)
 
 
 @router.post("/{show_id}/activate")

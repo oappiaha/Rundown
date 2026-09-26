@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlsplit
 
 import httpx
 
+from rundown import presentation
 from rundown.config import settings
 from rundown.models import RetrievalSource
 from rundown.rss import Entry, FeedError, plain_text
@@ -179,8 +180,17 @@ def collect(source: RetrievalSource) -> tuple[list[Entry], int]:
             if source.platform == 'youtube' and not plain_text(body).strip():
                 context += 'No description provided by the publisher.'
             truncated = len(context) > 6000 or len(full_title) > 1000
+            thumbnail = None
+            if source.platform == 'youtube':
+                offered = snippet.get('thumbnails')
+                thumbnail = presentation.choose_thumbnail(list(offered.values()) if isinstance(offered, dict) else [])
             entries.append(Entry(source.platform + ':' + ident, url, title, context[:6000],
-                                 datetime.fromtimestamp(published, UTC).isoformat(), truncated))
+                                 datetime.fromtimestamp(published, UTC).isoformat(), truncated,
+                                 creator=presentation.clean_text(plain_text(author), presentation.MAX_CREATOR),
+                                 thumbnail_url=thumbnail[0] if thumbnail else None,
+                                 thumbnail_width=thumbnail[1] if thumbnail else None,
+                                 thumbnail_height=thumbnail[2] if thumbnail else None,
+                                 excerpt=presentation.clean_text(plain_text(body), presentation.MAX_EXCERPT)))
         except (KeyError, TypeError, ValueError, AttributeError, OverflowError, OSError):
             skipped += 1
     return entries, skipped

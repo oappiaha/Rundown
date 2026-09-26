@@ -18,6 +18,8 @@ export default defineConfig({
       '/health': { target: apiTarget, changeOrigin: true },
       '/rundown': { target: apiTarget, changeOrigin: true },
       '/shows': { target: apiTarget, changeOrigin: true },
+      '/plans': { target: apiTarget, changeOrigin: true },
+      '/attachments': { target: apiTarget, changeOrigin: true },
       '/inbox': { target: apiTarget, changeOrigin: true },
       '/feeds': { target: apiTarget, changeOrigin: true },
       '/preparation': { target: apiTarget, changeOrigin: true },

@@ -12,6 +12,7 @@ from xml.parsers import expat
 
 import feedparser
 
+from rundown import presentation
 from rundown.config import settings
 from rundown.inbox import CaptureTopic, url_adapter
 
@@ -156,6 +157,37 @@ class Entry:
     body: str
     published: str | None
     truncated: bool
+    # Optional card metadata; positional callers predate these defaults.
+    creator: str = ''
+    thumbnail_url: str | None = None
+    thumbnail_width: int | None = None
+    thumbnail_height: int | None = None
+    media_seconds: int | None = None
+    excerpt: str = ''
+
+
+def entry_media(entry: dict, feed_url: str) -> list[object]:
+    """Media RSS thumbnails, image media content and image enclosures, in that order."""
+    found: list[object] = []
+    try:
+        get = entry.get
+        # A missing or empty address is skipped: urljoin would otherwise
+        # turn the feed document itself into the "thumbnail".
+        for item in get('media_thumbnail') or []:
+            if isinstance(item, dict) and isinstance(item.get('url'), str) and item['url'].strip():
+                found.append({**item, 'url': urljoin(feed_url, item['url'].strip())})
+        for item in get('media_content') or []:
+            if (isinstance(item, dict) and isinstance(item.get('url'), str) and item['url'].strip()
+                    and (str(item.get('medium', '')).lower() == 'image'
+                         or str(item.get('type', '')).lower().startswith('image/'))):
+                found.append({**item, 'url': urljoin(feed_url, item['url'].strip())})
+        for item in get('enclosures') or []:
+            if (isinstance(item, dict) and str(item.get('type', '')).lower().startswith('image/')
+                    and isinstance(item.get('href'), str) and item['href'].strip()):
+                found.append({'url': urljoin(feed_url, item['href'].strip())})
+    except (TypeError, ValueError, AttributeError):
+        return found
+    return found
 
 
 def parse_feed(data: bytes, feed_url: str) -> tuple[list[Entry | dict], list[str]]:
@@ -176,6 +208,8 @@ def parse_feed(data: bytes, feed_url: str) -> tuple[list[Entry | dict], list[str
     if not parsed.get('version'):
         raise FeedError('This URL did not return a recognized RSS or Atom feed.')
     warnings = []
+    feed_meta = parsed.get('feed')
+    feed_title = str(feed_meta.get('title', '')) if isinstance(feed_meta, dict) else ''
     if len(parsed.entries) > MAX_ENTRIES:
         warnings.append('Only the first 100 entries were examined. Older entries were not imported.')
     entries: list[Entry | dict] = []
@@ -192,7 +226,14 @@ def parse_feed(data: bytes, feed_url: str) -> tuple[list[Entry | dict], list[str
             continue
         content = entry.get('content', [])
         body = plain_text(str(content[0].get('value', '') if content else entry.get('summary', '')))
+        thumbnail = presentation.choose_thumbnail(entry_media(entry, feed_url))
+        creator = presentation.clean_text(plain_text(str(entry.get('author') or feed_title or '')),
+                                          presentation.MAX_CREATOR)
         entries.append(Entry(identity=str(entry.get('id') or link), url=link, title=title[:1000],
                              body=body[:50000], published=str(entry.get('published') or entry.get('updated') or '')[:120] or None,
-                             truncated=len(body) > 50000 or len(title) > 1000))
+                             truncated=len(body) > 50000 or len(title) > 1000,
+                             creator=creator, thumbnail_url=thumbnail[0] if thumbnail else None,
+                             thumbnail_width=thumbnail[1] if thumbnail else None,
+                             thumbnail_height=thumbnail[2] if thumbnail else None,
+                             excerpt=presentation.clean_text(body, presentation.MAX_EXCERPT)))
     return entries, warnings

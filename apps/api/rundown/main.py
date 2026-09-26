@@ -7,12 +7,14 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from rundown.analysis import router as analysis_router
+from rundown.attachments import router as attachments_router
 from rundown.config import settings
 from rundown.db import init_db
 from rundown.feeds import router as feeds_router
 from rundown.inbox import router as inbox_router
 from rundown.library import router as library_router
 from rundown.obs_bridge import router as obs_router
+from rundown.plans import router as plans_router
 from rundown.preparation import router as preparation_router
 from rundown.research import router as research_router
 from rundown.retrieval import router as retrieval_router
@@ -29,6 +31,7 @@ async def lifespan(_: FastAPI):
     settings.db_path.parent.mkdir(parents=True, exist_ok=True)
     settings.raw_cache_dir.mkdir(parents=True, exist_ok=True)
     settings.logs_dir.mkdir(parents=True, exist_ok=True)
+    settings.assets_dir.mkdir(parents=True, exist_ok=True)
     init_db()
     scheduler = FeedScheduler()
     scheduler.start()
@@ -43,6 +46,8 @@ app = FastAPI(title="RUNDOWN", version="0.1.0", lifespan=lifespan)
 app.include_router(obs_router)
 app.include_router(show_router)
 app.include_router(library_router)
+app.include_router(plans_router)
+app.include_router(attachments_router)
 app.include_router(inbox_router)
 app.include_router(feeds_router)
 app.include_router(scheduling_router)

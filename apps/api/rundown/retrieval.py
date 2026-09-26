@@ -9,7 +9,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from sqlmodel import Session, col, select
 
-from rundown import collectors, rss
+from rundown import collectors, presentation, rss
 from rundown.config import settings
 from rundown.db import session
 from rundown.library import ShowName, _stamp, saved_transaction
@@ -20,6 +20,7 @@ from rundown.models import (
     RetrievalRun,
     RetrievalSource,
     RetrievedItem,
+    TopicPresentation,
 )
 
 router = APIRouter(prefix='/retrieval', tags=['topic-retrieval'])
@@ -158,6 +159,11 @@ def ingest(db: Session, source: RetrievalSource, run: RetrievalRun, entries: lis
             if known is None:
                 db.add(RetrievalIdentity(id=entry.identity, inbox_topic_id=topic_id))
                 db.flush()
+            # Card metadata is backfilled for older collected imports only;
+            # manual ideas and existing rows are never touched.
+            if db.get(TopicPresentation, topic_id) is None and db.exec(select(RetrievedItem).where(
+                    RetrievedItem.inbox_topic_id == topic_id)).first() is not None:
+                db.add(presentation.from_entry(topic_id, source.platform, entry, time.time()))
             run.duplicates += 1
             continue
         now, topic_id = time.time(), str(uuid4())
@@ -171,6 +177,7 @@ def ingest(db: Session, source: RetrievalSource, run: RetrievalRun, entries: lis
                              original_title=entry.title, body_text=entry.body, published_at=entry.published or '',
                              imported_at=now, truncated=entry.truncated))
         db.add(RetrievalIdentity(id=entry.identity, inbox_topic_id=topic_id))
+        db.add(presentation.from_entry(topic_id, source.platform, entry, now))
         db.flush()
         urls[entry.url] = topic_id
         identities[entry.identity] = topic_id

@@ -32,6 +32,8 @@ class Settings(BaseSettings):
     db_path: Path = DATA_DIR / "rundown.db"
     raw_cache_dir: Path = DATA_DIR / "raw"
     logs_dir: Path = DATA_DIR / "logs"
+    # Managed upload files, served only by opaque id through /attachments.
+    assets_dir: Path = DATA_DIR / "assets"
 
     # Explicit fixture origin for isolated verification only; empty in normal use.
     rss_test_feed_origin: str = ""

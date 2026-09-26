@@ -116,6 +116,8 @@ export type SavedShowSummary = {
   revision: number
   topic_count: number
   total_seconds: number
+  /** Streaming-day date (YYYY-MM-DD) when the show is a planned day; absent/null for older shows. */
+  stream_date?: string | null
   created_at: string
   updated_at: string
 }
@@ -127,6 +129,7 @@ export type SavedShow = {
   name: string
   revision: number
   topics: SavedShowTopic[]
+  stream_date?: string | null
   created_at: string
   updated_at: string
 }
@@ -251,6 +254,45 @@ export type InboxSource = {
   truncated: boolean
 }
 
+/** Card metadata an importer retained (YouTube snippet, Media RSS); `null` for manual ideas and pre-slice imports. */
+export type InboxThumbnail = { url: string; width: number | null; height: number | null }
+export type InboxPresentation = {
+  provider: string
+  creator: string
+  excerpt: string
+  thumbnail: InboxThumbnail | null
+  media_seconds: number | null
+  /** `ready` when an image was offered; `partial` for a text-first card. */
+  state: "ready" | "partial"
+  reason: string | null
+  fetched_at: string
+}
+
+/**
+ * Personal bookmark and note. Its `revision` is a separate namespace from the
+ * topic's: it starts at 0 and only editorial writes advance it.
+ */
+export type InboxEditorial = { revision: number; saved: boolean; note: string; updated_at: string | null }
+
+export type InboxAttachmentRole = "cover" | "document"
+/** A managed upload, served by opaque id; `url` is the same-origin path the API serves it at. */
+export type InboxAttachment = {
+  id: string
+  role: InboxAttachmentRole
+  filename: string
+  media_type: string
+  size: number
+  sha256: string
+  width: number | null
+  height: number | null
+  url: string
+  created_at: string
+}
+export type InboxCaptureKind = "write" | "link" | "upload"
+/** What the user wrote, linked or uploaded from Discover: the full headline and any retained text/file. */
+export type InboxCapture = { kind: InboxCaptureKind; display_title: string; source_text: string; attachments: InboxAttachment[]; created_at: string }
+export const NO_EDITORIAL: InboxEditorial = { revision: 0, saved: false, note: "", updated_at: null }
+
 export type InboxItem = {
   id: string
   revision: number
@@ -263,7 +305,14 @@ export type InboxItem = {
   updated_at: string
   topic: InboxTopic
   source: InboxSource | null
+  /** Optional on the wire (older servers, stubs); normalised to a value or null. */
+  presentation?: InboxPresentation | null
+  editorial?: InboxEditorial
+  capture?: InboxCapture | null
 }
+
+/** Complete editorial state; `revision` guards against stale writes (409). */
+export type EditorialUpdate = { revision: number; saved: boolean; note: string }
 
 /** Create input: no id, no archived flag. `notes`/`source_url` may be omitted for "". */
 export type InboxCreate = { text: string; duration: number; notes?: string; source_url?: string }
@@ -290,6 +339,73 @@ function normalizeSource(raw: unknown): InboxSource | null {
   }
 }
 
+/** Only an absolute http(s) address is ever handed to an <img>; anything else reads as "no image". */
+function normalizeThumbnail(raw: unknown): InboxThumbnail | null {
+  if (!raw || typeof raw !== "object") return null
+  const thumb = raw as Record<string, unknown>
+  if (typeof thumb.url !== "string" || !/^https?:\/\/[^\s\\/@]+[^\s\\]*$/i.test(thumb.url)) return null
+  const size = (value: unknown) => (typeof value === "number" && Number.isInteger(value) && value > 0 ? value : null)
+  return { url: thumb.url, width: size(thumb.width), height: size(thumb.height) }
+}
+
+function normalizePresentation(raw: unknown): InboxPresentation | null {
+  if (!raw || typeof raw !== "object") return null
+  const card = raw as Record<string, unknown>
+  if (typeof card.provider !== "string") return null
+  return {
+    provider: card.provider,
+    creator: typeof card.creator === "string" ? card.creator : "",
+    excerpt: typeof card.excerpt === "string" ? card.excerpt : "",
+    thumbnail: normalizeThumbnail(card.thumbnail),
+    media_seconds: typeof card.media_seconds === "number" && Number.isFinite(card.media_seconds) && card.media_seconds > 0 ? card.media_seconds : null,
+    state: card.state === "ready" ? "ready" : "partial",
+    reason: typeof card.reason === "string" ? card.reason : null,
+    fetched_at: typeof card.fetched_at === "string" ? card.fetched_at : "",
+  }
+}
+
+function normalizeEditorial(raw: unknown): InboxEditorial {
+  if (!raw || typeof raw !== "object") return NO_EDITORIAL
+  const mark = raw as Record<string, unknown>
+  return {
+    revision: typeof mark.revision === "number" && Number.isInteger(mark.revision) && mark.revision >= 0 ? mark.revision : 0,
+    saved: mark.saved === true,
+    note: typeof mark.note === "string" ? mark.note : "",
+    updated_at: typeof mark.updated_at === "string" ? mark.updated_at : null,
+  }
+}
+
+const ATTACHMENT_ID = /^[0-9a-f]{32}$/
+
+function normalizeAttachment(raw: unknown): InboxAttachment | null {
+  if (!raw || typeof raw !== "object") return null
+  const file = raw as Record<string, unknown>
+  if (typeof file.id !== "string" || !ATTACHMENT_ID.test(file.id) || typeof file.media_type !== "string") return null
+  const size = (value: unknown) => (typeof value === "number" && Number.isInteger(value) && value > 0 ? value : null)
+  return {
+    id: file.id,
+    role: file.role === "cover" ? "cover" : "document",
+    filename: typeof file.filename === "string" && file.filename ? file.filename : "upload",
+    media_type: file.media_type,
+    size: size(file.size) ?? 0,
+    sha256: typeof file.sha256 === "string" ? file.sha256 : "",
+    width: size(file.width),
+    height: size(file.height),
+    // The address is derived from the opaque id, never taken from the wire.
+    url: `/attachments/${file.id}`,
+    created_at: typeof file.created_at === "string" ? file.created_at : "",
+  }
+}
+
+function normalizeCapture(raw: unknown): InboxCapture | null {
+  if (!raw || typeof raw !== "object") return null
+  const capture = raw as Record<string, unknown>
+  const kind = capture.kind === "write" || capture.kind === "link" || capture.kind === "upload" ? capture.kind : null
+  if (kind === null || typeof capture.display_title !== "string") return null
+  const attachments = Array.isArray(capture.attachments) ? capture.attachments.map(normalizeAttachment).filter((entry): entry is InboxAttachment => entry !== null) : []
+  return { kind, display_title: capture.display_title, source_text: typeof capture.source_text === "string" ? capture.source_text : "", attachments, created_at: typeof capture.created_at === "string" ? capture.created_at : "" }
+}
+
 function normalizeInboxItem(item: InboxItem): InboxItem {
   const notes = typeof item.notes === "string" ? item.notes : ""
   const source_url = typeof item.source_url === "string" ? item.source_url : ""
@@ -301,6 +417,9 @@ function normalizeInboxItem(item: InboxItem): InboxItem {
     archived: item.archived === true,
     topic: { ...topic, notes: typeof topic.notes === "string" ? topic.notes : "" },
     source: normalizeSource(item.source),
+    presentation: normalizePresentation(item.presentation),
+    editorial: normalizeEditorial(item.editorial),
+    capture: normalizeCapture(item.capture),
   }
 }
 
@@ -330,10 +449,99 @@ export async function updateInboxItem(id: string, input: InboxUpdate): Promise<I
   return expectInboxItem(r)
 }
 
+/**
+ * Replace the personal bookmark/note state. The topic, its imported source
+ * and its context notes are untouched; a stale `revision` is refused with 409
+ * and the stored note stays as it was.
+ */
+export async function putInboxEditorial(id: string, input: EditorialUpdate): Promise<InboxItem> {
+  const r = await fetch(`/inbox/${encodeURIComponent(id)}/editorial`, jsonInit("PUT", input))
+  return expectInboxItem(r)
+}
+
 /** Archive (`archived: true`) or restore (`archived: false`). Copies already made from the item are untouched. */
 export async function setInboxArchived(id: string, revision: number, archived: boolean): Promise<InboxItem> {
   const r = await fetch(`/inbox/${encodeURIComponent(id)}/archive`, jsonInit("POST", { revision, archived }))
   return expectInboxItem(r)
+}
+
+// ---- Discover capture and uploads -----------------------------------------------
+// A written or linked topic is created in one request; links are stored, never
+// fetched. An upload sends the raw file as the body (type decided from bytes on
+// the server) with the title/label in the query; its note is saved afterwards
+// through the editorial endpoint.
+
+export type CaptureInput = { kind: "write" | "link"; title: string; label?: string; note?: string; source_url?: string; duration?: number }
+
+export async function captureInboxTopic(input: CaptureInput): Promise<InboxItem> {
+  const r = await fetch("/inbox/capture", jsonInit("POST", input))
+  return expectInboxItem(r)
+}
+
+export type UploadInput = { file: Blob; filename: string; title: string; label?: string; duration?: number }
+
+export async function uploadInboxTopic(input: UploadInput): Promise<InboxItem> {
+  const query = new URLSearchParams({ title: input.title, filename: input.filename })
+  if (input.label !== undefined) query.set("label", input.label)
+  if (input.duration !== undefined) query.set("duration", String(input.duration))
+  const headers: Record<string, string> = {}
+  if (input.file.type) headers["content-type"] = input.file.type
+  const r = await fetch(`/attachments?${query.toString()}`, { method: "POST", headers, body: input.file })
+  return expectInboxItem(r)
+}
+
+// ---- Streaming days (dated saved shows) ------------------------------------------
+// A day is a saved show plus a date; its topics are the same timed snapshots
+// the saved-show editor and activation use. `origin` is display metadata only.
+
+export type PlanSummary = SavedShowSummary & { stream_date: string | null }
+export type PlanTopicOrigin = { inbox_topic_id: string; display_title: string }
+export type PlanTopic = SavedShowTopic & { origin: PlanTopicOrigin | null }
+export type Plan = Omit<SavedShow, "topics" | "stream_date"> & { stream_date: string | null; topics: PlanTopic[] }
+export type PlanTopicUpdate = SavedTopicUpdate
+export type AddPlanTopicInput = { revision: number; inbox_topic_id: string; label?: string; duration?: number }
+
+function normalizePlan(plan: Plan): Plan {
+  return {
+    ...plan,
+    stream_date: typeof plan.stream_date === "string" ? plan.stream_date : null,
+    topics: plan.topics.map((topic) => {
+      const origin = topic.origin && typeof topic.origin === "object" && typeof topic.origin.display_title === "string" && typeof topic.origin.inbox_topic_id === "string" ? { inbox_topic_id: topic.origin.inbox_topic_id, display_title: topic.origin.display_title } : null
+      return { ...topic, notes: typeof topic.notes === "string" ? topic.notes : "", origin }
+    }),
+  }
+}
+
+async function expectPlan(response: Response): Promise<Plan> {
+  return normalizePlan(await expectJson<Plan>(response))
+}
+
+export async function listPlans(signal?: AbortSignal): Promise<PlanSummary[]> {
+  const r = await fetch("/plans", { cache: "no-store", signal })
+  const body = await expectJson<{ plans: PlanSummary[] }>(r)
+  return body.plans.map((plan) => ({ ...plan, stream_date: typeof plan.stream_date === "string" ? plan.stream_date : null }))
+}
+
+export async function getPlan(id: string, signal?: AbortSignal): Promise<Plan> {
+  const r = await fetch(`/plans/${encodeURIComponent(id)}`, { cache: "no-store", signal })
+  return expectPlan(r)
+}
+
+export async function createPlan(name: string, streamDate: string): Promise<Plan> {
+  const r = await fetch("/plans", jsonInit("POST", { name, stream_date: streamDate }))
+  return expectPlan(r)
+}
+
+/** Order, timing, labels and notes in one revision-guarded write; a stale `revision` is refused with 409 and nothing changes. */
+export async function updatePlan(id: string, revision: number, name: string, topics: PlanTopicUpdate[]): Promise<Plan> {
+  const r = await fetch(`/plans/${encodeURIComponent(id)}`, jsonInit("PUT", { revision, name, topics }))
+  return expectPlan(r)
+}
+
+/** Snapshot an idea into the day; the server refuses (422) a headline over 30 characters without a chosen `label`. */
+export async function addPlanTopic(id: string, input: AddPlanTopicInput): Promise<Plan> {
+  const r = await fetch(`/plans/${encodeURIComponent(id)}/topics`, jsonInit("POST", input))
+  return expectPlan(r)
 }
 
 // ---- RSS sources (frozen contract) ------------------------------------------

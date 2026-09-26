@@ -21,11 +21,11 @@ import QuickAdd, { type AddOptions, type AddPlacement, type NewTopic } from "./c
 import TopicRow from "./components/TopicRow"
 import ShowsView from "./components/ShowsView"
 import InboxView from "./components/InboxView"
+import DiscoverView from "./components/DiscoverView"
 import SourcesView from "./components/SourcesView"
 import ReviewView from "./components/ReviewView"
 import ResearchView from "./components/ResearchView"
 import type { OpenShowRequest } from "./components/ShowsView"
-import type { SavedShow } from "./lib/api"
 import InboxPicker, { type PickPlacement } from "./components/InboxPicker"
 import type { InboxTopic } from "./lib/api"
 
@@ -49,7 +49,10 @@ export default function App() {
   const [conflict, setConflict] = useState<Conflict | null>(null)
   // Both views stay mounted; switching only hides one, so live and saved
   // drafts (and anything typed into quick-add) survive navigation.
-  const [view, setView] = useState<"live" | "shows" | "inbox" | "research" | "sources" | "review">("live")
+  // Discover is listed first but the live show stays the starting view: it is
+  // what a producer opens the control room for, and every existing screen
+  // (and its tests) is reached from it.
+  const [view, setView] = useState<"live" | "discover" | "shows" | "inbox" | "research" | "sources" | "review">("live")
   /** A show the research composer just saved and the user asked to open; Saved Shows loads it (guarding its own unsaved draft). */
   const [openShowRequest, setOpenShowRequest] = useState<OpenShowRequest | null>(null)
   const [inboxOpen, setInboxOpen] = useState(false)
@@ -324,7 +327,7 @@ export default function App() {
   }
 
   /** The research composer asks for its saved show to be opened: switch to Saved Shows and hand over the request. */
-  function openSavedShow(show: SavedShow) {
+  function openSavedShow(show: { id: string; name: string }) {
     setOpenShowRequest((current) => ({ seq: (current?.seq ?? 0) + 1, id: show.id, name: show.name }))
     setView("shows")
   }
@@ -358,6 +361,9 @@ export default function App() {
           <span className="brand-name">Rundown</span>
         </div>
         <nav aria-label="Sections">
+          <button type="button" className={`side-item${view === "discover" ? " on" : ""}`} aria-current={view === "discover" ? "page" : undefined} onClick={() => setView("discover")}>
+            <span className="side-icon" aria-hidden="true">◎</span> Discover
+          </button>
           <button type="button" className={`side-item${view === "live" ? " on" : ""}`} aria-current={view === "live" ? "page" : undefined} onClick={() => setView("live")}>
             <span className="side-icon" aria-hidden="true">≣</span> Tonight's Show
           </button>
@@ -518,6 +524,8 @@ export default function App() {
         onActivationPending={setActivating}
         openRequest={openShowRequest}
       />
+
+      <DiscoverView hidden={view !== "discover"} refreshKey={inboxRefreshKey} onOpenSources={() => setView("sources")} onOpenShow={openSavedShow} />
 
       <InboxView hidden={view !== "inbox"} refreshKey={inboxRefreshKey} />
 

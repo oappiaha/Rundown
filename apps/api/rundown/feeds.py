@@ -10,11 +10,19 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlmodel import Session, col, select
 
-from rundown import rss
+from rundown import presentation, rss
 from rundown.db import session
 from rundown.inbox import copy_notes
 from rundown.library import ShowName, _stamp, saved_transaction
-from rundown.models import FeedEntry, FeedRun, FeedSchedule, InboxSource, InboxTopic, RSSFeed
+from rundown.models import (
+    FeedEntry,
+    FeedRun,
+    FeedSchedule,
+    InboxSource,
+    InboxTopic,
+    RSSFeed,
+    TopicPresentation,
+)
 
 router = APIRouter(prefix='/feeds', tags=['rss-sources'])
 LEASE_SECONDS = 120
@@ -175,6 +183,10 @@ def ingest(db: Session, feed: RSSFeed, run: FeedRun, entries: list[rss.Entry | d
         if topic_id:
             run.duplicates += 1
             diagnostics.append({'title': entry.title[:100], 'reason': 'Already captured; existing idea left unchanged.'})
+            # Card metadata is backfilled for older feed imports only; manual
+            # ideas and existing rows are never touched.
+            if db.get(TopicPresentation, topic_id) is None and db.get(InboxSource, topic_id) is not None:
+                db.add(presentation.from_entry(topic_id, 'rss', entry, time.time()))
         else:
             topic_id = str(uuid4())
             now = time.time()
@@ -185,6 +197,7 @@ def ingest(db: Session, feed: RSSFeed, run: FeedRun, entries: list[rss.Entry | d
             db.add(InboxSource(inbox_topic_id=topic_id, feed_id=feed.id, feed_name=feed.name,
                                original_title=entry.title, body_text=entry.body, published_at=entry.published,
                                imported_at=now, truncated=entry.truncated))
+            db.add(presentation.from_entry(topic_id, 'rss', entry, now))
             run.created += 1
             urls[entry.url] = topic_id
         if previous is None:

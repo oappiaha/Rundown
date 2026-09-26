@@ -12,6 +12,7 @@ def isolated_database(tmp_path, monkeypatch):
     monkeypatch.setattr(settings, 'db_path', path)
     monkeypatch.setattr(settings, 'raw_cache_dir', tmp_path / 'raw')
     monkeypatch.setattr(settings, 'logs_dir', tmp_path / 'logs')
+    monkeypatch.setattr(settings, 'assets_dir', tmp_path / 'assets')
     monkeypatch.setattr(db, '_engine', engine)
     yield
     engine.dispose()

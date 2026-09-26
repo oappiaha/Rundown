@@ -23,3 +23,8 @@ data/rundown.db-journal
 data/raw/
 data/logs/
 topics.json
+
+# User-uploaded media and SQLite sidecars
+data/assets/
+data/rundown.db-wal
+data/rundown.db-shm

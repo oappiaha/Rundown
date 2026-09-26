@@ -310,3 +310,80 @@ class RetrievalIdentity(SQLModel, table=True):
     """Remember dedup against manual/RSS ideas even after their link is edited."""
     id: str = Field(primary_key=True)
     inbox_topic_id: str = Field(foreign_key="inboxtopic.id")
+
+
+class TopicPresentation(SQLModel, table=True):
+    """Additive card metadata for an imported idea. Source text, generated notes
+    and the personal note live elsewhere; this row is never required."""
+
+    inbox_topic_id: str = Field(primary_key=True, foreign_key="inboxtopic.id")
+    provider: str
+    creator: str = ""
+    excerpt: str = ""
+    thumbnail_url: str | None = None
+    thumbnail_width: int | None = None
+    thumbnail_height: int | None = None
+    media_seconds: int | None = None
+    # ready: image offered; partial: no usable image, text-first card.
+    state: str = "partial"
+    reason: str | None = None
+    fetched_at: float
+
+
+class TopicEditorial(SQLModel, table=True):
+    """Personal bookmark and note with its own revision namespace, independent
+    from InboxTopic.revision and from imported or generated notes."""
+
+    inbox_topic_id: str = Field(primary_key=True, foreign_key="inboxtopic.id")
+    revision: int = 0
+    saved: bool = False
+    note: str = ""
+    updated_at: float
+
+
+class ShowPlan(SQLModel, table=True):
+    """Additive streaming-day metadata for a saved show. Old shows have no row."""
+
+    show_id: str = Field(primary_key=True, foreign_key="savedshow.id")
+    stream_date: str = Field(index=True)
+    created_at: float
+
+
+class ShowTopicOrigin(SQLModel, table=True):
+    """Display metadata for one saved-show topic snapshot: which idea it came
+    from and its full headline. The 30-character live label stays in the
+    snapshot; this row never changes timing, order or notes."""
+
+    topic_id: str = Field(primary_key=True)
+    show_id: str = Field(foreign_key="savedshow.id", index=True)
+    inbox_topic_id: str = Field(foreign_key="inboxtopic.id", index=True)
+    display_title: str
+    label: str
+    created_at: float
+
+
+class TopicCapture(SQLModel, table=True):
+    """A topic the user wrote, linked or uploaded from Discover. The full
+    headline and retained text live here; InboxTopic keeps the live label."""
+
+    inbox_topic_id: str = Field(primary_key=True, foreign_key="inboxtopic.id")
+    kind: str
+    display_title: str
+    source_text: str = ""
+    created_at: float
+
+
+class Attachment(SQLModel, table=True):
+    """A managed upload stored under settings.assets_dir by opaque id. The
+    client filename is display only; the stored name is chosen by the server."""
+
+    id: str = Field(primary_key=True)
+    inbox_topic_id: str = Field(foreign_key="inboxtopic.id", index=True)
+    role: str
+    filename: str
+    media_type: str
+    size: int
+    sha256: str
+    width: int | None = None
+    height: int | None = None
+    created_at: float
