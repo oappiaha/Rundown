@@ -4,7 +4,7 @@ Updated September 26, 2026. This is the current handoff; NEXT-STEPS.md contains 
 
 ## Deployed September 26, 2026 — authoritative operational status
 
-Production now runs on rei’s Mac mini as LaunchAgent com.rei.rundown, release 00c5cbb, private URL http://reis-mac-mini.taildb04a2.ts.net:8088/. OBS will run on the MacBook using the mini’s /static/overlay.html URL. Old Wolf-4/beezy and connection-blocked notes below are superseded. See SHIPPING.md for exact paths, service commands, backups and rollback.
+Production now runs on rei’s Mac mini as LaunchAgent com.rei.rundown, release 43e20fd (original warm cream/sand palette restored at user request), private URL http://reis-mac-mini.taildb04a2.ts.net:8088/. OBS will run on the MacBook using the mini’s /static/overlay.html URL. Old Wolf-4/beezy and connection-blocked notes below are superseded. See SHIPPING.md for exact paths, service commands, backups and rollback.
 
 HTTP and real compiled-browser checks passed after restart, including Discover/Days/capture draft/mobile/overlay polling and unchanged live state. No production test topics were saved. MacBook reachability and actual OBS remain to verify. The user agent requires the mini to stay signed in; sleep is disabled, but unattended boot/power-failure recovery is not proven. Daily local backups installed and first backup verified; off-machine backup not configured. Source/model calls were not made.
 

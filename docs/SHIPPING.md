@@ -39,7 +39,7 @@
 - UI: http://reis-mac-mini.taildb04a2.ts.net:8088/
 - MacBook OBS Browser Source URL: http://reis-mac-mini.taildb04a2.ts.net:8088/static/overlay.html
 - Both devices must be signed into the intended Tailscale network with ACL access. HTTP here travels through the encrypted Tailscale network; no public listener, TLS termination, or Funnel. Tailscale Serve is not enabled and was not changed. Never bind this unauthenticated app to all interfaces.
-- App release: `/Users/rei/services/rundown/releases/00c5cbb32ad73e18cab1bea47066c2d56b1964eb`; `current` symlink selects it. Source was exported from Git and compiled `apps/web/dist` copied into it. No dev server or hot reload.
+- App release: `/Users/rei/services/rundown/releases/43e20fd16ae23cfb540b5c86cedc4992d5c21385`; `current` symlink selects it. Source was exported from Git and compiled `apps/web/dist` copied into it. No dev server or hot reload.
 - Python: `/Users/rei/2026/Rundown/apps/api/.venv/bin/python -m uvicorn rundown.main:app --host 100.93.40.70 --port 8088`, working directory `current/apps/api`. The venv is shared with the checkout: do not upgrade it without release verification. Release `.env` is a symlink to the original secret file; never commit/copy its contents into artifacts.
 - Explicit data paths stay under `/Users/rei/2026/Rundown/data`: `rundown.db`, `assets`, `raw`. Logs: `/Users/rei/services/rundown/logs`.
 - LaunchAgent: `~/Library/LaunchAgents/com.rei.rundown.plist`, RunAtLoad + KeepAlive, 10-second restart throttle. `launchctl print gui/$(id -u)/com.rei.rundown`; restart with `launchctl kickstart -k gui/$(id -u)/com.rei.rundown`.
@@ -53,7 +53,7 @@
 - Pre-deploy backup and daily snapshots: `/Users/rei/services/rundown/backups` (private directory). Database backup verified by `PRAGMA integrity_check`; uploads copied alongside. No secrets included.
 - `ops/backup.py` is installed at `/Users/rei/services/rundown/bin/backup.py`. LaunchAgent `com.rei.rundown-backup` runs at 04:15 local time when the user session is available. Seven daily snapshots retained; pre-deploy snapshot retained separately. Manual: `/usr/bin/python3 /Users/rei/services/rundown/bin/backup.py`.
 - Backups are local to the same disk, not off-machine disaster recovery. Full restore rehearsal remains pending.
-- Rollback: stop the service using `launchctl bootout gui/$(id -u)/com.rei.rundown`; repoint `current` to a previously verified release and bootstrap its plist. This is the first release, so there is no previous production release yet.
+- Rollback: stop the service using `launchctl bootout gui/$(id -u)/com.rei.rundown`; repoint `current` to a previously verified release and bootstrap its plist. Previous production release 00c5cbb is retained for rollback.
 - Data restore (destructive; explicit authorization required): stop service, preserve current data separately, verify the chosen backup with SQLite integrity_check, restore DB plus matching assets, remove stale DB WAL/SHM only while stopped, restart, and verify. Do not restore an older DB casually: it discards post-backup changes.
 
 ## Post-deploy log
