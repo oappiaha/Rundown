@@ -2,6 +2,12 @@
 
 Updated September 26, 2026. This is the current handoff; NEXT-STEPS.md contains historical round reports, some superseded by later entries.
 
+## Deployed September 26, 2026 — authoritative operational status
+
+Production now runs on rei’s Mac mini as LaunchAgent com.rei.rundown, release 00c5cbb, private URL http://reis-mac-mini.taildb04a2.ts.net:8088/. OBS will run on the MacBook using the mini’s /static/overlay.html URL. Old Wolf-4/beezy and connection-blocked notes below are superseded. See SHIPPING.md for exact paths, service commands, backups and rollback.
+
+HTTP and real compiled-browser checks passed after restart, including Discover/Days/capture draft/mobile/overlay polling and unchanged live state. No production test topics were saved. MacBook reachability and actual OBS remain to verify. The user agent requires the mini to stay signed in; sleep is disabled, but unattended boot/power-failure recovery is not proven. Daily local backups installed and first backup verified; off-machine backup not configured. Source/model calls were not made.
+
 ## Current release status — September 26, 2026
 
 User explicitly authorized push and deployment. Release pushed successfully to origin/main at a9ea039; remote SHA verified. This includes the three historical pending commits, AI/OBS fixes, Discover/day-plan/capture implementation and evidence. Streaming days and topic creation/uploads are now implemented and independently accepted alongside Discover. See [release acceptance](evaluations/2026-09-26-days-release/README.md). Fresh checks: 271 API and 237 web tests; lint/types/build pass. Worker 51 browser checks plus independent parent flows cover capture, dated plans, snapshots, uploads, readback, mobile and live preservation. This supersedes earlier incomplete-slice notes below.

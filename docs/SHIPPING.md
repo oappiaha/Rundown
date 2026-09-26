@@ -5,11 +5,12 @@
 - This is a local-first, single-user application. Do not touch OBS, launchd, Tailscale, logged-in browser profiles, or external collectors during local verification.
 - `.env` contains secrets and is never committed or copied into evidence.
 - `data/rundown.db` is live local state. Tests must point `settings.db_path` at a temporary SQLite database.
-- The served application is intended for Wolf-4, but deployment and launchd installation require explicit user authorization.
+- Production runs on rei’s Mac mini; OBS runs separately on the MacBook. Deployment was explicitly authorized September 26, 2026.
 
 ## Port registry
 
-- API default: `8000`.
+- Production API: `100.93.40.70:8088` (Tailscale interface only). Port 8000 belongs to another application.
+- Development API default: `8000`; override to avoid the other application.
 - Vite development server default: `3000`.
 - OBS WebSocket default: `4455`; never bind or replace this during verification.
 - For isolated verification, choose unused loopback ports in `8100–8199` for API and `3100–3199` for web.
@@ -32,12 +33,28 @@
 - SQLite schema is currently created by SQLModel; add a migration mechanism before any destructive schema evolution.
 - Commits, pushes, and production changes are centralized and only performed when explicitly authorized.
 
-## Deploy runbook
+## Deploy runbook — verified September 26, 2026
 
-- Target: Wolf-4 Mac mini, outside `~/Documents`, per TDD v2.1.
-- Build `apps/web`, run the FastAPI service with its repo environment, then smoke-check `/health`, `/`, `/static/overlay.html`, and `/rundown/topics`.
-- Install or reload launchd agents only with explicit authorization. Never print secret values.
-- Confirm OBS is configured for URL mode at `http://localhost:8000/static/overlay.html` before a live stream.
+- Host: rei’s Mac mini, local user `rei`, Tailscale `reis-mac-mini.taildb04a2.ts.net` / `100.93.40.70`. The old `beezy@wolf-4` examples are historical and incorrect for this installation.
+- UI: http://reis-mac-mini.taildb04a2.ts.net:8088/
+- MacBook OBS Browser Source URL: http://reis-mac-mini.taildb04a2.ts.net:8088/static/overlay.html
+- Both devices must be signed into the intended Tailscale network with ACL access. HTTP here travels through the encrypted Tailscale network; no public listener, TLS termination, or Funnel. Tailscale Serve is not enabled and was not changed. Never bind this unauthenticated app to all interfaces.
+- App release: `/Users/rei/services/rundown/releases/00c5cbb32ad73e18cab1bea47066c2d56b1964eb`; `current` symlink selects it. Source was exported from Git and compiled `apps/web/dist` copied into it. No dev server or hot reload.
+- Python: `/Users/rei/2026/Rundown/apps/api/.venv/bin/python -m uvicorn rundown.main:app --host 100.93.40.70 --port 8088`, working directory `current/apps/api`. The venv is shared with the checkout: do not upgrade it without release verification. Release `.env` is a symlink to the original secret file; never commit/copy its contents into artifacts.
+- Explicit data paths stay under `/Users/rei/2026/Rundown/data`: `rundown.db`, `assets`, `raw`. Logs: `/Users/rei/services/rundown/logs`.
+- LaunchAgent: `~/Library/LaunchAgents/com.rei.rundown.plist`, RunAtLoad + KeepAlive, 10-second restart throttle. `launchctl print gui/$(id -u)/com.rei.rundown`; restart with `launchctl kickstart -k gui/$(id -u)/com.rei.rundown`.
+- This is a user LaunchAgent: starts at login, not before login, and stops on logout. Keep the mini powered, networked and signed in. Sleep is already 0 on AC; display sleep is fine. Automatic restart after power failure was off and was not changed. Unattended recovery after power failure/reboot is not yet verified.
+- RSS scheduler retains its enabled configuration; zero enabled feed schedules at deployment. AI analysis/preparation stay disabled in the service environment. No source import/model calls were made for deployment.
+- Before any update: clean reviewed Git release, build/test, snapshot DB with SQLite backup, copy uploads, export new immutable release and built frontend, switch current, restart service, verify actual private URL. Keep previous release for rollback. Do not test mutations against production.
+- Smoke: `/health`, `/`, `/static/overlay.html`, `/rundown/topics`, `/inbox`, `/plans`. Real browser: Discover → Explore → Days → New draft/Escape, mobile overflow, overlay polling. Repeat from MacBook before streaming; actual OBS setup and WebSocket refresh remain unverified.
+
+### Backups and rollback
+
+- Pre-deploy backup and daily snapshots: `/Users/rei/services/rundown/backups` (private directory). Database backup verified by `PRAGMA integrity_check`; uploads copied alongside. No secrets included.
+- `ops/backup.py` is installed at `/Users/rei/services/rundown/bin/backup.py`. LaunchAgent `com.rei.rundown-backup` runs at 04:15 local time when the user session is available. Seven daily snapshots retained; pre-deploy snapshot retained separately. Manual: `/usr/bin/python3 /Users/rei/services/rundown/bin/backup.py`.
+- Backups are local to the same disk, not off-machine disaster recovery. Full restore rehearsal remains pending.
+- Rollback: stop the service using `launchctl bootout gui/$(id -u)/com.rei.rundown`; repoint `current` to a previously verified release and bootstrap its plist. This is the first release, so there is no previous production release yet.
+- Data restore (destructive; explicit authorization required): stop service, preserve current data separately, verify the chosen backup with SQLite integrity_check, restore DB plus matching assets, remove stale DB WAL/SHM only while stopped, restart, and verify. Do not restore an older DB casually: it discards post-backup changes.
 
 ## Post-deploy log
 
