@@ -12,3 +12,9 @@
 ## September 26, 2026 — warm palette
 
 Deployed `43e20fd16ae23cfb540b5c86cedc4992d5c21385`: original cream/paper background, sand surfaces, warm dark text and concept artwork colors. Layout and APIs unchanged. Lint/types/build pass. Browser preview and deployed desktop/mobile drawer/capture/overlay checks pass; computed page background #f5f1e8 verified and live state preserved. Backup taken; previous release retained.
+
+## September 26, 2026 — pasted link previews deployed
+
+Shipped `44dd08a`: explicit article/TikTok preview in Link capture, thumbnail/source preservation, personal-title/note protection and manual fallback. Warm palette and existing Discover/day workflow retained. Additive `topiclinksource` table only. Independent 299 API / 242 web tests, static/build checks, API and Chromium acceptance passed. Production smoke and backup comparison passed; no test topics persisted. See docs/evaluations/2026-09-26-link-previews/README.md for evidence and the rolled-back test-isolation incident/fix.
+
+Predeploy backup `predeploy-20260926-184249`; previous release `43e20fd` retained. Real source availability, MacBook/OBS rehearsal, Reddit approval and off-machine backups remain followups. No billed AI calls.

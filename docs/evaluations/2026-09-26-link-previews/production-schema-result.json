@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "new_tables": [
+    "topiclinksource"
+  ],
+  "new_table_rows": 0,
+  "existing_rows": "unchanged except normal clock read timestamp",
+  "differences": [
+    "showclock.updated_at"
+  ]
+}

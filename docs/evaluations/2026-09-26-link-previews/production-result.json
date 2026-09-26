@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "url": "http://reis-mac-mini.taildb04a2.ts.net:8088",
+  "checks": [
+    "managed restart health",
+    "compiled UI served",
+    "Discover Explore",
+    "Days drawer",
+    "capture draft and Escape",
+    "mobile width",
+    "overlay polls API",
+    "live state preserved"
+  ],
+  "scope": "Browser on Mac mini; MacBook and real OBS not yet verified"
+}
