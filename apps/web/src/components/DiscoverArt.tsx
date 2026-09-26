@@ -1,14 +1,14 @@
 import { artworkFor, type ArtKind } from "../lib/discover"
 
 // Deterministic artwork for a topic without a usable image, in the control
-// room's own light/blue/silver palette. Same id, same picture, no network.
+// room's original warm-paper palette. Same id, same picture, no network.
 const PALETTES = [
-  { bg: "#e8eef7", a: "#0071e3", b: "#1d1d1f", c: "#ffffff" },
-  { bg: "#1d1d1f", a: "#f5f5f7", b: "#0071e3", c: "#78c8e8" },
-  { bg: "#dfe3ea", a: "#0055b3", b: "#1d1d1f", c: "#ffffff" },
-  { bg: "#0071e3", a: "#f5f5f7", b: "#1d1d1f", c: "#78c8e8" },
-  { bg: "#f5f5f7", a: "#1d1d1f", b: "#0071e3", c: "#c4c4c4" },
-  { bg: "#0a1520", a: "#78c8e8", b: "#f5f5f7", c: "#0071e3" },
+  { bg: "#e9e1cf", a: "#1b3fd4", b: "#16140f", c: "#f5f1e8" },
+  { bg: "#16140f", a: "#f5f1e8", b: "#c9f24d", c: "#1b3fd4" },
+  { bg: "#d9cbb3", a: "#b8432f", b: "#16140f", c: "#f5f1e8" },
+  { bg: "#1b3fd4", a: "#f5f1e8", b: "#c9f24d", c: "#16140f" },
+  { bg: "#ede7d9", a: "#16140f", b: "#b8432f", c: "#d9cbb3" },
+  { bg: "#4a4639", a: "#e9e1cf", b: "#f5f1e8", c: "#b8432f" },
 ]
 
 const W = 400
